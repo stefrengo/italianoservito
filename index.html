@@ -102,4 +102,477 @@
             display: flex;
             gap: 2rem;
             list-style: none;
-            align-items
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .lang-switch {
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: var(--accent-soft);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            color: var(--primary);
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--primary);
+            color: #FFFFFF !important;
+            padding: 0.9rem 2rem;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(140, 74, 58, 0.15);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            border: 1px solid var(--primary);
+            color: var(--primary) !important;
+            padding: 0.8rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 500;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--accent-soft);
+        }
+
+        /* SECTIONS GENERAL */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 3rem auto;
+            font-size: 1.1rem;
+        }
+
+        /* 1. HERO */
+        .hero {
+            padding: 6rem 2rem 5rem 2rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-main) 0%, var(--accent-soft) 100%);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            max-width: 850px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        /* 2. LA PROMESSA */
+        .promessa {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .promessa-intro {
+            font-size: 1.3rem;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3.5rem auto;
+            color: var(--text-main);
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-main);
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .feature-icon {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
+        /* 3. PERCHÉ GIADA */
+        .chi-sono-teaser {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .chi-sono-image {
+            background-color: var(--sage-accent);
+            border-radius: 20px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .chi-sono-text h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chi-sono-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
+        }
+
+        /* 4. I PERCORSI */
+        .percorsi {
+            background-color: var(--accent-soft);
+        }
+
+        .card-percorso {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2.5rem;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease;
+        }
+
+        .card-percorso:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-percorso h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-percorso .level-tag {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .card-percorso p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        /* 5. LO SPAZIO SICURO */
+        .spazio-sicuro {
+            background-color: var(--bg-card);
+            text-align: center;
+        }
+
+        .spazio-box {
+            background: linear-gradient(135deg, var(--bg-main) 0%, var(--sage-accent) 100%);
+            padding: 4rem 2rem;
+            border-radius: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid var(--border);
+        }
+
+        .spazio-box h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+
+        .spazio-box p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* 8. FAQ SECTION (GEO FRIENDLY) */
+        .faq-section {
+            background-color: var(--bg-main);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .faq-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .faq-item p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
+        /* 9. CTA FINALE */
+        .cta-final {
+            background-color: var(--primary);
+            color: #FFFFFF;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .cta-final h2 {
+            color: #FFFFFF;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-final p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-final .btn-primary {
+            background-color: #FFFFFF;
+            color: var(--primary) !important;
+        }
+
+        .cta-final .btn-primary:hover {
+            background-color: var(--accent-soft);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: var(--text-main);
+            color: #FFFFFF;
+            padding: 3rem 2rem;
+            font-size: 0.9rem;
+            text-align: center;
+            opacity: 0.95;
+        }
+
+        footer a {
+            color: var(--accent-soft);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .chi-sono-teaser { grid-template-columns: 1fr; gap: 2rem; }
+            .nav-links { display: none; } /* In un progetto completo qui andrebbe un menu mobile hamburger */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">L'Italiano è Servito</a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#chi-sono">Chi Sono</a></li>
+                    <li><a href="#percorsi">I Percorsi</a></li>
+                    <li><a href="#blog">Blog</a></li>
+                    <li><a href="#contatti">Contatti</a></li>
+                    <li><span class="lang-switch">IT | PL</span></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Non lezioni di italiano. Un percorso per entrare nel cuore dell'Italia.</h1>
+            <p>Corsi online di italiano per chi, in Polonia, si è innamorata dell'Italia. Con Giada Longo, insegnante certificata che capisce esattamente dove ti blocchi — perché ci è passata anche lei, dall'altra parte.</p>
+            <a href="#percorsi" class="btn-primary">Trova il tuo percorso in italiano</a>
+        </div>
+    </section>
+
+    <section class="promessa">
+        <div class="container">
+            <p class="promessa-intro">
+                Non ti insegnerò solo la grammatica. Ti accompagnerò a costruire la sicurezza di aprire bocca, sbagliare, ridere dell'errore e riprovare — finché l'italiano non sarà più "una lingua straniera da studiare", ma un pezzo di te.
+            </p>
+            
+            <div class="grid-3">
+                <div class="feature-card">
+                    <span class="feature-icon">🧭</span>
+                    <h3>Autonomia</h3>
+                    <p>Viaggia in Italia con la serenità di muoverti da sola e farti capire ovunque, senza sentirti persa.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">💬</span>
+                    <h3>Voce</h3>
+                    <p>Lasciati alle spalle la timidezza e parla in modo naturale, senza il terrore del giudizio o dell'errore.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🇮🇹</span>
+                    <h3>Cultura</h3>
+                    <p>Entra nel cuore dell'Italia: nei gesti, nelle tradizioni e nel modo autentico di pensare e vivere italiano.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="chi-sono-teaser" id="chi-sono">
+        <div class="container chi-sono-teaser">
+            <div class="chi-sono-image">
+                [Foto di Giada Longo]
+            </div>
+            <div class="chi-sono-text">
+                <h2>Behind the scene: una storia d'amore per la Polonia.</h2>
+                <p>Sono Giada, e prima di essere la tua insegnante sono stata per 7 anni una polacca d'adozione. Ho vissuto a Cracovia, ho lavorato per sei anni presso l'Istituto Italiano di Cultura, e in tutto questo tempo ho imparato una cosa fondamentale:</p>
+                <p><strong>So esattamente dove la lingua polacca ti mette i bastoni tra le ruote quando provi a parlare italiano.</strong> Non è solo teoria accademica: è esperienza vissuta in prima persona, dall'altra parte del confine.</p>
+                <a href="#contatti" class="btn-secondary">Scopri la mia storia</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="percorsi" id="percorsi">
+        <div class="container">
+            <h2 class="section-title">I Percorsi di Trasformazione</h2>
+            <p class="section-subtitle">Non troverai corsi "di livello". Troverai percorsi pensati per la persona che sei oggi.</p>
+
+            <div class="grid-3">
+                <div class="card-percorso">
+                    <div>
+                        <span class="level-tag">Livello A1</span>
+                        <h3>Sbloccati da Zero</h3>
+                        <p>Per chi parte da zero assoluto o ha pochissime basi e la paura di non farcela. Impara le fondamenta per muoverti in Italia in totale autonomia e tranquillità.</p>
+                    </div>
+                    <a href="#contatti" class="btn-secondary">Scopri se è il percorso giusto per te</a>
+                </div>
+
+                <div class="card-percorso">
+                    <div>
+                        <span class="level-tag">Conversazione A2 - B1</span>
+                        <h3>Trova la tua Voce</h3>
+                        <p>Per chi conosce le regole ma si blocca quando deve parlare. Conversazione fluida e reale, vissuta in un salotto accogliente di massimo 6 persone.</p>
+                    </div>
+                    <a href="#contatti" class="btn-secondary">Scopri se è il percorso giusto per te</a>
+                </div>
+
+                <div class="card-percorso">
+                    <div>
+                        <span class="level-tag">Approfondimento B1 - B2 / Individuali</span>
+                        <h3>Esplora la Lingua</h3>
+                        <p>Per chi vuole entrare nelle sfumature più sottili della cultura, della letteratura e della società italiana. L'italiano autentico che non si trova sui libri.</p>
+                    </div>
+                    <a href="#contatti" class="btn-secondary">Scopri se è il percorso giusto per te</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="spazio-sicuro">
+        <div class="container">
+            <div class="spazio-box">
+                <h2>Un ambiente protetto dove sbagliare è il benvenuto.</h2>
+                <p>Qui sbagliare fa parte del percorso, non è un fallimento. I gruppi sono piccoli — massimo 6 persone — perché la fiducia si costruisce solo quando ci si conosce davvero. Niente lezioni frontali o giudizi: troverai salotti di conversazione accoglienti dove la grammatica arriva quando serve, spiegata nel modo in cui tu, che pensi in polacco, riesci finalmente a capirla.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">Domande Frequenti</h2>
+            <p class="section-subtitle">Tutto quello che desideri sapere prima di iniziare il tuo viaggio con l'italiano.</p>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3>Cosa succede se ho paura di parlare davanti agli altri?</h3>
+                    <p>La timidezza è il punto di partenza più comune, non un ostacolo. I primi incontri sono pensati apposta per abbassare la pressione: si parla con calma, si ascolta tanto e la fiducia cresce lezione dopo lezione in un piccolo gruppo accogliente.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Come si svolgono le lezioni pensate per studenti polacchi?</h3>
+                    <p>Le lezioni tengono conto delle difficoltà specifiche di chi parte dal polacco — come la gestione dei pronomi, i tempi passati e la struttura della frase. Vengono spiegate con paragoni e chiarezza che solo chi conosce la lingua polacca può offrirti.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Devo già sapere un po' di italiano per iscrivermi?</h3>
+                    <p>Assolutamente no. Il percorso "Sbloccati da Zero" è stato progettato appositamente per chi parte da zero e vuole muovere i primi passi con serenità e con la giusta guida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-final" id="contatti">
+        <div class="container">
+            <h2>Non serve la perfezione. Basta il primo passo.</h2>
+            <p>Raccontami la tua storia d'amore con l'Italia e prenota un primo incontro conoscitivo gratuito.</p>
+            <a href="mailto:giada@italianoservito.it" class="btn-primary">Trova il tuo percorso in italiano</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 L'Italiano è Servito di Giada Longo. Tutti i diritti riservati.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Cookie Policy</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
