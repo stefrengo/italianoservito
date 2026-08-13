@@ -1,0 +1,221 @@
+---
+// Pagina volutamente FUORI dal menu di navigazione (non linkata da Navbar.astro).
+// Punto di atterraggio dedicato alle campagne social a pagamento.
+// Struttura molto ispirata a italianoservito.it/corsi-di-italiano-estate-2026...
+// ma con placeholder chiaramente etichettati al posto delle date/prezzi di quella
+// campagna estiva (già conclusa): da riempire con i dati veri del semestre in corso.
+import MainLayout from '../layouts/MainLayout.astro';
+import SignupForm from '../components/SignupForm.astro';
+import { STAGIONE, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione } from '../data/corsiStagione.js';
+
+const perche = [
+  { titolo: 'Madrelingua con esperienza', testo: "8 anni di insegnamento a persone adulte di ogni livello linguistico." },
+  { titolo: 'Spiegazioni chiare anche in polacco', testo: 'Capisci la grammatica più difficile grazie al supporto nella tua lingua madre.' },
+  { titolo: 'Lezioni pratiche, basate sulla conversazione', testo: 'Parli fin dal primo giorno, in contesti reali.' },
+  { titolo: 'Massimo 6 partecipanti a gruppo', testo: 'Il giusto spazio per parlare e fare domande a ogni lezione.' },
+];
+---
+
+<MainLayout
+  title={`Corsi di italiano ${STAGIONE} — L'Italiano è Servito`}
+  description="Corsi online di italiano con Giada Longo. Posti limitati: prenota il tuo posto ora."
+>
+  <section class="hero-ads">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <span class="stamp ink">Iscriviti ai nuovi corsi</span>
+        <h1>Corsi online<br>di lingua italiana</h1>
+        <p class="stagione">{STAGIONE}</p>
+        <p class="lede">Ciao! Sono Giada, insegnante di lingua e cultura italiana per persone straniere. Dopo anni di insegnamento in Polonia, ho fondato "L'Italiano è Servito" per aiutare chi viene dal mondo slavo a vivere davvero la lingua italiana — non solo a studiarla.</p>
+        <p class="lede">Per me, imparare l'italiano significa entrare nel cuore dell'Italia: nei gesti, nei sapori, nelle tradizioni.</p>
+        <a class="btn" href="#iscrizione">Prenota il tuo posto</a>
+      </div>
+      <div class="photo main-photo torn-bottom reveal d1">
+        <img src="/foto/giada-1.png" alt="Giada Longo" />
+      </div>
+    </div>
+  </section>
+
+  <section id="corsi" class="corsi-section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Calendario dei corsi</h2>
+        <p class="intro">Per {STAGIONE.toLowerCase()} ti propongo corsi online in piccoli gruppi (da 3 a 6 persone) per imparare, conversare e migliorare il tuo italiano in un ambiente accogliente. Qualunque sia il tuo livello, trovi un corso pensato per te, con un programma adatto alle tue esigenze e al tuo ritmo.</p>
+      </div>
+
+      <div class="price-grid">
+        {corsiStagione.map((c, i) => (
+          <div class={`price-card reveal d${i % 3}`}>
+            <div class="price-head">{c.orario}</div>
+            <div class="price-tag">
+              <span class="stamp ink small">{c.pasto}</span>
+              <span class="livello">{c.livello}</span>
+            </div>
+            <p class="path-name">{c.tag}</p>
+            <div class="price-amount"><span class="currency">PLN</span>{c.prezzo}</div>
+            <ul>
+              <li>{c.tipo}</li>
+              <li>{c.lezioni}</li>
+              <li>Giorno libero: {c.giornoLibero}</li>
+            </ul>
+            <button type="button" class="btn small" data-corso={`${c.tag} — ${c.livello}`}>Prenota il tuo posto</button>
+          </div>
+        ))}
+      </div>
+
+      <p class="info-line reveal">Hai bisogno di ulteriori informazioni? Scrivimi a <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a></p>
+    </div>
+  </section>
+
+  <section class="perche-section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Perché scegliere i miei corsi</h2>
+      </div>
+      <div class="perche-grid">
+        {perche.map((p, i) => (
+          <div class={`perche-item reveal d${i % 4}`}>
+            <h3>{p.titolo}</h3>
+            <p>{p.testo}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="storia-section">
+    <div class="storia-photo"><img src="/foto/giada-5-cane.png" alt="Giada Longo" /></div>
+    <div class="storia-content">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--gold);">La mia storia</span>
+        <h2>Ciao! Sono Giada Longo, e ho la fortuna di fare il lavoro più bello del mondo: insegnare italiano a chi viene da fuori.</h2>
+        <p>Mi sono laureata in Lingue Moderne con specializzazione in polacco e russo, con una tesi magistrale dedicata proprio alla didattica dell'italiano in Polonia.</p>
+        <p>Della Polonia, poi, mi sono davvero innamorata: dopo un tirocinio all'Università Jagellonica di Cracovia, ho scelto di viverci per sette anni, costruendo lì la mia esperienza nell'insegnamento — con un'attenzione particolare a chi ha origini polacche o slave.</p>
+        <p>Ho lavorato sei anni all'Istituto Italiano di Cultura di Cracovia, aggiornandomi con workshop tematici e perfezionandomi nella didattica online.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dettagli-section">
+    <div class="wrap dettagli-grid">
+      <div class="reveal">
+        <h2>Dettagli</h2>
+        <ul class="dettagli-list">
+          <li>📅 {STAGIONE} — <em>[intervallo date]</em></li>
+          <li>💻 Online su Zoom</li>
+          <li>🧑‍🏫 Posti limitati</li>
+        </ul>
+      </div>
+      <div class="scadenza-card reveal d1">
+        <h3>Scadenza iscrizioni: {SCADENZA_LABEL}</h3>
+        <div class="countdown" id="countdown" data-target={SCADENZA_ISO}>
+          <div><span id="cd-days">00</span><small>Giorni</small></div>
+          <div><span id="cd-hours">00</span><small>Ore</small></div>
+          <div><span id="cd-min">00</span><small>Min</small></div>
+          <div><span id="cd-sec">00</span><small>Sec</small></div>
+        </div>
+        <a class="btn" href="#iscrizione">Prenota il tuo posto ora</a>
+      </div>
+    </div>
+  </section>
+
+  <SignupForm corsi={corsiStagione} includiClubStandalone={true} />
+</MainLayout>
+
+<script>
+  // I bottoni "Prenota il tuo posto" per corso e i campi condizionali del form
+  // sono gestiti dallo script dentro il componente <SignupForm />.
+
+  // Countdown alla scadenza iscrizioni
+  const el = document.getElementById('countdown');
+  if (el) {
+    const target = new Date(el.dataset.target).getTime();
+    const dEl = document.getElementById('cd-days');
+    const hEl = document.getElementById('cd-hours');
+    const mEl = document.getElementById('cd-min');
+    const sEl = document.getElementById('cd-sec');
+    function tick() {
+      const diff = target - Date.now();
+      if (diff <= 0) {
+        [dEl, hEl, mEl, sEl].forEach(e => e.textContent = '00');
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      dEl.textContent = String(d).padStart(2, '0');
+      hEl.textContent = String(h).padStart(2, '0');
+      mEl.textContent = String(m).padStart(2, '0');
+      sEl.textContent = String(s).padStart(2, '0');
+    }
+    tick();
+    setInterval(tick, 1000);
+  }
+</script>
+
+<style>
+  .hero-ads { padding: 60px 0 40px; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 46px; align-items: center; }
+  .hero-grid h1 { font-size: clamp(2rem, 3.6vw, 2.8rem); margin: 14px 0 6px; line-height: 1.12; }
+  .stagione { font-weight: 600; color: var(--green); margin: 0 0 18px; font-size: 1.05rem; }
+  .lede { color: var(--ink-soft); margin-bottom: 14px; }
+  .main-photo { height: 380px; border-radius: 4px 90px 4px 4px; }
+  .stamp.small { font-size: 0.78rem; padding: 4px 10px 3px; }
+
+  .corsi-section { padding: 60px 0; }
+  .intro { color: var(--ink-soft); max-width: 70ch; margin: 14px auto 0; text-align: center; }
+  .price-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 44px; }
+  .price-card { background: #fff; border: 1px solid var(--card-line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+  .price-head { background: var(--red); color: #fff; text-align: center; font-weight: 600; font-size: 0.88rem; padding: 12px 10px; }
+  .price-tag { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 0; }
+  .price-tag .livello { font-weight: 700; color: var(--green); font-size: 0.9rem; }
+  .path-name { margin: 8px 16px 0; font-size: 0.82rem; color: var(--ink-soft); font-weight: 600; }
+  .price-amount { padding: 6px 16px 12px; font-family: var(--font-display); }
+  .price-amount .currency { font-size: 0.85rem; color: var(--ink-soft); margin-right: 6px; }
+  .price-amount { font-size: 2.1rem; font-weight: 700; color: var(--red); }
+  .price-card ul { list-style: none; margin: 0; padding: 14px 16px; border-top: 1px solid var(--card-line); flex-grow: 1; display: flex; flex-direction: column; gap: 10px; }
+  .price-card li { font-size: 0.85rem; color: var(--ink-soft); padding-left: 14px; position: relative; }
+  .price-card li::before { content: "•"; position: absolute; left: 0; color: var(--red); }
+  .price-card .btn.small { margin: 0 16px 18px; text-align: center; font-size: 0.85rem; padding: 11px 18px; }
+  .info-line { text-align: center; margin-top: 34px; color: var(--ink-soft); }
+  .info-line a { color: var(--red); font-weight: 600; }
+
+  .perche-section { padding: 20px 0 60px; }
+  .perche-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .perche-item { border-top: 3px solid var(--green); padding-top: 14px; }
+  .perche-item h3 { font-size: 1rem; margin-bottom: 8px; }
+  .perche-item p { color: var(--ink-soft); font-size: 0.88rem; margin: 0; }
+
+  .storia-section {
+    background: var(--red); color: #fff;
+    display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; align-items: center;
+    padding: 60px 6vw; margin: 0;
+  }
+  .storia-photo { border-radius: 6px; overflow: hidden; height: 320px; }
+  .storia-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+  .storia-content h2 { color: #fff; font-size: clamp(1.3rem,2.2vw,1.7rem); margin: 8px 0 16px; }
+  .storia-content p { color: #F5E4DC; font-size: 0.95rem; margin-bottom: 14px; }
+
+  .dettagli-section { padding: 60px 0; }
+  .dettagli-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .dettagli-list { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 12px; font-size: 1rem; }
+  .scadenza-card { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 30px; text-align: center; }
+  .scadenza-card h3 { font-size: 1.15rem; margin-bottom: 18px; }
+  .countdown { display: flex; justify-content: center; gap: 16px; margin-bottom: 22px; }
+  .countdown div { display: flex; flex-direction: column; align-items: center; }
+  .countdown span { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--red); }
+  .countdown small { font-size: 0.7rem; color: var(--ink-soft); text-transform: uppercase; }
+
+  @media (max-width: 980px) {
+    .price-grid, .perche-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 820px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .main-photo { order: -1; height: 280px; }
+    .price-grid, .perche-grid { grid-template-columns: 1fr; }
+    .storia-section { grid-template-columns: 1fr; padding: 40px 24px; }
+    .storia-photo { height: 240px; }
+    .dettagli-grid { grid-template-columns: 1fr; }
+  }
+</style>

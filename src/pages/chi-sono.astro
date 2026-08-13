@@ -1,0 +1,95 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import Filmstrip from '../components/Filmstrip.astro';
+import SafeSpace from '../components/SafeSpace.astro';
+---
+
+<MainLayout
+  title="Chi Sono — Giada Longo | L'Italiano è Servito"
+  description="Insegnante certificata di italiano, 7 anni a Cracovia e 6 anni all'Istituto Italiano di Cultura. Scopri la mia storia."
+>
+  <section class="apertura">
+    <div class="wrap apertura-grid">
+      <div class="reveal">
+        <span class="eyebrow">Chi sono</span>
+        <h1>Sono Giada, insegnante certificata di italiano — ma prima ancora di essere la tua insegnante, sono stata per 7 anni una polacca d'adozione.</h1>
+        <p class="lede">Ho vissuto a Cracovia. Ho fatto la spesa in polacco, ho litigato in polacco, ho sognato — qualche volta — anche in polacco. E in mezzo a tutto questo, ho imparato una cosa che nei libri di didattica non si trova: so esattamente dove la lingua polacca ti mette i bastoni tra le ruote quando provi a diventare italiana anche solo per un'ora al giorno.</p>
+      </div>
+      <div class="photo main-photo torn-bottom reveal d1">
+        <img src="/foto/giada-1.png" alt="Giada Longo" />
+      </div>
+    </div>
+  </section>
+
+  <Filmstrip />
+
+  <section>
+    <div class="wrap narrow reveal">
+      <h2>La storia, prima ancora della professione</h2>
+      <p>Mi sono laureata in Lingue Moderne, specializzazione in polacco e russo — la mia tesi era già su come si insegna una lingua a chi ne parla un'altra completamente diversa nella struttura. Poi la teoria è diventata vita vera: 7 anni a Cracovia, e 6 di questi passati a lavorare all'Istituto Italiano di Cultura, tra corsi, eventi e persone — tantissime persone — che come te si erano innamorate dell'Italia prima ancora di metterci piede.</p>
+      <p>Ho visto da vicino cosa funziona e cosa no quando una persona polacca prova a imparare l'italiano. Ho visto la frustrazione di fronte a grammatiche spiegate come fossero teoremi. Ho visto la paura di aprire bocca e sbagliare davanti a qualcuno. E ho capito che il problema, quasi sempre, non era la capacità di imparare — era il modo in cui gli veniva insegnato.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>Perché è diverso</h2>
+      </div>
+      <div class="pillars">
+        <div class="pillar-card reveal">
+          <div class="mark">🎓</div>
+          <h3>Competenza certificata</h3>
+          <p>Laurea in Lingue Moderne, specializzazione slava, tesi sulla didattica dell'italiano a studenti polacchi.</p>
+        </div>
+        <div class="pillar-card reveal d1">
+          <div class="mark" style="background:var(--red);">🏛️</div>
+          <h3>Esperienza sul campo</h3>
+          <p>6 anni all'Istituto Italiano di Cultura di Cracovia, centinaia di studenti accompagnati.</p>
+        </div>
+        <div class="pillar-card reveal d2">
+          <div class="mark" style="background:var(--gold);">🇵🇱</div>
+          <h3>Comprensione autentica</h3>
+          <p>7 anni vissuti in Polonia: non conosco solo la lingua, conosco la mentalità.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SafeSpace
+    quote="Con me, sbagliare non è un fallimento — è la prova che ci stai provando. Le lezioni sono piccoli salotti di conversazione, massimo 6 persone, pensati apposta perché tu possa aprire bocca senza il terrore del giudizio."
+  />
+
+  <section>
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <h2>Se stai cercando qualcuno che ti spieghi la grammatica in modo freddo, probabilmente non sono l'insegnante giusta per te.</h2>
+      <p style="margin-top:18px;">Se invece cerchi una guida che ti accompagni davvero — dentro la lingua, dentro la cultura, dentro l'Italia — allora forse ci siamo trovate.</p>
+      <div class="cta-row" style="justify-content:center; margin-top:28px;">
+        <a class="btn" href="/percorsi">Trova il tuo percorso in italiano</a>
+        <a class="btn ghost" href="/contatti">Scrivimi</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 60px 0 20px; }
+  .apertura-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 46px; align-items: center; }
+  .apertura h1 { font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.22; margin: 10px 0 20px; }
+  .lede { color: var(--ink-soft); font-size: 1.02rem; }
+  .main-photo { height: 380px; border-radius: 4px 90px 4px 4px; }
+  .narrow { max-width: 720px; margin: 0 auto; }
+  .narrow p { margin-bottom: 20px; color: var(--ink-soft); }
+  .narrow h2 { margin-bottom: 20px; font-size: clamp(1.4rem,2.4vw,1.9rem); }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pillar-card { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 28px 24px; }
+  .pillar-card .mark { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--green); color: #fff; font-size: 1.2rem; margin-bottom: 16px; }
+  .pillar-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .pillar-card p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+  .cta-row { display: flex; gap: 18px; flex-wrap: wrap; }
+  @media (max-width: 900px) {
+    .apertura-grid { grid-template-columns: 1fr; }
+    .main-photo { order: -1; height: 280px; }
+    .pillars { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+const testimonianze = [
+  { nome: '[Nome], corso Sbloccati da Zero', testo: '"[Testo della testimonianza — es. un dettaglio concreto tipo \'ora ordino al ristorante senza tradurre mentalmente\'.]"' },
+  { nome: '[Nome], corso Trova la tua Voce', testo: '"[Testo della testimonianza.]"' },
+  { nome: '[Nome], Club del Libro', testo: '"[Testo della testimonianza.]"' },
+];
+---
+
+<section class="testimonianze">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Voci</span>
+      <h2>Chi ha già trovato il suo percorso</h2>
+    </div>
+    <div class="grid">
+      {testimonianze.map((t, i) => (
+        <div class={`card reveal d${i}`}>
+          <span class="script quote-mark">"</span>
+          <p class="testo">{t.testo}</p>
+          <p class="nome">— {t.nome}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonianze { padding: 60px 0; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 26px 24px; }
+  .quote-mark { color: var(--gold); font-size: 1.8rem; display: block; margin-bottom: 4px; line-height: 1; }
+  .testo { font-family: var(--font-display); font-style: italic; color: var(--ink); font-size: 0.98rem; line-height: 1.5; margin: 0 0 14px; }
+  .nome { margin: 0; font-size: 0.82rem; color: var(--ink-soft); font-weight: 600; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+</style>

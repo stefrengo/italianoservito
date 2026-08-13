@@ -1,0 +1,27 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import CourseCards from '../../components/CourseCards.astro';
+---
+
+<MainLayout
+  title="I Percorsi — Corsi di italiano online | L'Italiano è Servito"
+  description="Tre percorsi di trasformazione linguistica, tutti in piccoli gruppi: Sbloccati da Zero (A1-A2), Trova la tua Voce (B1-B2), Esplora la Lingua (C1-C2)."
+>
+  <section class="apertura">
+    <div class="wrap section-head reveal">
+      <span class="eyebrow">I percorsi</span>
+      <h1>Non troverai corsi "di livello".<br>Troverai percorsi pensati per la persona che sei oggi.</h1>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <CourseCards />
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 70px 0 20px; }
+  .apertura h1 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); }
+</style>

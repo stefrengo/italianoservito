@@ -1,0 +1,57 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import { faq } from '../data/faq.js';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+---
+
+<MainLayout
+  title="Domande frequenti — Corsi di italiano online | L'Italiano è Servito"
+  description="Come funzionano i corsi di italiano online di Giada Longo: lezioni di gruppo, livelli, prezzi, supporto in polacco e iscrizione."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="apertura">
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <span class="eyebrow">Domande frequenti</span>
+      <h1>Tutto quello che vuoi sapere prima di iniziare</h1>
+      <p class="lede">Se hai altri dubbi, la lezione conoscitiva o un messaggio a giada@italianoservito.it restano il modo più veloce per avere una risposta su misura.</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="wrap narrow">
+      {faq.map((item) => (
+        <details class="reveal">
+          <summary>{item.q}</summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <a class="btn" href="/percorsi">Trova il tuo percorso in italiano</a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 70px 0 20px; }
+  .narrow { max-width: 700px; margin: 0 auto; }
+  .lede { color: var(--ink-soft); margin-top: 14px; }
+  .faq-section { padding: 20px 0 60px; }
+  details { border-top: 1px solid var(--card-line); padding: 18px 0; }
+  details:last-child { border-bottom: 1px solid var(--card-line); }
+  summary { font-weight: 600; cursor: pointer; font-size: 1.02rem; }
+  details p { margin: 14px 0 0; color: var(--ink-soft); line-height: 1.6; }
+</style>

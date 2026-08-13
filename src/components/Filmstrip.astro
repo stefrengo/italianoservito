@@ -1,0 +1,21 @@
+<div class="wrap">
+  <div class="filmstrip reveal d2">
+    <div class="photo"><img src="/foto/giada-5-cane.png" alt="Giada" /></div>
+    <div class="photo placeholder"><span class="cap">[foto: Italia]</span></div>
+    <div class="photo"><img src="/foto/giada-3-libro.jpg" alt="Giada col libro del Club" /></div>
+    <div class="photo placeholder"><span class="cap">[foto: Italia]</span></div>
+    <div class="photo"><img src="/foto/giada-4-plaid.jpg" alt="Giada" /></div>
+  </div>
+</div>
+
+<style>
+  .filmstrip { display: flex; gap: 16px; padding: 36px 0 8px; overflow-x: auto; }
+  .filmstrip .photo {
+    flex: 0 0 auto; width: 150px; height: 190px; border-radius: 3px;
+    border: 6px solid #fff; box-shadow: 0 10px 20px -10px rgba(43,36,30,0.3);
+    transition: transform .3s ease;
+  }
+  .filmstrip .photo:nth-child(odd) { transform: rotate(-3deg); }
+  .filmstrip .photo:nth-child(even) { transform: rotate(2.5deg); }
+  .filmstrip .photo:hover { transform: rotate(0deg) translateY(-4px); }
+</style>

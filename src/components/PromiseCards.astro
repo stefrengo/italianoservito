@@ -1,0 +1,36 @@
+---
+const items = [
+  { name: 'Autonomia', text: 'Viaggi in Italia senza mai perderti.' },
+  { name: 'Voce', text: 'Parli senza il terrore del giudizio.' },
+  { name: 'Cultura', text: 'Entri nei gesti, nelle tradizioni, nel modo di pensare italiano.' },
+];
+---
+
+<section class="promessa-strip">
+  <div class="wrap">
+    <div class="strip reveal">
+      {items.map((item, i) => (
+        <>
+          <div class="item">
+            <span class="name">{item.name}</span>
+            <span class="text">{item.text}</span>
+          </div>
+          {i < items.length - 1 && <span class="sep" aria-hidden="true">·</span>}
+        </>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .promessa-strip { padding: 34px 0; border-top: 1px solid var(--card-line); border-bottom: 1px solid var(--card-line); }
+  .strip { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 22px; text-align: center; }
+  .item { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; justify-content: center; }
+  .item .name { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--green); }
+  .item .text { color: var(--ink-soft); font-size: 0.92rem; }
+  .sep { color: var(--card-line); font-size: 1.2rem; }
+  @media (max-width: 700px) {
+    .sep { display: none; }
+    .strip { flex-direction: column; gap: 14px; }
+  }
+</style>

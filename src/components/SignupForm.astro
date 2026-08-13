@@ -1,0 +1,132 @@
+---
+// Form di iscrizione riutilizzabile — stesso form, stesso endpoint
+// (/api/iscrizione), sia su /landing-ads (tutti i corsi della stagione) sia
+// sulle singole pagine /percorsi/* (solo i corsi di quel percorso). Iscriversi
+// dalla landing o dalla pagina del corso deve essere un'esperienza identica.
+//
+// Props:
+//   corsi: [{ tag, livello }]  — corsi da proporre nel select (obbligatorio)
+//   includiClubStandalone: bool — mostra "Club del Libro (solo)" tra le opzioni
+//                                  (solo sulla landing, non sulle pagine percorso)
+//   titolo, intro: testi della sezione, personalizzabili per contesto
+
+const {
+  corsi,
+  includiClubStandalone = false,
+  titolo = 'Iscriviti ora',
+  intro = "Compila il modulo per prenotare il tuo posto: non è una semplice richiesta di informazioni, è la tua iscrizione. Ti confermo tutto via email appena la ricevo.",
+} = Astro.props;
+---
+
+<section id="iscrizione" class="iscrizione-section">
+  <div class="wrap">
+    <div class="form-card reveal">
+      <div class="section-head">
+        <h2>{titolo}</h2>
+        <p class="intro">{intro}</p>
+      </div>
+      <form class="signup-form" method="POST" action="/api/iscrizione">
+        <div class="row">
+          <label>Nome<input type="text" name="nome" required /></label>
+          <label>Email<input type="email" name="email" required /></label>
+        </div>
+        <label>
+          Telefono (anche WhatsApp)
+          <input type="tel" name="telefono" placeholder="Es. +48 123 456 789" required />
+        </label>
+        <label>
+          A quale corso vuoi iscriverti?
+          <select name="percorso" id="corso-select" required>
+            <option value="">Scegli il corso</option>
+            {corsi.map((c) => (
+              <option value={`${c.tag} — ${c.livello}`}>{c.tag} — {c.livello}</option>
+            ))}
+            {includiClubStandalone && <option value="Club del Libro">Club del Libro (solo)</option>}
+            <option value="Non sono sicura">Non ho ancora deciso, aiutami a scegliere</option>
+          </select>
+        </label>
+        <div id="bundle-wrap" class="conditional-field" hidden>
+          <label class="checkbox bundle">
+            <input type="checkbox" name="club_del_libro" value="si" />
+            <span>Voglio abbinare anche il <strong>Club del Libro</strong> — l'incontro quindicinale per non perdere quello che costruisco a lezione (prezzo bundle da confermare via email).</span>
+          </label>
+        </div>
+        <div id="messaggio-wrap" class="conditional-field" hidden>
+          <label>
+            Raccontami di più (facoltativo)
+            <textarea name="messaggio" rows="4" placeholder="Il tuo livello, i tuoi obiettivi, qualunque dubbio: aiutami a capire qual è il corso giusto per te."></textarea>
+          </label>
+        </div>
+        <label class="checkbox">
+          <input type="checkbox" name="newsletter" value="si" />
+          <span>Iscrivimi anche alla newsletter</span>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="privacy" required />
+          <span>Ho letto e accetto la <a href="/privacy">Privacy Policy</a> *</span>
+        </label>
+        <button type="submit" class="btn">Prenota il tuo posto</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Bottoni "Prenota il tuo posto" (es. sulle price-card della landing): scorrono
+  // al form e pre-selezionano il corso, se presente nella pagina.
+  document.querySelectorAll('[data-corso]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const select = document.getElementById('corso-select');
+      if (select) {
+        select.value = btn.getAttribute('data-corso');
+        select.dispatchEvent(new Event('change'));
+      }
+      document.getElementById('iscrizione')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Campi condizionali in base al corso scelto:
+  // - il bundle Club del Libro ha senso solo se hai scelto un corso vero e proprio
+  //   (non se hai già scelto "Club del Libro" da solo, e non se non hai ancora deciso)
+  // - il campo messaggio si apre solo quando chiedi aiuto a scegliere
+  const corsoSelect = document.getElementById('corso-select');
+  const bundleWrap = document.getElementById('bundle-wrap');
+  const messaggioWrap = document.getElementById('messaggio-wrap');
+  if (corsoSelect && bundleWrap && messaggioWrap) {
+    const bundleCheckbox = bundleWrap.querySelector('input[name="club_del_libro"]');
+    corsoSelect.addEventListener('change', () => {
+      const valore = corsoSelect.value;
+      const eCorsoVero = valore !== '' && valore !== 'Club del Libro' && valore !== 'Non sono sicura';
+      bundleWrap.hidden = !eCorsoVero;
+      if (!eCorsoVero && bundleCheckbox) bundleCheckbox.checked = false;
+      messaggioWrap.hidden = valore !== 'Non sono sicura';
+    });
+  }
+</script>
+
+<style>
+  .iscrizione-section { padding: 20px 0 80px; }
+  .form-card { max-width: 640px; margin: 0 auto; background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 40px; }
+  .section-head h2 { font-size: clamp(1.3rem,2.2vw,1.7rem); margin-bottom: 10px; }
+  .section-head .intro { color: var(--ink-soft); }
+  .signup-form { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+  .signup-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .signup-form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; font-weight: 500; color: var(--ink-soft); }
+  .signup-form input[type="text"], .signup-form input[type="email"], .signup-form input[type="tel"], .signup-form select, .signup-form textarea {
+    font-family: var(--font-body); font-size: 1rem; border: 1.5px solid var(--card-line); border-radius: 12px;
+    padding: 12px 14px; background: #fff; color: var(--ink); width: 100%; box-sizing: border-box;
+  }
+  .signup-form textarea { resize: vertical; min-height: 90px; font-family: var(--font-body); }
+  .signup-form label.checkbox { flex-direction: row; align-items: flex-start; gap: 10px; font-size: 0.85rem; }
+  .signup-form label.checkbox input { margin-top: 3px; }
+  .signup-form label.checkbox a { color: var(--red); font-weight: 600; }
+  .signup-form label.checkbox.bundle {
+    background: var(--green-soft); border: 1px solid var(--green); border-radius: 12px; padding: 12px 14px;
+  }
+  .signup-form label.checkbox.bundle strong { color: var(--green); }
+  .signup-form button { margin-top: 4px; }
+
+  @media (max-width: 820px) {
+    .signup-form .row { grid-template-columns: 1fr; }
+  }
+</style>

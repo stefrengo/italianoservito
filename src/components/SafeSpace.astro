@@ -1,0 +1,30 @@
+---
+const {
+  quote = "Qui sbagliare fa parte del percorso, non è un fallimento. I gruppi sono piccoli — massimo 6 persone — perché la fiducia si costruisce solo quando ci si conosce davvero.",
+  photo = '/foto/quote-bg.jpg',
+} = Astro.props;
+---
+
+<section class="safe">
+  <div class="bgphoto"><img src={photo} alt="" /></div>
+  <div class="scrim"></div>
+  <div class="fade-top"></div>
+  <div class="fade-bottom"></div>
+  <div class="wrap reveal">
+    <span class="script">"</span>
+    <p class="quote">{quote}</p>
+  </div>
+</section>
+
+<style>
+  .safe { position: relative; min-height: 420px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0; }
+  .safe .bgphoto { position: absolute; inset: 0; z-index: 0; }
+  .safe .bgphoto img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.4) contrast(1.05); transform: scale(1.1); opacity: 0.6; }
+  .safe .scrim { position: absolute; inset: 0; z-index: 1; background: linear-gradient(105deg, rgba(47,107,79,0.90) 10%, rgba(20,16,12,0.72) 60%, rgba(166,58,50,0.55) 100%); }
+  .safe .fade-top, .safe .fade-bottom { position: absolute; left: 0; right: 0; height: 110px; z-index: 2; pointer-events: none; }
+  .safe .fade-top { top: 0; background: linear-gradient(var(--bg), transparent); }
+  .safe .fade-bottom { bottom: 0; background: linear-gradient(transparent, var(--bg)); }
+  .safe .wrap { position: relative; z-index: 3; max-width: 760px; text-align: center; }
+  .safe .script { color: var(--gold); font-size: 2.1rem; display: block; margin-bottom: 8px; font-family: var(--font-script); font-weight: 700; }
+  .safe p.quote { font-family: var(--font-display); font-style: italic; color: #fff; font-size: clamp(1.25rem,2.2vw,1.65rem); line-height: 1.5; margin: 0; }
+</style>

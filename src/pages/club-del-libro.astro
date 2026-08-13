@@ -1,0 +1,53 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout title="Club del Libro — L'Italiano è Servito" description="Un incontro ogni due settimane per leggere, commentare e parlare italiano attorno a un libro.">
+  <section class="apertura">
+    <div class="wrap apertura-grid">
+      <div>
+        <span class="eyebrow">Bonus</span>
+        <h1>Club del Libro</h1>
+        <p class="lede">Un incontro ogni due settimane per leggere, commentare e parlare italiano attorno a un libro — non una lezione, una scusa bellissima per restare in contatto con la lingua.</p>
+        <a class="btn" href="/contatti">Unisciti al Club del Libro</a>
+      </div>
+      <div class="photo hero-photo torn-bottom">
+        <img src="/foto/giada-3-libro.jpg" alt="Giada Longo con un libro" style="object-position:center 12%;" />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <h2>Perché partecipare</h2>
+      <p>Non è un corso di livello, è uno spazio di continuità. Molte persone finiscono un percorso e poi, senza pratica costante, sentono la lingua sfumare via. Il Club del Libro è il modo più piacevole per non perdere quello che hai costruito — leggendo, parlando, confrontandoti con altre persone che come te amano l'Italia.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <h2>Come funziona</h2>
+      <ul class="details">
+        <li><strong>Formato:</strong> incontro online di discussione, ogni due settimane</li>
+        <li><strong>Gruppo:</strong> piccolo, stesso spirito "salotto" degli altri percorsi</li>
+        <li><strong>Livello consigliato:</strong> <em>da definire</em></li>
+        <li><strong>Prezzo:</strong> <em>da definire</em></li>
+      </ul>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 70px 0 20px; }
+  .apertura-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 44px; align-items: center; }
+  .hero-photo { height: 320px; border-radius: 4px 90px 4px 4px; }
+  .narrow { max-width: 640px; margin: 0 auto; }
+  .lede { color: var(--ink-soft); margin: 14px 0 26px; }
+  h2 { margin-bottom: 16px; font-size: clamp(1.3rem,2.2vw,1.7rem); }
+  .details { padding-left: 20px; color: var(--ink-soft); }
+  .details li { margin-bottom: 10px; }
+  @media (max-width: 900px) {
+    .apertura-grid { grid-template-columns: 1fr; }
+    .hero-photo { order: -1; height: 260px; }
+  }
+</style>

@@ -1,0 +1,63 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+const {
+  title = "L'Italiano è Servito — Corsi di italiano online per chi ama l'Italia",
+  description = "Corsi online di italiano con Giada Longo: percorsi di trasformazione linguistica per chi si è innamorato dell'Italia."
+} = Astro.props;
+
+// Dati strutturati globali (schema.org), presenti su ogni pagina: aiutano sia i
+// motori di ricerca tradizionali sia gli assistenti AI (Claude, ChatGPT, Perplexity)
+// a capire chi è Giada, cosa insegna e a chi si rivolge — così quando qualcuno in
+// Polonia chiede "come imparare l'italiano online" il sito ha più probabilità di
+// essere trovato e citato correttamente. Vedi anche /llms.txt.
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationalOrganization',
+  name: "L'Italiano è Servito",
+  alternateName: 'Italiano è Servito — Giada Longo',
+  url: 'https://www.italianoservito.it',
+  logo: 'https://www.italianoservito.it/logo.png',
+  description: "Scuola online di lingua e cultura italiana per persone polacche e slave che amano l'Italia, fondata dall'insegnante certificata Giada Longo. Lezioni di gruppo, mai individuali: piccoli gruppi (massimo 6 persone) per imparare parlando, non solo studiando.",
+  founder: {
+    '@type': 'Person',
+    name: 'Giada Longo',
+    jobTitle: 'Insegnante certificata di lingua e cultura italiana',
+    description: "Laurea in Lingue Moderne (specializzazione polacco e russo), 7 anni vissuti a Cracovia, 6 anni di insegnamento presso l'Istituto Italiano di Cultura di Cracovia.",
+  },
+  areaServed: ['PL', 'IT'],
+  audience: {
+    '@type': 'Audience',
+    audienceType: 'Persone polacche e dell\'Europa dell\'Est che vogliono imparare l\'italiano',
+  },
+  knowsLanguage: ['it', 'pl', 'en'],
+  sameAs: [],
+};
+---
+
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="icon" href="/logo.png" />
+  <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+</head>
+<body>
+  <Navbar />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+  <script>
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

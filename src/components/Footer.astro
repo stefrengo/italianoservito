@@ -1,0 +1,55 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brandmark">
+          <span class="ring" style="padding:5px;"><img src="/logo.png" alt="" width="34" height="34" /></span>
+          <div class="brandname">L'Italiano<span>è servito</span></div>
+        </div>
+        <p class="tagline">Un percorso di trasformazione linguistica, non una lista di regole da studiare.</p>
+      </div>
+      <div>
+        <h4>Il sito</h4>
+        <ul>
+          <li><a href="/chi-sono">Chi Sono</a></li>
+          <li><a href="/percorsi">I Percorsi</a></li>
+          <li><a href="/approfondimenti">Approfondimenti</a></li>
+          <li><a href="/faq">FAQ</a></li>
+          <li><a href="/contatti">Contatti</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Seguimi</h4>
+        <ul>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© {year} L'Italiano è Servito — Giada Longo</span>
+      <span>IT · PL · EN</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer { padding: 60px 0 34px; border-top: 1px solid var(--card-line); margin-top: 40px; }
+  .brandmark { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .brandname { font-family: var(--font-display); font-size: 1.05rem; font-weight: 600; line-height: 1.1; }
+  .brandname span { display: block; font-family: var(--font-script); font-size: 1rem; color: var(--green); font-weight: 700; }
+  .tagline { color: var(--ink-soft); font-size: 0.9rem; max-width: 32ch; }
+  .foot-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 30px; margin-bottom: 36px; }
+  h4 { font-family: var(--font-display); font-size: 1rem; margin-bottom: 14px; }
+  ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  footer a { color: var(--ink-soft); font-size: 0.92rem; }
+  footer a:hover { color: var(--red); }
+  .foot-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; color: var(--ink-soft); flex-wrap: wrap; gap: 10px; }
+  @media (max-width: 820px) {
+    .foot-grid { grid-template-columns: 1fr; }
+  }
+</style>

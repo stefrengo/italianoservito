@@ -1,0 +1,118 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import SignupForm from '../../components/SignupForm.astro';
+import { corsi } from '../../data/corsi.js';
+import { corsiStagione } from '../../data/corsiStagione.js';
+const c = corsi['trova-la-tua-voce'];
+const corsiDelPercorso = corsiStagione.filter((cs) => cs.tag === c.title);
+
+const courseSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Course',
+  name: `${c.title} — Corso di italiano online (${c.badge})`,
+  description: c.lede,
+  provider: { '@type': 'EducationalOrganization', name: "L'Italiano è Servito", sameAs: 'https://www.italianoservito.it' },
+  inLanguage: 'it',
+  teaches: 'Lingua e cultura italiana',
+  courseMode: 'online',
+  hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'online', courseWorkload: 'Lezioni di gruppo, massimo 6 persone' },
+};
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: c.faq.map((item) => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })),
+};
+---
+
+<MainLayout title={`${c.title} — Corso di italiano online (${c.badge}) | L'Italiano è Servito`} description={c.lede}>
+  <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <section class="apertura">
+    <div class="wrap apertura-grid">
+      <div class="reveal">
+        <span class="stamp ink">{c.stampLabel}</span>
+        <span class="level-badge" style="margin-left:8px;">{c.badge}</span>
+        <h1>{c.heroLine}</h1>
+        <p class="lede">{c.lede}</p>
+        <a class="btn" href="#iscrizione">Scopri se è il tuo percorso</a>
+      </div>
+      <div class="photo hero-photo torn-bottom reveal d1">
+        <img src={c.img} alt={c.title} style={`object-position:${c.imgPos};`} />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow reveal">
+      <h2>Per chi è</h2>
+      <p>{c.perChi}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="benefit wrap reveal">
+      <span class="script quote-mark">"</span>
+      <p class="quote">{c.beneficio}</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow reveal">
+      <h2>Come lavoro</h2>
+      <ul class="details">
+        <li><strong>Formato:</strong> lezioni online in piccolo gruppo (salotto di conversazione, non lezione frontale)</li>
+        <li><strong>Gruppo:</strong> massimo 6 persone</li>
+        <li><strong>Durata:</strong> <em>da definire</em></li>
+        <li><strong>Frequenza:</strong> <em>da definire</em></li>
+        <li><strong>Orario:</strong> <em>da definire</em></li>
+        <li><strong>Prezzo:</strong> <em>da definire</em></li>
+      </ul>
+      <h2 style="margin-top:36px;">Cosa impari con me</h2>
+      <ul class="temi">
+        {c.temi.map(t => <li>{t}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow reveal">
+      <h2>Domande frequenti</h2>
+      {c.faq.map(item => (
+        <details>
+          <summary>{item.q}</summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <SignupForm
+    corsi={corsiDelPercorso}
+    titolo={`Iscriviti a ${c.title}`}
+    intro={`Compila il modulo per prenotare il tuo posto in ${c.title}: non è una semplice richiesta di informazioni, è la tua iscrizione. Ti confermo tutto via email appena la ricevo.`}
+  />
+</MainLayout>
+
+<style>
+  .apertura { padding: 60px 0 30px; }
+  .apertura-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 44px; align-items: center; }
+  .apertura h1 { font-size: clamp(1.7rem, 3vw, 2.35rem); margin: 14px 0 16px; line-height: 1.2; }
+  .lede { color: var(--ink-soft); margin-bottom: 26px; font-size: 1.02rem; }
+  .hero-photo { height: 340px; border-radius: 4px 90px 4px 4px; }
+  .narrow { max-width: 700px; margin: 0 auto; }
+  .narrow h2 { margin-bottom: 16px; font-size: clamp(1.3rem,2.2vw,1.7rem); }
+  .narrow p { color: var(--ink-soft); }
+  .benefit { max-width: 700px; background: var(--green-soft); border-radius: var(--radius); padding: 36px 34px; }
+  .benefit .quote-mark { color: var(--gold); font-size: 1.9rem; display: block; margin-bottom: 4px; }
+  .benefit .quote { font-family: var(--font-display); font-style: italic; color: var(--ink); font-size: 1.1rem; line-height: 1.5; margin: 0; }
+  .details, .temi { padding-left: 20px; color: var(--ink-soft); }
+  .details li, .temi li { margin-bottom: 10px; }
+  details { border-top: 1px solid var(--card-line); padding: 16px 0; }
+  summary { font-weight: 600; cursor: pointer; }
+  details p { margin: 12px 0 0; color: var(--ink-soft); }
+
+  @media (max-width: 900px) {
+    .apertura-grid { grid-template-columns: 1fr; }
+    .hero-photo { order: -1; height: 260px; }
+  }
+</style>

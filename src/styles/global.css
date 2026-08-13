@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Piazzolla:ital,opsz,wght@0,8..30,400;0,8..30,500;0,8..30,600;0,8..30,700;1,8..30,500&family=Sora:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap');
+
+:root {
+  --bg: #FAF6EF;
+  --ink: #2B241E;
+  --ink-soft: #5A5044;
+  --green: #2F6B4F;
+  --green-soft: #E4EEE7;
+  --red: #A63A32;
+  --gold: #C08A3E;
+  --card: #F1E9D8;
+  --card-line: #E1D5B8;
+  --radius: 22px;
+  --font-display: 'Piazzolla', Georgia, serif;
+  --font-body: 'Sora', system-ui, sans-serif;
+  --font-script: 'Caveat', cursive;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.script { font-family: var(--font-script); font-weight: 700; }
+
+a { color: inherit; text-decoration: none; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+/* Anello conviviale — elemento firma del brand, riprende il cerchio tricolore del logo */
+.ring {
+  position: relative;
+  border-radius: 50%;
+  padding: 7px;
+  display: inline-block;
+  background: conic-gradient(from -20deg,
+    var(--green) 0deg 108deg,
+    var(--red) 116deg 224deg,
+    var(--gold) 232deg 340deg,
+    var(--green) 348deg 360deg);
+  transform: rotate(-3deg);
+}
+.ring > * {
+  display: block;
+  border-radius: 50%;
+  background: var(--bg);
+  padding: 5px;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  padding: 15px 28px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.98rem;
+  box-shadow: 0 10px 24px -10px rgba(166,58,50,0.55);
+  transition: transform .2s ease, box-shadow .2s ease;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+/* Il rosso vive SOLO qui: è l'unico colore-azione del sito.
+   Non usarlo altrove (badge, tag, decorazioni) o perde la sua funzione
+   di richiamo visivo verso il click che conta davvero. */
+.btn:not(.ghost)::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 100px;
+  background: var(--red);
+  opacity: 0.3;
+  z-index: -1;
+  animation: pulse-glow 2.8s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { transform: scale(1); opacity: 0.28; }
+  50% { transform: scale(1.06); opacity: 0.05; }
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -10px rgba(166,58,50,0.6); }
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--card-line);
+  box-shadow: none;
+}
+.btn.ghost:hover { border-color: var(--red); color: var(--red); }
+
+.eyebrow {
+  font-family: var(--font-script);
+  font-size: 1.5rem;
+  color: var(--red);
+  margin-bottom: 6px;
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+
+.level-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+/* ---------- francobollo conviviale — elemento firma del brand ---------- */
+/* Badge/tag ricorrente, ispirato a una cartolina dall'Italia.
+   Colori codificati con un significato preciso, non a caso:
+   ink = etichetta neutra (percorsi), gold = bonus/extra, verde = rassicurazione. */
+.stamp {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--bg);
+  border: 1.5px solid var(--ink);
+  padding: 7px 13px 6px;
+  font-family: var(--font-script); font-weight: 700; font-size: 1rem;
+  transform: rotate(-4deg);
+  box-shadow: 3px 4px 0 rgba(43,36,30,0.12);
+  transition: transform .3s ease;
+}
+.stamp::before {
+  content: ""; position: absolute; inset: 3px;
+  border: 1px dashed rgba(43,36,30,0.35);
+  pointer-events: none;
+}
+.stamp:hover { transform: rotate(0deg) scale(1.04); }
+.stamp.ink { border-color: var(--ink); color: var(--ink-soft); }
+.stamp.green { border-color: var(--green); color: var(--green); }
+.stamp.gold { border-color: var(--gold); color: var(--gold); }
+
+/* ---------- foto: crop con priorità al volto + zoom lento al hover ---------- */
+.photo { position: relative; overflow: hidden; background: var(--card); }
+.photo img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 15%;
+  display: block; transform: scale(1.06); transition: transform 8s ease;
+}
+.photo:hover img { transform: scale(1.14); }
+.photo .cap {
+  position: absolute; left: 12px; bottom: 12px; z-index: 1;
+  font-family: var(--font-script); font-size: 0.95rem; color: #fff;
+  background: rgba(43,36,30,0.4); padding: 3px 11px; border-radius: 100px;
+  backdrop-filter: blur(2px);
+}
+.photo.placeholder {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25), transparent 55%),
+    linear-gradient(135deg, #DCCBA6 0%, #C9A876 38%, #A9724F 72%, #8C5A3E 100%);
+}
+.photo.placeholder::after {
+  content: ""; position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
+  background-size: 3px 3px; mix-blend-mode: multiply; opacity: 0.5;
+}
+.torn-bottom { clip-path: polygon(0% 0%,100% 0%,100% 91%,96% 96%,92% 89%,88% 97%,84% 90%,80% 96%,76% 89%,72% 97%,68% 90%,64% 96%,60% 89%,56% 97%,52% 90%,48% 96%,44% 89%,40% 97%,36% 90%,32% 96%,28% 89%,24% 97%,20% 90%,16% 96%,12% 89%,8% 97%,4% 90%,0% 96%); }
+.torn-top { clip-path: polygon(0% 9%,4% 4%,8% 11%,12% 3%,16% 10%,20% 4%,24% 11%,28% 3%,32% 10%,36% 4%,40% 11%,44% 3%,48% 10%,52% 4%,56% 11%,60% 3%,64% 10%,68% 4%,72% 11%,76% 3%,80% 10%,84% 4%,88% 11%,92% 3%,96% 10%,100% 4%,100% 100%,0% 100%); }
+
+/* ---------- reveal allo scroll ---------- */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.d1 { transition-delay: .08s; }
+.reveal.d2 { transition-delay: .16s; }
+.reveal.d3 { transition-delay: .24s; }
+
+section { padding: 74px 0; }
+.section-head { max-width: 640px; margin: 0 auto 44px; text-align: center; }
+.section-head .eyebrow { display: block; margin: 0 auto 8px; }
+.section-head h2 { font-size: clamp(1.6rem, 2.6vw, 2.1rem); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
