@@ -19,7 +19,12 @@ export const prerender = false;
 
 export async function POST({ request, locals }) {
   try {
-    const env = locals.runtime.env;
+    const env = locals?.runtime?.env;
+    if (!env) {
+      throw new Error(
+        `locals.runtime.env non disponibile (locals: ${locals ? Object.keys(locals).join(',') : 'undefined'}; runtime: ${locals?.runtime ? Object.keys(locals.runtime).join(',') : 'undefined'})`
+      );
+    }
     const data = await request.formData();
     const nome = data.get('nome')?.toString().trim();
     const email = data.get('email')?.toString().trim();
@@ -129,7 +134,15 @@ export async function POST({ request, locals }) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    console.error('Errore imprevisto:', err);
-    return new Response(JSON.stringify({ error: 'Errore imprevisto.' }), { status: 500 });
+    // TEMPORANEO: includo il dettaglio dell'errore nella risposta per diagnosticare
+    // il problema in produzione — da rimuovere una volta trovata la causa.
+    console.error('Errore imprevisto:', err && err.stack ? err.stack : err);
+    return new Response(
+      JSON.stringify({
+        error: 'Errore imprevisto.',
+        debug: err ? { name: err.name, message: err.message } : null,
+      }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
   }
 }
