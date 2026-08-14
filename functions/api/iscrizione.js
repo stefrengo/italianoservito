@@ -18,14 +18,15 @@ export async function onRequestPost({ request, env }) {
     const clubDelLibro = data.get('club_del_libro') === 'si';
     const newsletter = data.get('newsletter') === 'si';
     const privacyAccettata = data.get('privacy') === 'on';
-    // Solo dal form di /contatti (non presenti nella landing):
+    // Solo dal form di /contatti (non presenti nella landing/percorsi):
     const livello = data.get('livello')?.toString().trim() || '';
     const obiettivo = data.get('obiettivo')?.toString().trim() || '';
     // Messaggio libero: sempre presente in /contatti, condizionale nella landing
-    // (si apre solo scegliendo "non ho ancora deciso, aiutami a scegliere").
-    // Per ora viaggia solo via email, non è ancora salvato su Supabase — la
-    // colonna la aggiungiamo quando rivediamo lo schema del database.
+    // e nelle pagine percorso (si apre solo scegliendo "non ho ancora deciso").
     const messaggio = data.get('messaggio')?.toString().trim() || '';
+    // Da quale pagina arriva il lead: ogni form manda un campo nascosto "fonte"
+    // (landing-ads, percorso:<slug>, contatti) — vedi SignupForm.astro e contatti.astro.
+    const fonte = data.get('fonte')?.toString().trim() || 'sconosciuta';
 
     if (!nome || !email || !telefono) {
       return new Response(JSON.stringify({ error: 'Nome, email e telefono sono obbligatori.' }), { status: 400 });
@@ -49,9 +50,12 @@ export async function onRequestPost({ request, env }) {
         telefono,
         percorso,
         club_del_libro: clubDelLibro,
-        fonte: 'landing-ads',
+        fonte,
         newsletter,
         privacy_accettata: privacyAccettata,
+        livello,
+        obiettivo,
+        messaggio,
       }),
     });
 
@@ -95,7 +99,7 @@ export async function onRequestPost({ request, env }) {
         to: env.GIADA_NOTIFICATION_EMAIL,
         subject: `Nuova richiesta: ${nome} — ${percorso}${clubDelLibro ? ' + Club del Libro' : ''}`,
         html: `
-          <p>Nuova iscrizione dalla landing:</p>
+          <p>Nuova iscrizione (fonte: ${fonte}):</p>
           <ul>
             <li><strong>Nome:</strong> ${nome}</li>
             <li><strong>Email:</strong> ${email}</li>

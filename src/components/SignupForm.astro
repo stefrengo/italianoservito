@@ -9,12 +9,15 @@
 //   includiClubStandalone: bool — mostra "Club del Libro (solo)" tra le opzioni
 //                                  (solo sulla landing, non sulle pagine percorso)
 //   titolo, intro: testi della sezione, personalizzabili per contesto
+//   fonte: da quale pagina arriva il lead (es. 'landing-ads', 'percorso:sbloccati-da-zero'),
+//          salvata su Supabase per sapere dove si iscrive di più la gente
 
 const {
   corsi,
   includiClubStandalone = false,
   titolo = 'Iscriviti ora',
   intro = "Compila il modulo per prenotare il tuo posto: non è una semplice richiesta di informazioni, è la tua iscrizione. Ti confermo tutto via email appena la ricevo.",
+  fonte = 'sconosciuta',
 } = Astro.props;
 ---
 
@@ -26,6 +29,7 @@ const {
         <p class="intro">{intro}</p>
       </div>
       <form class="signup-form" method="POST" action="/api/iscrizione">
+        <input type="hidden" name="fonte" value={fonte} />
         <div class="row">
           <label>Nome<input type="text" name="nome" required /></label>
           <label>Email<input type="email" name="email" required /></label>

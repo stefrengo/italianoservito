@@ -17,6 +17,7 @@ import MainLayout from '../layouts/MainLayout.astro';
            via email, mantenendo intatto il flusso Zapier -> Google Sheet già in uso da Giada.
            Collegato a functions/api/iscrizione.js (Supabase + Resend). -->
       <form class="contact-form" method="POST" action="/api/iscrizione">
+        <input type="hidden" name="fonte" value="contatti" />
         <label>
           Nome
           <input type="text" name="nome" required />

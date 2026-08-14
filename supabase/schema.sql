@@ -7,19 +7,25 @@ create table leads (
   email text not null,
   telefono text,
   percorso text,
-  club_del_libro boolean default false,  -- bundle Club del Libro richiesto in fase di iscrizione (solo landing-ads)
-  fonte text,               -- es. 'landing-ads' o 'contatti'
+  club_del_libro boolean default false,  -- bundle Club del Libro richiesto in fase di iscrizione
+  fonte text,               -- pagina di provenienza: 'landing-ads', 'percorso:sbloccati-da-zero', 'percorso:trova-la-tua-voce', 'percorso:esplora-la-lingua', 'contatti'
   newsletter boolean default false,
   privacy_accettata boolean not null default false,
+  livello text,             -- solo da /contatti: livello attuale dichiarato
+  obiettivo text,           -- solo da /contatti: obiettivo libero
+  messaggio text,           -- messaggio libero (da /contatti sempre, dalle altre pagine solo se "aiutami a scegliere")
   stato text default 'nuovo',  -- nuovo / contattata-o / iscritta-o
   created_at timestamp default now()
 );
 
 -- Se la tabella "leads" esiste già (progetto Supabase creato prima di questa
--- modifica), esegui invece queste due righe nell'SQL Editor per aggiungere
+-- modifica), esegui invece queste righe nell'SQL Editor per aggiungere
 -- solo le colonne mancanti, senza perdere i dati già raccolti:
 -- alter table leads add column if not exists telefono text;
 -- alter table leads add column if not exists club_del_libro boolean default false;
+-- alter table leads add column if not exists livello text;
+-- alter table leads add column if not exists obiettivo text;
+-- alter table leads add column if not exists messaggio text;
 
 -- Sicurezza: il pubblico può SOLO inserire righe, mai leggerle.
 alter table leads enable row level security;
