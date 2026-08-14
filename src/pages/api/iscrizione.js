@@ -134,15 +134,10 @@ export async function POST({ request, locals }) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    // TEMPORANEO: includo il dettaglio dell'errore nella risposta per diagnosticare
-    // il problema in produzione — da rimuovere una volta trovata la causa.
     console.error('Errore imprevisto:', err && err.stack ? err.stack : err);
-    return new Response(
-      JSON.stringify({
-        error: 'Errore imprevisto.',
-        debug: err ? { name: err.name, message: err.message } : null,
-      }),
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: 'Errore imprevisto.' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 }
