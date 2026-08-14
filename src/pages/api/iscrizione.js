@@ -80,12 +80,6 @@ export async function POST({ request, locals }) {
       return new Response(JSON.stringify({ error: 'Errore nel salvataggio dei dati.' }), { status: 500 });
     }
 
-    // TEMPORANEO: log diagnostico su chiave/risposta Resend, da rimuovere
-    // una volta capito perché le email non arrivano.
-    console.log(
-      `Debug Resend — chiave presente: ${!!env.RESEND_API_KEY}, lunghezza: ${env.RESEND_API_KEY ? env.RESEND_API_KEY.length : 0}, prefisso: ${env.RESEND_API_KEY ? env.RESEND_API_KEY.slice(0, 5) : 'n/d'}`
-    );
-
     // 2) Email di conferma alla persona iscritta (testo personalizzabile qui sotto)
     const emailConfermaRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
@@ -107,7 +101,9 @@ export async function POST({ request, locals }) {
         `,
       }),
     });
-    console.log(`Debug Resend — email conferma: status ${emailConfermaRes.status}, body: ${await emailConfermaRes.clone().text()}`);
+    if (!emailConfermaRes.ok) {
+      console.error('Errore Resend (email conferma):', emailConfermaRes.status, await emailConfermaRes.text());
+    }
 
     // 3) Notifica a Giada
     const emailNotificaRes = await fetch('https://api.resend.com/emails', {
@@ -135,7 +131,9 @@ export async function POST({ request, locals }) {
         `,
       }),
     });
-    console.log(`Debug Resend — email notifica: status ${emailNotificaRes.status}, body: ${await emailNotificaRes.clone().text()}`);
+    if (!emailNotificaRes.ok) {
+      console.error('Errore Resend (email notifica):', emailNotificaRes.status, await emailNotificaRes.text());
+    }
 
     return new Response(JSON.stringify({ ok: true }), {
       status: 200,
