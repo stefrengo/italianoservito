@@ -1,15 +1,25 @@
-// Cloudflare Pages Function — riceve i dati dal form della landing,
-// li scrive su Supabase, poi manda le due email tramite Resend.
+// Endpoint Astro (route: /api/iscrizione) — riceve i dati dal form (landing,
+// pagine percorso, contatti), li scrive su Supabase, poi manda le due email
+// tramite Resend.
 //
-// Variabili d'ambiente richieste (da impostare nel pannello Cloudflare Pages,
-// Settings → Environment variables — MAI scritte qui nel codice):
+// Nota tecnica: il progetto è deployato come Cloudflare Worker (via Workers
+// Builds, adapter @astrojs/cloudflare) e NON come Cloudflare Pages classiche
+// — quindi le variabili d'ambiente/secret non arrivano tramite un secondo
+// argomento "env" come nelle Pages Functions, ma tramite locals.runtime.env,
+// secondo la convenzione dell'adapter Cloudflare per Astro.
+//
+// Variabili d'ambiente richieste (impostate nel pannello Cloudflare del
+// progetto Worker, Settings → Variables and Secrets — MAI scritte qui):
 //   SUPABASE_URL
-//   SUPABASE_SERVICE_ROLE_KEY   (chiave "service role", non quella pubblica: qui siamo lato server)
+//   SUPABASE_SERVICE_ROLE_KEY   (chiave "service role"/"secret", non quella pubblica: qui siamo lato server)
 //   RESEND_API_KEY
 //   GIADA_NOTIFICATION_EMAIL    (l'indirizzo dove Giada vuole ricevere le notifiche)
 
-export async function onRequestPost({ request, env }) {
+export const prerender = false;
+
+export async function POST({ request, locals }) {
   try {
+    const env = locals.runtime.env;
     const data = await request.formData();
     const nome = data.get('nome')?.toString().trim();
     const email = data.get('email')?.toString().trim();
@@ -73,7 +83,7 @@ export async function onRequestPost({ request, env }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: "L'Italiano è Servito <giada@italianoservito.it>", // da verificare/configurare su Resend
+        from: "L'Italiano è Servito <giada@italianoservito.it>",
         to: email,
         subject: 'Il tuo posto è prenotato! 🇮🇹',
         html: `

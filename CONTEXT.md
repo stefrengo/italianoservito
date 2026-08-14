@@ -6,10 +6,10 @@
 Sito web per "L'Italiano è Servito", scuola di italiano online di Giada Longo (insegnante certificata, ex 7 anni a Cracovia, 6 anni all'Istituto Italiano di Cultura). Target: prevalentemente persone polacche innamorate dell'Italia. Stefano (chi legge questo file) è lo sviluppatore/consulente che segue il progetto per conto di Giada.
 
 ## Stack tecnico (deciso, non negoziabile senza motivo forte)
-- **Framework**: Astro (output statico)
-- **Hosting**: Cloudflare Pages (NON Vercel — piano gratuito Vercel vieta uso commerciale; NON Netlify — modello a crediti troppo rigido per traffico a raffica da ads; Cloudflare Pages ha banda illimitata gratis anche per siti commerciali)
+- **Framework**: Astro, output `hybrid` — pagine statiche per default, solo `/api/iscrizione` è on-demand (`export const prerender = false`)
+- **Hosting**: Cloudflare, come **Worker** (via Workers Builds, Git integration su questo repo), adapter `@astrojs/cloudflare` — NON Cloudflare Pages classiche: il progetto compare in Cloudflare come "Worker" (dominio `*.workers.dev` di default), e la convenzione `functions/` delle Pages Functions NON viene letta da questo tipo di deploy. Le route dinamiche vanno scritte come endpoint Astro in `src/pages/api/*.js`. (NON Vercel — piano gratuito Vercel vieta uso commerciale; NON Netlify — modello a crediti troppo rigido per traffico a raffica da ads)
 - **Backend/DB**: Supabase, usato SOLO per i lead dei form (tabella `leads`, schema in `supabase/schema.sql`) — non per contenuti/CMS
-- **Email transazionali**: Resend, tramite `functions/api/iscrizione.js` (Cloudflare Pages Function) — invia conferma alla persona iscritta + notifica a Giada
+- **Email transazionali**: Resend, tramite `src/pages/api/iscrizione.js` (endpoint Astro on-demand, non una Cloudflare Pages Function) — invia conferma alla persona iscritta + notifica a Giada. Le variabili d'ambiente/secret si leggono da `locals.runtime.env` (convenzione dell'adapter Cloudflare per Astro), impostate nel pannello Cloudflare del Worker → Settings → Variables and Secrets
 - **Niente WordPress, niente Divi, niente Polylang** — multilingua IT/PL/EN gestita nativamente da Astro (i18n configurato in `astro.config.mjs`, ma i contenuti PL/EN non sono ancora scritti)
 - **Perché niente CMS headless**: il sito si aggiorna ~2 volte l'anno, un CMS sarebbe complessità non necessaria
 
@@ -29,12 +29,12 @@ Sito web per "L'Italiano è Servito", scuola di italiano online di Giada Longo (
 
 ## Cosa manca prima del lancio (in ordine di priorità)
 1. Dati veri della landing ads (prezzi, orari, date, scadenza iscrizioni — oggi placeholder)
-2. Collegare davvero Supabase + Resend (creare progetto Supabase, eseguire `supabase/schema.sql`, configurare dominio su Resend, impostare le variabili d'ambiente su Cloudflare Pages — dettagli in `README.md`)
+2. ~~Collegare davvero Supabase + Resend~~ — fatto: progetto Supabase `italiano-servito` attivo con tabella `leads` (RLS on), dominio `italianoservito.it` verificato su Resend, variabili d'ambiente impostate sul Worker Cloudflare. Endpoint `/api/iscrizione` migrato da Pages Function a route Astro on-demand per essere compatibile col deploy reale (vedi Stack tecnico sopra)
 3. Foto reali mancanti (segnaposto testurizzati ancora presenti in alcune sezioni, es. "tavola imbandita")
 4. Testi completi dei 9 articoli di Approfondimenti (già scritti nel Word doc consegnato a Giada, da trasferire nel sito)
 5. Traduzioni PL/EN
 6. Revisione di Giada sui testi (le è stato consegnato un .docx separato con tutti i contenuti)
-7. Deploy vero su Cloudflare Pages + collegamento dominio
+7. ~~Rimuovere `.github/workflows/deploy.yml`~~ — fatto: era un residuo di un tentativo precedente su GitHub Pages, non collegato al deploy reale su Cloudflare
 
 ## Cose esplicitamente scartate (per non riproporle)
 - WordPress/Divi — abbandonato in favore di Astro
