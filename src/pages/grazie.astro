@@ -1,0 +1,53 @@
+---
+// Pagina di conferma dopo l'invio del form di iscrizione (/api/iscrizione
+// reindirizza qui con un redirect 303 dopo un salvataggio riuscito).
+//
+// Pagina UNICA per tutte e tre le lingue del sito (IT/PL/EN), anche quando
+// le traduzioni PL/EN saranno pronte: qui arriveranno in futuro anche i
+// pixel di tracciamento (Meta/Facebook, Google Ads, GTM...) e conviene che
+// vivano in un solo punto, non duplicati in tre pagine — meno rischio di
+// dimenticarli in una versione. La vecchia versione del sito (ancora live
+// su italianoservito.it/grazie) fa lo stesso identico ragionamento, con un
+// unico messaggio multilingua su una sola pagina.
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Grazie! — L'Italiano è Servito"
+  description="La tua iscrizione è stata ricevuta: Giada ti risponde entro 24-48 ore."
+  noindex={true}
+>
+  <!--
+    Spazio per i pixel di tracciamento (Meta/Facebook, Google Ads, GTM...).
+    Da inserire qui quando saranno disponibili gli ID veri — vedi CONTEXT.md.
+  -->
+
+  <section class="grazie-section">
+    <div class="wrap narrow reveal">
+      <span class="stamp green">Iscrizione ricevuta</span>
+      <h1>Grazie! Il tuo posto è prenotato.</h1>
+      <p class="lede">
+        Ho ricevuto i tuoi dati e ti scrivo personalmente entro 24-48 ore, anche su WhatsApp
+        al numero che mi hai lasciato, per confermarti tutti i dettagli e i prossimi passi.
+      </p>
+      <p class="lede-soft">
+        Nel frattempo, se hai già controllato la posta e non trovi nulla, dai un'occhiata anche
+        nella cartella spam: a volte le email di conferma finiscono lì.
+      </p>
+      <div class="azioni">
+        <a href="/" class="btn">Torna alla home</a>
+        <a href="/approfondimenti" class="btn ghost">Leggi gli Approfondimenti</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .grazie-section { padding: 100px 0 120px; }
+  .narrow { max-width: 640px; text-align: center; }
+  .stamp { margin-bottom: 22px; }
+  h1 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin-bottom: 18px; }
+  .lede { font-size: 1.1rem; color: var(--ink-soft); margin: 0 0 12px; }
+  .lede-soft { font-size: 0.95rem; color: var(--ink-soft); opacity: 0.8; margin: 0 0 34px; }
+  .azioni { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+</style>

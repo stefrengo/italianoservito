@@ -135,10 +135,11 @@ export async function POST({ request, locals }) {
       console.error('Errore Resend (email notifica):', emailNotificaRes.status, await emailNotificaRes.text());
     }
 
-    return new Response(JSON.stringify({ ok: true }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    // Il form è un POST nativo (non fetch via JS), quindi qui reindirizziamo
+    // il browser alla pagina di ringraziamento invece di restituire JSON
+    // grezzo. 303 = "See Other": il browser rifà una GET verso /grazie
+    // invece di ripetere la POST (comportamento corretto dopo un form submit).
+    return Response.redirect(new URL('/grazie', request.url), 303);
   } catch (err) {
     console.error('Errore imprevisto:', err && err.stack ? err.stack : err);
     return new Response(JSON.stringify({ error: 'Errore imprevisto.' }), {

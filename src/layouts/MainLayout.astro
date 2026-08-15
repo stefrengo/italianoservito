@@ -5,7 +5,10 @@ import '../styles/global.css';
 
 const {
   title = "L'Italiano è Servito — Corsi di italiano online per chi ama l'Italia",
-  description = "Corsi online di italiano con Giada Longo: percorsi di trasformazione linguistica per chi si è innamorato dell'Italia."
+  description = "Corsi online di italiano con Giada Longo: percorsi di trasformazione linguistica per chi si è innamorato dell'Italia.",
+  // Pagine "di servizio" (es. /grazie dopo un'iscrizione) non devono comparire
+  // nei motori di ricerca: passare noindex={true} per escluderle.
+  noindex = false,
 } = Astro.props;
 
 // Dati strutturati globali (schema.org), presenti su ogni pagina: aiutano sia i
@@ -44,6 +47,7 @@ const organizationSchema = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, follow" />}
   <link rel="icon" href="/logo.png" />
   <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
 </head>
