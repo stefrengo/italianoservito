@@ -80,16 +80,6 @@ export async function POST({ request, locals }) {
       return new Response(JSON.stringify({ error: 'Errore nel salvataggio dei dati.' }), { status: 500 });
     }
 
-    // TEMPORANEO: log diagnostico per capire perché Resend rifiuta la chiave
-    // (stampa solo lunghezza + primi/ultimi caratteri, mai il valore intero).
-    // Da rimuovere una volta risolto.
-    {
-      const k = env.RESEND_API_KEY || '';
-      console.log(
-        `Debug RESEND_API_KEY — presente: ${!!k}, lunghezza: ${k.length}, inizio: ${k.slice(0, 8)}, fine: ${k.slice(-4)}`
-      );
-    }
-
     // 2) Email di conferma alla persona iscritta (testo personalizzabile qui sotto)
     const emailConfermaRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
