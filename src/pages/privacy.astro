@@ -1,0 +1,104 @@
+---
+// Privacy Policy — bozza di base, da far verificare a un consulente
+// privacy/legale prima del lancio pubblico. Copre: dati raccolti tramite i
+// moduli di iscrizione/contatto (salvati su Supabase, notificati via Resend),
+// e i cookie di analisi/marketing (GA4, Meta Pixel) gestiti dal banner di
+// consenso in CookieConsent.astro. Vedi anche CONTEXT.md.
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Privacy Policy — L'Italiano è Servito"
+  description="Come vengono trattati i tuoi dati personali su italianoservito.it: moduli di iscrizione, cookie di analisi e di marketing."
+>
+  <section class="privacy-section">
+    <div class="wrap narrow reveal">
+      <span class="eyebrow">Privacy Policy</span>
+      <h1>Come tratto i tuoi dati</h1>
+      <p class="lede">
+        Questa pagina spiega, in modo semplice, quali dati raccolgo quando visiti questo sito o compili
+        un modulo, perché li raccolgo e come puoi controllarli. Ultimo aggiornamento: {new Date().toLocaleDateString('it-IT', { year: 'numeric', month: 'long' })}.
+      </p>
+
+      <h2>Titolare del trattamento</h2>
+      <p>
+        Giada Longo, titolare di "L'Italiano è Servito" — contatto: <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a>.
+      </p>
+
+      <h2>Dati raccolti tramite i moduli del sito</h2>
+      <p>
+        Quando compili il modulo di iscrizione a un corso o il modulo di contatto, raccolgo i dati che inserisci
+        direttamente: nome, email, numero di telefono, corso di interesse ed eventuale messaggio facoltativo.
+        Questi dati vengono salvati in modo sicuro (tramite Supabase) e usati esclusivamente per:
+      </p>
+      <ul class="details">
+        <li>rispondere alla tua richiesta e organizzare l'iscrizione al corso scelto;</li>
+        <li>inviarti via email (tramite Resend) la conferma e i dettagli pratici del corso;</li>
+        <li>se hai dato il consenso facoltativo, inviarti la newsletter con aggiornamenti sui corsi.</li>
+      </ul>
+      <p>
+        La base giuridica è il tuo consenso esplicito (la spunta obbligatoria nel modulo) e l'esecuzione delle
+        misure necessarie a gestire la tua richiesta di iscrizione. Conservo questi dati per il tempo necessario
+        a gestire il corso e i rapporti che ne derivano; puoi chiedermene la cancellazione in qualsiasi momento
+        (vedi "I tuoi diritti" più sotto).
+      </p>
+
+      <h2>Cookie e strumenti di analisi/marketing</h2>
+      <p>
+        La prima volta che visiti il sito ti chiedo, con un banner, il permesso di usare due strumenti non
+        essenziali al funzionamento del sito:
+      </p>
+      <ul class="details">
+        <li>
+          <strong>Google Analytics 4</strong> (Google Ireland Limited) — mi aiuta a capire quante persone
+          visitano il sito e quali pagine funzionano meglio, in forma aggregata.
+        </li>
+        <li>
+          <strong>Meta Pixel</strong> (Meta Platforms Ireland Limited) — mi permette di misurare l'efficacia
+          delle campagne pubblicitarie su Facebook e Instagram (ad esempio, sapere se una sponsorizzata ha
+          portato a un'iscrizione).
+        </li>
+      </ul>
+      <p>
+        Questi strumenti si attivano solo se scegli "Accetta" nel banner. Se scegli "Rifiuta", o se non
+        esprimi una scelta, restano disattivati e nessun dato viene inviato a Google o Meta a fini statistici
+        o pubblicitari. Puoi cambiare idea in qualsiasi momento cancellando i dati di navigazione del tuo
+        browser per questo sito, così il banner ricompare.
+      </p>
+      <p>
+        Google e Meta possono trattare questi dati anche fuori dall'Unione Europea; entrambe le aziende
+        aderiscono a meccanismi di trasferimento dati riconosciuti dalla normativa europea (clausole
+        contrattuali standard).
+      </p>
+
+      <h2>I tuoi diritti</h2>
+      <p>
+        In qualsiasi momento puoi chiedermi di accedere ai tuoi dati, correggerli, cancellarli, limitarne
+        l'uso, opporti al trattamento o riceverli in un formato trasferibile: basta scrivere a
+        <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a>. Se ritieni che il trattamento
+        dei tuoi dati non sia conforme alla normativa, puoi anche presentare un reclamo al Garante per la
+        protezione dei dati personali (garanteprivacy.it).
+      </p>
+
+      <p class="nota-legale">
+        Nota: questa pagina è una bozza di base pensata per essere chiara e trasparente, non un testo redatto
+        da un legale. Prima del lancio pubblico del sito consiglio di farla rivedere da un consulente
+        privacy/legale, soprattutto per confermare i tempi esatti di conservazione dei dati e i dettagli
+        societari del titolare.
+      </p>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .privacy-section { padding: 70px 0 90px; }
+  .narrow { max-width: 720px; margin: 0 auto; }
+  .lede { color: var(--ink-soft); margin: 14px 0 34px; }
+  h2 { margin: 34px 0 14px; font-size: clamp(1.15rem,2vw,1.4rem); }
+  h2:first-of-type { margin-top: 30px; }
+  p { color: var(--ink-soft); line-height: 1.65; margin-bottom: 14px; }
+  .details { padding-left: 20px; color: var(--ink-soft); }
+  .details li { margin-bottom: 10px; line-height: 1.6; }
+  a { color: var(--red); font-weight: 600; }
+  .nota-legale { margin-top: 40px; padding: 18px 20px; background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); font-size: 0.85rem; font-style: italic; }
+</style>

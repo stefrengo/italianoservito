@@ -1,0 +1,106 @@
+---
+// Banner di consenso cookie — blocca il caricamento di GA4 e Meta Pixel finché
+// il visitatore non sceglie "Accetta". Necessario perché il pubblico è
+// prevalentemente in UE (Polonia/Italia) e GA4 + Meta Pixel non sono cookie
+// tecnici: servono senza consenso preventivo si va contro GDPR/ePrivacy.
+//
+// La scelta viene salvata in localStorage (non richiede un cookie a sua volta
+// per "ricordare" il consenso) e resta valida finché il visitatore non la
+// cancella dal browser. Nessuno script di tracciamento viene inserito nel DOM
+// finché non c'è un "accepted" esplicito.
+import { GA4_MEASUREMENT_ID, META_PIXEL_ID } from '../data/tracking.js';
+---
+
+<div id="cookie-banner" class="cookie-banner" hidden>
+  <div class="cookie-banner-inner">
+    <p>
+      Usiamo cookie di analisi (Google Analytics) e di marketing (Meta Pixel) per capire come funziona
+      il sito e misurare le sponsorizzate. Puoi accettarli o rifiutarli — trovi tutti i dettagli nella
+      <a href="/privacy">Privacy Policy</a>.
+    </p>
+    <div class="cookie-banner-actions">
+      <button type="button" id="cookie-reject" class="btn ghost small">Rifiuta</button>
+      <button type="button" id="cookie-accept" class="btn small">Accetta</button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ GA4_MEASUREMENT_ID, META_PIXEL_ID }}>
+  const STORAGE_KEY = 'cookie-consent'; // 'accepted' | 'rejected'
+
+  function loadGA4() {
+    // Il placeholder 'G-XXXXXXXXXX' inizia anch'esso per "G-", quindi va escluso
+    // esplicitamente e non solo con un controllo di formato.
+    if (!GA4_MEASUREMENT_ID || GA4_MEASUREMENT_ID === 'G-XXXXXXXXXX' || !GA4_MEASUREMENT_ID.startsWith('G-')) return;
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_MEASUREMENT_ID}`;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', GA4_MEASUREMENT_ID);
+  }
+
+  function loadMetaPixel() {
+    if (!META_PIXEL_ID) return;
+    /* eslint-disable */
+    !(function (f, b, e, v, n, t, s) {
+      if (f.fbq) return;
+      n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n;
+      n.push = n; n.loaded = true; n.version = '2.0'; n.queue = [];
+      t = b.createElement(e); t.async = true; t.src = v;
+      s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s);
+    })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+    /* eslint-enable */
+    window.fbq('init', META_PIXEL_ID);
+    window.fbq('track', 'PageView');
+  }
+
+  function loadTracking() {
+    loadGA4();
+    loadMetaPixel();
+  }
+
+  const consent = localStorage.getItem(STORAGE_KEY);
+  if (consent === 'accepted') {
+    loadTracking();
+  } else if (consent !== 'rejected') {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.hidden = false;
+  }
+
+  document.getElementById('cookie-accept')?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'accepted');
+    document.getElementById('cookie-banner').hidden = true;
+    loadTracking();
+  });
+  document.getElementById('cookie-reject')?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'rejected');
+    document.getElementById('cookie-banner').hidden = true;
+  });
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 100;
+    background: var(--ink); color: #fff; padding: 18px 20px;
+    box-shadow: 0 -6px 24px rgba(0,0,0,0.18);
+  }
+  .cookie-banner-inner {
+    max-width: 1100px; margin: 0 auto; display: flex; align-items: center;
+    justify-content: space-between; gap: 24px; flex-wrap: wrap;
+  }
+  .cookie-banner p { margin: 0; font-size: 0.88rem; color: #EFE7D8; max-width: 62ch; line-height: 1.5; }
+  .cookie-banner a { color: #fff; text-decoration: underline; }
+  .cookie-banner-actions { display: flex; gap: 12px; flex-shrink: 0; }
+  .cookie-banner .btn.small { padding: 10px 18px; font-size: 0.85rem; }
+  .cookie-banner .btn.ghost { border-color: rgba(255,255,255,0.4); color: #fff; }
+  @media (max-width: 640px) {
+    .cookie-banner-inner { flex-direction: column; align-items: stretch; }
+    .cookie-banner-actions { justify-content: flex-end; }
+  }
+</style>

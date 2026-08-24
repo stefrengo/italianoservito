@@ -18,9 +18,20 @@ import MainLayout from '../layouts/MainLayout.astro';
   noindex={true}
 >
   <!--
-    Spazio per i pixel di tracciamento (Meta/Facebook, Google Ads, GTM...).
-    Da inserire qui quando saranno disponibili gli ID veri — vedi CONTEXT.md.
+    Evento di conversione: si attiva solo se GA4/Meta Pixel sono già stati
+    caricati (cioè solo se il visitatore ha accettato i cookie nel banner —
+    vedi CookieConsent.astro). Se il consenso non è stato dato, gtag/fbq non
+    esistono e questi due "if" non fanno nulla: nessun dato inviato senza
+    consenso, come richiesto dal GDPR.
   -->
+  <script>
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'generate_lead', { event_category: 'iscrizione' });
+    }
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead');
+    }
+  </script>
 
   <section class="grazie-section">
     <div class="wrap narrow reveal">
