@@ -6,11 +6,11 @@
 export const faq = [
   {
     q: "Le lezioni sono individuali o di gruppo?",
-    a: "Tutti i corsi de \"L'Italiano è Servito\" sono lezioni di gruppo, mai individuali: piccoli gruppi online, da 3 a un massimo di 6 persone. È una scelta precisa, non un limite — credo nel potere dell'interazione tra le persone: si impara di più, e più in fretta, parlando con altri che stanno affrontando le tue stesse difficoltà, non ripetendo frasi a un'insegnante da sole davanti a uno schermo.",
+    a: "Tutti i corsi de \"L'Italiano è Servito\" sono lezioni di gruppo, mai individuali: piccoli gruppi online, da 3 a un massimo di 6 persone. È una scelta precisa, non un limite: credo nel potere dell'interazione tra le persone. Si impara di più, e più in fretta, parlando con altri che stanno affrontando le tue stesse difficoltà, non ripetendo frasi a un'insegnante da soli davanti a uno schermo.",
   },
   {
     q: "Perché scegliere un corso di gruppo invece di un'insegnante privata?",
-    a: "Perché la lingua si allena parlando con altre persone, non recitando a memoria davanti a una sola interlocutrice. In un piccolo gruppo ti confronti, ascolti come si esprimono altri al tuo livello, ti correggi a vicenda e — soprattutto — ti alleni a sostenere una vera conversazione, non solo a rispondere a domande. È lo stesso principio su cui ho costruito il mio metodo, maturato in anni di insegnamento in Polonia.",
+    a: "Perché la lingua si allena parlando con altre persone, non recitando a memoria davanti a una sola interlocutrice. In un piccolo gruppo ti confronti, ascolti come si esprimono altri al tuo livello, ti correggi a vicenda e, soprattutto, ti alleni a sostenere una vera conversazione, non solo a rispondere a domande. È lo stesso principio su cui ho costruito il mio metodo, maturato in anni di insegnamento in Polonia.",
   },
   {
     q: "Come si svolgono i corsi e su quale piattaforma?",
@@ -22,7 +22,7 @@ export const faq = [
   },
   {
     q: "Le spiegazioni sono disponibili anche in polacco?",
-    a: "Sì. Ho vissuto sette anni in Polonia, di cui sei lavorando all'Istituto Italiano di Cultura di Cracovia, e so esattamente dove la struttura del polacco complica l'apprendimento dell'italiano. Quando serve, spiego la grammatica più ostica partendo proprio da come funziona in polacco — non da un manuale italiano tradotto.",
+    a: "Sì. Ho vissuto sette anni in Polonia, di cui sei lavorando all'Istituto Italiano di Cultura di Cracovia, e so esattamente dove la struttura del polacco complica l'apprendimento dell'italiano. Quando serve, spiego la grammatica più ostica partendo proprio da come funziona in polacco, non da un manuale italiano tradotto.",
   },
   {
     q: "Quanto costano i corsi e quando iniziano?",
@@ -35,5 +35,9 @@ export const faq = [
   {
     q: "Come mi iscrivo a un corso?",
     a: "Si compila il modulo nella pagina dei corsi attivi o nella pagina Contatti: dopo l'iscrizione arriva una conferma via email con tutti i dettagli per partecipare.",
+  },
+  {
+    q: "Devo versare una caparra per confermare il mio posto?",
+    a: "Sì: per bloccare effettivamente il posto è richiesta una piccola caparra di 100 PLN, che viene poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta: in passato alcune persone si sono iscritte prenotando un posto e poi non si sono più presentate, lasciando fuori chi invece lo desiderava davvero. Visto che i gruppi sono piccoli e i posti sono pochi, è giusto che restino a chi è pronto a iniziare. I dettagli su come versarla vengono spiegati personalmente al momento della conferma.",
   },
 ];

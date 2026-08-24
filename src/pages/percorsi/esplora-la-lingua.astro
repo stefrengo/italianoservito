@@ -9,7 +9,7 @@ const corsiDelPercorso = corsiStagione.filter((cs) => cs.tag === c.title);
 const courseSchema = {
   '@context': 'https://schema.org',
   '@type': 'Course',
-  name: `${c.title} — Corso di italiano online (${c.badge})`,
+  name: `${c.title} | Corso di italiano online (${c.badge})`,
   description: c.lede,
   provider: { '@type': 'EducationalOrganization', name: "L'Italiano è Servito", sameAs: 'https://www.italianoservito.it' },
   inLanguage: 'it',
@@ -24,7 +24,7 @@ const faqSchema = {
 };
 ---
 
-<MainLayout title={`${c.title} — Corso di italiano online (${c.badge}) | L'Italiano è Servito`} description={c.lede}>
+<MainLayout title={`${c.title} | Corso di italiano online (${c.badge}) | L'Italiano è Servito`} description={c.lede}>
   <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <section class="apertura">
@@ -64,7 +64,7 @@ const faqSchema = {
         <li><strong>Gruppo:</strong> massimo 6 persone</li>
       </ul>
 
-      <h2 style="margin-top:36px;">Le edizioni attive — {STAGIONE}</h2>
+      <h2 style="margin-top:36px;">Le edizioni attive · {STAGIONE}</h2>
       <div class="edizioni-grid">
         {corsiDelPercorso.map((cs) => (
           <div class="edizione-card">
@@ -78,7 +78,7 @@ const faqSchema = {
               <li>{cs.lezioni}</li>
               <li>Giorno libero: {cs.giornoLibero}</li>
             </ul>
-            <button type="button" class="btn small" data-corso={`${cs.tag} — ${cs.livello}`}>Prenota il tuo posto</button>
+            <button type="button" class="btn small" data-corso={`${cs.tag} · ${cs.livello}`}>Prenota il tuo posto</button>
           </div>
         ))}
       </div>

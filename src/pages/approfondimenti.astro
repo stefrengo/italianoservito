@@ -5,7 +5,7 @@ import { articoli, categorie, tags } from '../data/articoli.js';
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: "Approfondimenti — L'Italiano è Servito",
+  name: "Approfondimenti | L'Italiano è Servito",
   description: "Grammatica senza stress, vita in Italia, storie e cucina: articoli per chi impara l'italiano venendo dalla Polonia.",
   hasPart: articoli.map((a) => ({
     '@type': 'Article',
@@ -16,7 +16,7 @@ const faqSchema = {
 ---
 
 <MainLayout
-  title="Approfondimenti — L'Italiano è Servito"
+  title="Approfondimenti | L'Italiano è Servito"
   description="Grammatica senza stress, vita in Italia, storie e cucina: piccoli approfondimenti per restare in contatto con la lingua tra una lezione e l'altra."
 >
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />

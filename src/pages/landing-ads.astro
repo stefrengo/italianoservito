@@ -25,7 +25,7 @@ const perche = [
 ---
 
 <MainLayout
-  title={`Corsi di italiano ${STAGIONE} — L'Italiano è Servito`}
+  title={`Corsi di italiano ${STAGIONE} | L'Italiano è Servito`}
   description="Corsi online di italiano con Giada Longo. Posti limitati: prenota il tuo posto ora."
 >
   <section class="hero-ads">
@@ -34,7 +34,7 @@ const perche = [
         <span class="stamp ink">Iscriviti ai nuovi corsi</span>
         <h1>Corsi online<br>di lingua italiana</h1>
         <p class="stagione">{STAGIONE}</p>
-        <p class="lede">Ciao! Sono Giada, insegnante di lingua e cultura italiana per persone straniere. Dopo anni di insegnamento in Polonia, ho fondato "L'Italiano è Servito" per aiutare chi viene dal mondo slavo a vivere davvero la lingua italiana — non solo a studiarla.</p>
+        <p class="lede">Ciao! Sono Giada, insegnante di lingua e cultura italiana per persone straniere. Dopo anni di insegnamento in Polonia, ho fondato "L'Italiano è Servito" per aiutare chi viene dal mondo slavo a vivere davvero la lingua italiana, non solo a studiarla.</p>
         <p class="lede">Per me, imparare l'italiano significa entrare nel cuore dell'Italia: nei gesti, nei sapori, nelle tradizioni.</p>
         <a class="btn" href="#iscrizione">Prenota il tuo posto</a>
       </div>
@@ -74,7 +74,7 @@ const perche = [
                 <li>Giorno libero: {c.giornoLibero}</li>
               </ul>
             )}
-            <button type="button" class="btn small" data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} — ${c.livello}`}>Prenota il tuo posto</button>
+            <button type="button" class="btn small" data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} · ${c.livello}`}>Prenota il tuo posto</button>
           </div>
         ))}
       </div>
@@ -106,7 +106,7 @@ const perche = [
         <span class="eyebrow" style="color:var(--gold);">La mia storia</span>
         <h2>Ciao! Sono Giada Longo, e ho la fortuna di fare il lavoro più bello del mondo: insegnare italiano a chi viene da fuori.</h2>
         <p>Mi sono laureata in Lingue Moderne con specializzazione in polacco e russo, con una tesi magistrale dedicata proprio alla didattica dell'italiano in Polonia.</p>
-        <p>Della Polonia, poi, mi sono davvero innamorata: dopo un tirocinio all'Università Jagellonica di Cracovia, ho scelto di viverci per sette anni, costruendo lì la mia esperienza nell'insegnamento — con un'attenzione particolare a chi ha origini polacche o slave.</p>
+        <p>Della Polonia, poi, mi sono davvero innamorata: dopo un tirocinio all'Università Jagellonica di Cracovia, ho scelto di viverci per sette anni, costruendo lì la mia esperienza nell'insegnamento, con un'attenzione particolare a chi ha origini polacche o slave.</p>
         <p>Ho lavorato sei anni all'Istituto Italiano di Cultura di Cracovia, aggiornandomi con workshop tematici e perfezionandomi nella didattica online.</p>
       </div>
     </div>
@@ -117,7 +117,7 @@ const perche = [
       <div class="reveal">
         <h2>Dettagli</h2>
         <ul class="dettagli-list">
-          <li>📅 {STAGIONE} — {PERIODO}</li>
+          <li>📅 {STAGIONE} · {PERIODO}</li>
           <li>💻 Online su Zoom</li>
           <li>🧑‍🏫 Posti limitati</li>
         </ul>
@@ -131,6 +131,7 @@ const perche = [
           <div><span id="cd-sec">00</span><small>Sec</small></div>
         </div>
         <a class="btn" href="#iscrizione">Prenota il tuo posto ora</a>
+        <p class="nota-caparra">Per bloccare effettivamente il posto è richiesta una piccola caparra di 100 PLN, scalata poi dal costo del corso: i gruppi sono piccoli e i posti sono pochi, quindi preferisco che restino a chi è pronto a cominciare davvero.</p>
       </div>
     </div>
   </section>
@@ -208,8 +209,8 @@ const perche = [
     display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; align-items: center;
     padding: 60px 6vw; margin: 0;
   }
-  .storia-photo { border-radius: 6px; overflow: hidden; height: 320px; }
-  .storia-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+  .storia-photo { border-radius: 6px; overflow: hidden; aspect-ratio: 4 / 3; }
+  .storia-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
   .storia-content h2 { color: #fff; font-size: clamp(1.3rem,2.2vw,1.7rem); margin: 8px 0 16px; }
   .storia-content p { color: #F5E4DC; font-size: 0.95rem; margin-bottom: 14px; }
 
@@ -222,6 +223,7 @@ const perche = [
   .countdown div { display: flex; flex-direction: column; align-items: center; }
   .countdown span { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--red); }
   .countdown small { font-size: 0.7rem; color: var(--ink-soft); text-transform: uppercase; }
+  .nota-caparra { font-size: 0.78rem; color: var(--ink-soft); margin: 14px 0 0; line-height: 1.4; }
 
   @media (max-width: 980px) {
     .price-grid, .perche-grid { grid-template-columns: repeat(2, 1fr); }
@@ -231,7 +233,6 @@ const perche = [
     .main-photo { order: -1; height: 280px; }
     .price-grid, .perche-grid { grid-template-columns: 1fr; }
     .storia-section { grid-template-columns: 1fr; padding: 40px 24px; }
-    .storia-photo { height: 240px; }
     .dettagli-grid { grid-template-columns: 1fr; }
   }
 </style>

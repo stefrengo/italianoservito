@@ -4,13 +4,13 @@ import SignupForm from '../components/SignupForm.astro';
 import { corsiDolce } from '../data/corsiStagione.js';
 ---
 
-<MainLayout title="Club del Libro e club tematici — L'Italiano è Servito" description="Il Club del Libro e Tè e Riviste: incontri di conversazione ogni due settimane per non perdere quello che hai costruito a lezione.">
+<MainLayout title="Club del Libro e club tematici | L'Italiano è Servito" description="Il Club del Libro e Tè e Riviste: incontri di conversazione ogni due settimane per non perdere quello che hai costruito a lezione.">
   <section class="apertura">
     <div class="wrap apertura-grid">
       <div class="reveal">
         <span class="eyebrow">Bonus</span>
         <h1>Club del Libro e club tematici</h1>
-        <p class="lede">Un incontro ogni due settimane per leggere, commentare e parlare italiano attorno a un libro o a una rivista — non una lezione, una scusa bellissima per restare in contatto con la lingua.</p>
+        <p class="lede">Un incontro ogni due settimane per leggere, commentare e parlare italiano attorno a un libro o a una rivista, non una lezione, una scusa bellissima per restare in contatto con la lingua.</p>
         <a class="btn" href="#iscrizione">Unisciti al Club</a>
       </div>
       <div class="photo hero-photo torn-bottom reveal d1">
@@ -22,7 +22,7 @@ import { corsiDolce } from '../data/corsiStagione.js';
   <section>
     <div class="wrap narrow reveal">
       <h2>Perché partecipare</h2>
-      <p>Non sono corsi di livello, sono uno spazio di continuità. Molte persone finiscono un percorso e poi, senza pratica costante, sentono la lingua sfumare via. Il Club del Libro e Tè e Riviste sono il modo più piacevole per non perdere quello che hai costruito — leggendo, parlando, confrontandoti con altre persone che come te amano l'Italia.</p>
+      <p>Non sono corsi di livello, sono uno spazio di continuità. Molte persone finiscono un percorso e poi, senza pratica costante, sentono la lingua sfumare via. Il Club del Libro e Tè e Riviste sono il modo più piacevole per non perdere quello che hai costruito, leggendo, parlando, confrontandoti con altre persone che come te amano l'Italia.</p>
     </div>
   </section>
 
@@ -43,7 +43,7 @@ import { corsiDolce } from '../data/corsiStagione.js';
         {corsiDolce.map((cl) => (
           <div class="edizione-card">
             <div class="edizione-head">
-              {cl.tag} — {cl.edizione}
+              {cl.tag} · {cl.edizione}
               {cl.novita && <span class="novita">Novità</span>}
             </div>
             <div class="edizione-body">
@@ -58,7 +58,7 @@ import { corsiDolce } from '../data/corsiStagione.js';
                 <div class="prezzo-singolo"><span class="currency">PLN</span>{cl.prezzo}<small>da solo</small></div>
                 <div class="prezzo-bundle"><span class="currency">PLN</span>{cl.prezzoBundle}<small>in bundle con un corso standard</small></div>
               </div>
-              <button type="button" class="btn small" data-corso={`${cl.tag} — ${cl.livello}`}>Prenota il tuo posto</button>
+              <button type="button" class="btn small" data-corso={`${cl.tag} · ${cl.livello}`}>Prenota il tuo posto</button>
             </div>
           </div>
         ))}

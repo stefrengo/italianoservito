@@ -95,10 +95,11 @@ export async function POST({ request, locals }) {
         subject: 'Il tuo posto è prenotato! 🇮🇹',
         html: `
           <p>Ciao ${nome},</p>
-          <p>ho ricevuto la tua iscrizione al corso <strong>${percorso}</strong> — il tuo posto è prenotato.</p>
+          <p>ho ricevuto la tua iscrizione al corso <strong>${percorso}</strong>: il tuo posto è prenotato.</p>
           ${clubDelLibro ? '<p>Hai chiesto di abbinare anche il <strong>Club del Libro</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
           ${teERiviste ? '<p>Hai chiesto di abbinare anche <strong>Tè e Riviste</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
-          ${messaggio ? `<p>Ho letto quello che mi hai scritto: <em>"${messaggio}"</em> — ne terrò conto quando ti risponderò.</p>` : ''}
+          ${messaggio ? `<p>Ho letto quello che mi hai scritto: <em>"${messaggio}"</em>, ne terrò conto quando ti risponderò.</p>` : ''}
+          <p>Un'ultima cosa importante: per bloccare effettivamente il posto ti chiederò una piccola caparra di 100 PLN, che verrà poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta dei semestri scorsi, in cui alcuni posti restavano bloccati da persone che poi non si presentavano più, togliendo spazio a chi invece lo desiderava davvero. I gruppi sono piccoli e i posti sono pochi, quindi preferisco che restino a chi è pronto a cominciare: ti spiegherò personalmente come versarla quando ci sentiamo.</p>
           <p>Ti scrivo personalmente entro 24-48 ore, anche su WhatsApp al numero che mi hai lasciato, per confermarti tutti i dettagli e i prossimi passi.</p>
           <p>A presto,<br>Giada</p>
         `,
@@ -118,7 +119,7 @@ export async function POST({ request, locals }) {
       body: JSON.stringify({
         from: 'Sito L\'Italiano è Servito <notifiche@italianoservito.it>',
         to: env.GIADA_NOTIFICATION_EMAIL,
-        subject: `Nuova richiesta: ${nome} — ${percorso}${clubDelLibro ? ' + Club del Libro' : ''}${teERiviste ? ' + Tè e Riviste' : ''}`,
+        subject: `Nuova richiesta: ${nome} · ${percorso}${clubDelLibro ? ' + Club del Libro' : ''}${teERiviste ? ' + Tè e Riviste' : ''}`,
         html: `
           <p>Nuova iscrizione (fonte: ${fonte}):</p>
           <ul>
