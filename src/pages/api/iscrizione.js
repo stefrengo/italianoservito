@@ -31,6 +31,7 @@ export async function POST({ request, locals }) {
     const telefono = data.get('telefono')?.toString().trim() || '';
     const percorso = data.get('percorso')?.toString() || 'non specificato';
     const clubDelLibro = data.get('club_del_libro') === 'si';
+    const teERiviste = data.get('te_e_riviste') === 'si';
     const newsletter = data.get('newsletter') === 'si';
     const privacyAccettata = data.get('privacy') === 'on';
     // Solo dal form di /contatti (non presenti nella landing/percorsi):
@@ -65,6 +66,7 @@ export async function POST({ request, locals }) {
         telefono,
         percorso,
         club_del_libro: clubDelLibro,
+        te_e_riviste: teERiviste,
         fonte,
         newsletter,
         privacy_accettata: privacyAccettata,
@@ -95,6 +97,7 @@ export async function POST({ request, locals }) {
           <p>Ciao ${nome},</p>
           <p>ho ricevuto la tua iscrizione al corso <strong>${percorso}</strong> — il tuo posto è prenotato.</p>
           ${clubDelLibro ? '<p>Hai chiesto di abbinare anche il <strong>Club del Libro</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
+          ${teERiviste ? '<p>Hai chiesto di abbinare anche <strong>Tè e Riviste</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
           ${messaggio ? `<p>Ho letto quello che mi hai scritto: <em>"${messaggio}"</em> — ne terrò conto quando ti risponderò.</p>` : ''}
           <p>Ti scrivo personalmente entro 24-48 ore, anche su WhatsApp al numero che mi hai lasciato, per confermarti tutti i dettagli e i prossimi passi.</p>
           <p>A presto,<br>Giada</p>
@@ -115,7 +118,7 @@ export async function POST({ request, locals }) {
       body: JSON.stringify({
         from: 'Sito L\'Italiano è Servito <notifiche@italianoservito.it>',
         to: env.GIADA_NOTIFICATION_EMAIL,
-        subject: `Nuova richiesta: ${nome} — ${percorso}${clubDelLibro ? ' + Club del Libro' : ''}`,
+        subject: `Nuova richiesta: ${nome} — ${percorso}${clubDelLibro ? ' + Club del Libro' : ''}${teERiviste ? ' + Tè e Riviste' : ''}`,
         html: `
           <p>Nuova iscrizione (fonte: ${fonte}):</p>
           <ul>
@@ -124,6 +127,7 @@ export async function POST({ request, locals }) {
             <li><strong>Telefono:</strong> ${telefono}</li>
             <li><strong>Percorso:</strong> ${percorso}</li>
             <li><strong>Bundle Club del Libro:</strong> ${clubDelLibro ? 'Sì' : 'No'}</li>
+            <li><strong>Bundle Tè e Riviste:</strong> ${teERiviste ? 'Sì' : 'No'}</li>
             ${livello ? `<li><strong>Livello attuale:</strong> ${livello}</li>` : ''}
             ${obiettivo ? `<li><strong>Obiettivo:</strong> ${obiettivo}</li>` : ''}
             ${messaggio ? `<li><strong>Messaggio:</strong> ${messaggio}</li>` : ''}

@@ -6,7 +6,15 @@
 // campagna estiva (già conclusa): da riempire con i dati veri del semestre in corso.
 import MainLayout from '../layouts/MainLayout.astro';
 import SignupForm from '../components/SignupForm.astro';
-import { STAGIONE, PERIODO, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione } from '../data/corsiStagione.js';
+import { STAGIONE, PERIODO, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione, corsiDolce } from '../data/corsiStagione.js';
+
+// Griglia unica: i corsi della stagione + i due corsi "Dolce" (bonus di
+// conversazione), questi ultimi contrassegnati da un timbro "Bonus" al posto
+// di Antipasto/Primo/Secondo — per il resto stessa identica card.
+const tutteLeCard = [
+  ...corsiStagione.map((c) => ({ ...c, dolce: false })),
+  ...corsiDolce.map((c) => ({ ...c, dolce: true })),
+];
 
 const perche = [
   { titolo: 'Madrelingua con esperienza', testo: "8 anni di insegnamento a persone adulte di ogni livello linguistico." },
@@ -44,21 +52,29 @@ const perche = [
       </div>
 
       <div class="price-grid">
-        {corsiStagione.map((c, i) => (
+        {tutteLeCard.map((c, i) => (
           <div class={`price-card reveal d${i % 3}`}>
             <div class="price-head">{c.orario}</div>
             <div class="price-tag">
-              <span class="stamp ink small">{c.pasto}</span>
+              <span class="stamp ink small">{c.dolce ? 'Bonus' : c.pasto}</span>
               <span class="livello">{c.livello}</span>
             </div>
             <p class="path-name">{c.tag}</p>
             <div class="price-amount"><span class="currency">PLN</span>{c.prezzo}</div>
-            <ul>
-              <li>{c.tipo}</li>
-              <li>{c.lezioni}</li>
-              <li>Giorno libero: {c.giornoLibero}</li>
-            </ul>
-            <button type="button" class="btn small" data-corso={`${c.tag} — ${c.livello}`}>Prenota il tuo posto</button>
+            {c.dolce ? (
+              <ul>
+                <li>{c.comeFunziona}</li>
+                <li>{c.lezioni} lezioni da {c.minuti} minuti</li>
+                <li>In abbinamento a un corso: PLN {c.prezzoBundle}</li>
+              </ul>
+            ) : (
+              <ul>
+                <li>{c.tipo}</li>
+                <li>{c.lezioni}</li>
+                <li>Giorno libero: {c.giornoLibero}</li>
+              </ul>
+            )}
+            <button type="button" class="btn small" data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} — ${c.livello}`}>Prenota il tuo posto</button>
           </div>
         ))}
       </div>

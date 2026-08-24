@@ -4,13 +4,21 @@
 // sulle singole pagine /percorsi/* (solo i corsi di quel percorso). Iscriversi
 // dalla landing o dalla pagina del corso deve essere un'esperienza identica.
 //
+// I corsi "Dolce" (Club del Libro, Tè e Riviste) sono gestiti a parte, non
+// tramite la prop "corsi": sono bonus di conversazione validi sitewide, quindi
+// il banner "voglio abbinare anche..." li propone sempre entrambi, su ogni
+// pagina che monta questo form.
+//
 // Props:
 //   corsi: [{ tag, livello }]  — corsi da proporre nel select (obbligatorio)
-//   includiClubStandalone: bool — mostra "Club del Libro (solo)" tra le opzioni
+//   includiClubStandalone: bool — mostra "Il Club del Libro (solo)" e "Tè e
+//                                  Riviste (solo)" tra le opzioni del select
 //                                  (solo sulla landing, non sulle pagine percorso)
 //   titolo, intro: testi della sezione, personalizzabili per contesto
 //   fonte: da quale pagina arriva il lead (es. 'landing-ads', 'percorso:sbloccati-da-zero'),
 //          salvata su Supabase per sapere dove si iscrive di più la gente
+
+import { corsiDolce } from '../data/corsiStagione.js';
 
 const {
   corsi,
@@ -42,18 +50,26 @@ const {
           A quale corso vuoi iscriverti?
           <select name="percorso" id="corso-select" required>
             <option value="">Scegli il corso</option>
-            {corsi.map((c) => (
-              <option value={`${c.tag} — ${c.livello}`}>{c.tag} — {c.livello}</option>
+            {corsi.map((c) => {
+              const eDolce = corsiDolce.some((d) => d.tag === c.tag);
+              return (
+                <option value={`${c.tag} — ${c.livello}`} data-standalone={eDolce ? 'true' : undefined}>{c.tag} — {c.livello}</option>
+              );
+            })}
+            {includiClubStandalone && corsiDolce.map((c) => (
+              <option value={`${c.tag} (solo)`} data-standalone="true">{c.tag} (solo)</option>
             ))}
-            {includiClubStandalone && <option value="Club del Libro">Club del Libro (solo)</option>}
             <option value="Non sono sicura">Non ho ancora deciso, aiutami a scegliere</option>
           </select>
         </label>
         <div id="bundle-wrap" class="conditional-field" hidden>
-          <label class="checkbox bundle">
-            <input type="checkbox" name="club_del_libro" value="si" />
-            <span>Voglio abbinare anche il <strong>Club del Libro</strong> — l'incontro quindicinale per non perdere quello che costruisco a lezione (prezzo bundle da confermare via email).</span>
-          </label>
+          <p class="bundle-intro">Vuoi abbinare anche un club di conversazione? (prezzo bundle da confermare via email)</p>
+          {corsiDolce.map((c) => (
+            <label class="checkbox bundle">
+              <input type="checkbox" name={c.tag === 'Il Club del Libro' ? 'club_del_libro' : 'te_e_riviste'} value="si" />
+              <span>Voglio abbinare anche <strong>{c.tag}</strong> — {c.orario} (a partire da PLN {c.prezzoBundle}).</span>
+            </label>
+          ))}
         </div>
         <div id="messaggio-wrap" class="conditional-field" hidden>
           <label>
@@ -90,19 +106,22 @@ const {
   });
 
   // Campi condizionali in base al corso scelto:
-  // - il bundle Club del Libro ha senso solo se hai scelto un corso vero e proprio
-  //   (non se hai già scelto "Club del Libro" da solo, e non se non hai ancora deciso)
+  // - il bundle (Club del Libro / Tè e Riviste) ha senso solo se hai scelto un
+  //   corso vero e proprio (non se hai già scelto uno dei due "(solo)", e non
+  //   se non hai ancora deciso)
   // - il campo messaggio si apre solo quando chiedi aiuto a scegliere
   const corsoSelect = document.getElementById('corso-select');
   const bundleWrap = document.getElementById('bundle-wrap');
   const messaggioWrap = document.getElementById('messaggio-wrap');
   if (corsoSelect && bundleWrap && messaggioWrap) {
-    const bundleCheckbox = bundleWrap.querySelector('input[name="club_del_libro"]');
+    const bundleCheckboxes = bundleWrap.querySelectorAll('input[type="checkbox"]');
     corsoSelect.addEventListener('change', () => {
       const valore = corsoSelect.value;
-      const eCorsoVero = valore !== '' && valore !== 'Club del Libro' && valore !== 'Non sono sicura';
+      const opzioneScelta = corsoSelect.selectedOptions[0];
+      const eStandalone = opzioneScelta?.dataset.standalone === 'true';
+      const eCorsoVero = valore !== '' && valore !== 'Non sono sicura' && !eStandalone;
       bundleWrap.hidden = !eCorsoVero;
-      if (!eCorsoVero && bundleCheckbox) bundleCheckbox.checked = false;
+      if (!eCorsoVero) bundleCheckboxes.forEach((cb) => { cb.checked = false; });
       messaggioWrap.hidden = valore !== 'Non sono sicura';
     });
   }
@@ -124,6 +143,9 @@ const {
   .signup-form label.checkbox { flex-direction: row; align-items: flex-start; gap: 10px; font-size: 0.85rem; }
   .signup-form label.checkbox input { margin-top: 3px; }
   .signup-form label.checkbox a { color: var(--red); font-weight: 600; }
+  .conditional-field[hidden] { display: none; }
+  .conditional-field { display: flex; flex-direction: column; gap: 10px; }
+  .bundle-intro { font-size: 0.85rem; color: var(--ink-soft); margin: 0; font-weight: 500; }
   .signup-form label.checkbox.bundle {
     background: var(--green-soft); border: 1px solid var(--green); border-radius: 12px; padding: 12px 14px;
   }
