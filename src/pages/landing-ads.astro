@@ -16,6 +16,8 @@ const tutteLeCard = [
   ...corsiDolce.map((c) => ({ ...c, dolce: true })),
 ];
 
+const stagionePiana = STAGIONE.replace(' | ', ' ');
+
 const perche = [
   { titolo: 'Madrelingua con esperienza', testo: "8 anni di insegnamento a persone adulte di ogni livello linguistico." },
   { titolo: 'Spiegazioni chiare anche in polacco', testo: 'Capisci la grammatica più difficile grazie al supporto nella tua lingua madre.' },
@@ -33,7 +35,7 @@ const perche = [
       <div class="reveal">
         <span class="stamp ink">Iscriviti ai nuovi corsi</span>
         <h1>Corsi online<br>di lingua italiana</h1>
-        <p class="stagione">{STAGIONE}</p>
+        <p class="stagione">Perché l'italiano è un piacere!</p>
         <p class="lede">Ciao! Sono Giada, insegnante di lingua e cultura italiana per persone straniere. Dopo anni di insegnamento in Polonia, ho fondato "L'Italiano è Servito" per aiutare chi viene dal mondo slavo a vivere davvero la lingua italiana, non solo a studiarla.</p>
         <p class="lede">Per me, imparare l'italiano significa entrare nel cuore dell'Italia: nei gesti, nei sapori, nelle tradizioni.</p>
         <a class="btn" href="#iscrizione">Prenota il tuo posto</a>
@@ -47,8 +49,8 @@ const perche = [
   <section id="corsi" class="corsi-section">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Calendario dei corsi</h2>
-        <p class="intro">Per {STAGIONE.toLowerCase()} ti propongo corsi online in piccoli gruppi (da 3 a 6 persone) per imparare, conversare e migliorare il tuo italiano in un ambiente accogliente. Qualunque sia il tuo livello, trovi un corso pensato per te, con un programma adatto alle tue esigenze e al tuo ritmo.</p>
+        <h2>Calendario dei corsi | {stagionePiana}</h2>
+        <p class="intro">Questo semestre ti propongo corsi online in piccoli gruppi (da 3 a 6 persone) per imparare, conversare e migliorare il tuo italiano in un ambiente accogliente. Qualunque sia il tuo livello, trovi un corso pensato per te, con un programma adatto alle tue esigenze e al tuo ritmo.</p>
       </div>
 
       <div class="price-grid">
@@ -117,9 +119,9 @@ const perche = [
       <div class="reveal">
         <h2>Dettagli</h2>
         <ul class="dettagli-list">
-          <li>📅 {STAGIONE} · {PERIODO}</li>
+          <li>📅 {PERIODO}</li>
           <li>💻 Online su Zoom</li>
-          <li>🧑‍🏫 Posti limitati</li>
+          <li>🧑‍🏫 Posti limitati: per bloccare effettivamente il tuo posto ti chiederò una piccola caparra di 100 PLN.</li>
         </ul>
       </div>
       <div class="scadenza-card reveal d1">
@@ -131,7 +133,6 @@ const perche = [
           <div><span id="cd-sec">00</span><small>Sec</small></div>
         </div>
         <a class="btn" href="#iscrizione">Prenota il tuo posto ora</a>
-        <p class="nota-caparra">Per bloccare effettivamente il posto è richiesta una piccola caparra di 100 PLN, scalata poi dal costo del corso: i gruppi sono piccoli e i posti sono pochi, quindi preferisco che restino a chi è pronto a cominciare davvero.</p>
       </div>
     </div>
   </section>
@@ -223,7 +224,6 @@ const perche = [
   .countdown div { display: flex; flex-direction: column; align-items: center; }
   .countdown span { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--red); }
   .countdown small { font-size: 0.7rem; color: var(--ink-soft); text-transform: uppercase; }
-  .nota-caparra { font-size: 0.78rem; color: var(--ink-soft); margin: 14px 0 0; line-height: 1.4; }
 
   @media (max-width: 980px) {
     .price-grid, .perche-grid { grid-template-columns: repeat(2, 1fr); }
