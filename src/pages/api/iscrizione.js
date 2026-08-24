@@ -17,6 +17,48 @@
 
 export const prerender = false;
 
+// Involucro grafico per le mail inviate alla persona iscritta: header con
+// logo su sfondo verde, corpo bianco, footer con i contatti. Usa solo
+// tecniche compatibili con i client email più diffusi (tabelle, stili
+// inline, niente CSS esterno/@import) e i colori del sito (vedi
+// src/styles/global.css). Il logo è caricato dall'URL pubblico del sito:
+// funziona una volta che il sito è online su quel dominio.
+function mailConfermaHtml(corpo) {
+  return `<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body style="margin:0; padding:0; background-color:#FAF6EF;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#FAF6EF; padding:32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px; background-color:#ffffff; border-radius:12px; overflow:hidden; border:1px solid #E1D5B8;">
+            <tr>
+              <td align="center" style="background-color:#2F6B4F; padding:28px 24px;">
+                <img src="https://www.italianoservito.it/logo.png" alt="L'Italiano è Servito" width="56" height="56" style="display:block; border-radius:50%; background-color:#ffffff;" />
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:32px 28px; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#2B241E; font-size:15px; line-height:1.65;">
+                ${corpo}
+              </td>
+            </tr>
+            <tr>
+              <td align="center" style="padding:20px 28px; background-color:#F1E9D8; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:12px; color:#5A5044;">
+                L'Italiano è Servito · Giada Longo<br>
+                <a href="https://www.italianoservito.it" style="color:#A63A32; text-decoration:none;">italianoservito.it</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>`;
+}
+
 export async function POST({ request, locals }) {
   try {
     const env = locals?.runtime?.env;
@@ -93,16 +135,16 @@ export async function POST({ request, locals }) {
         from: "L'Italiano è Servito <giada@italianoservito.it>",
         to: email,
         subject: 'Il tuo posto è prenotato! 🇮🇹',
-        html: `
-          <p>Ciao ${nome},</p>
-          <p>ho ricevuto la tua iscrizione al corso <strong>${percorso}</strong>: il tuo posto è prenotato.</p>
-          ${clubDelLibro ? '<p>Hai chiesto di abbinare anche il <strong>Club del Libro</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
-          ${teERiviste ? '<p>Hai chiesto di abbinare anche <strong>Tè e Riviste</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
-          ${messaggio ? `<p>Ho letto quello che mi hai scritto: <em>"${messaggio}"</em>, ne terrò conto quando ti risponderò.</p>` : ''}
-          <p>Un'ultima cosa importante: per bloccare effettivamente il posto ti chiederò una piccola caparra di 100 PLN, che verrà poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta dei semestri scorsi, in cui alcuni posti restavano bloccati da persone che poi non si presentavano più, togliendo spazio a chi invece lo desiderava davvero. I gruppi sono piccoli e i posti sono pochi, quindi preferisco che restino a chi è pronto a cominciare: ti spiegherò personalmente come versarla quando ci sentiamo.</p>
-          <p>Ti scrivo personalmente entro 24-48 ore, anche su WhatsApp al numero che mi hai lasciato, per confermarti tutti i dettagli e i prossimi passi.</p>
-          <p>A presto,<br>Giada</p>
-        `,
+        html: mailConfermaHtml(`
+          <p style="margin:0 0 18px; font-family: Georgia, 'Times New Roman', serif; font-size:21px; font-weight:600; color:#2F6B4F;">Ciao ${nome},</p>
+          <p style="margin:0 0 14px;">ho ricevuto la tua iscrizione al corso <strong>${percorso}</strong>: il tuo posto è prenotato.</p>
+          ${clubDelLibro ? '<p style="margin:0 0 14px;">Hai chiesto di abbinare anche il <strong>Club del Libro</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
+          ${teERiviste ? '<p style="margin:0 0 14px;">Hai chiesto di abbinare anche <strong>Tè e Riviste</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
+          ${messaggio ? `<p style="margin:0 0 14px;">Ho letto quello che mi hai scritto: <em>"${messaggio}"</em>, ne terrò conto quando ti risponderò.</p>` : ''}
+          <p style="margin:0 0 14px;">Un'ultima cosa importante: per bloccare effettivamente il posto ti chiederò una piccola caparra di 100 PLN, che verrà poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta dei semestri scorsi, in cui alcuni posti restavano bloccati da persone che poi non si presentavano più, togliendo spazio a chi invece lo desiderava davvero. I gruppi sono piccoli e i posti sono pochi, quindi preferisco che restino a chi è pronto a cominciare: ti spiegherò personalmente come versarla quando ci sentiamo.</p>
+          <p style="margin:0 0 14px;">Ti scrivo personalmente entro 24-48 ore, anche su WhatsApp al numero che mi hai lasciato, per confermarti tutti i dettagli e i prossimi passi.</p>
+          <p style="margin:24px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size:16px; color:#A63A32;">A presto,<br>Giada</p>
+        `),
       }),
     });
     if (!emailConfermaRes.ok) {
