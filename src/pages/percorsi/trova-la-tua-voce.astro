@@ -2,7 +2,7 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import SignupForm from '../../components/SignupForm.astro';
 import { corsi } from '../../data/corsi.js';
-import { corsiStagione } from '../../data/corsiStagione.js';
+import { corsiStagione, STAGIONE } from '../../data/corsiStagione.js';
 const c = corsi['trova-la-tua-voce'];
 const corsiDelPercorso = corsiStagione.filter((cs) => cs.tag === c.title);
 
@@ -62,11 +62,27 @@ const faqSchema = {
       <ul class="details">
         <li><strong>Formato:</strong> lezioni online in piccolo gruppo (salotto di conversazione, non lezione frontale)</li>
         <li><strong>Gruppo:</strong> massimo 6 persone</li>
-        <li><strong>Durata:</strong> <em>da definire</em></li>
-        <li><strong>Frequenza:</strong> <em>da definire</em></li>
-        <li><strong>Orario:</strong> <em>da definire</em></li>
-        <li><strong>Prezzo:</strong> <em>da definire</em></li>
       </ul>
+
+      <h2 style="margin-top:36px;">Le edizioni attive — {STAGIONE}</h2>
+      <div class="edizioni-grid">
+        {corsiDelPercorso.map((cs) => (
+          <div class="edizione-card">
+            <div class="edizione-head">{cs.orario}</div>
+            <div class="edizione-tag">
+              <span class="livello">{cs.livello}</span>
+              <span class="prezzo"><span class="currency">PLN</span>{cs.prezzo}</span>
+            </div>
+            <ul>
+              <li>{cs.tipo}</li>
+              <li>{cs.lezioni}</li>
+              <li>Giorno libero: {cs.giornoLibero}</li>
+            </ul>
+            <button type="button" class="btn small" data-corso={`${cs.tag} — ${cs.livello}`}>Prenota il tuo posto</button>
+          </div>
+        ))}
+      </div>
+
       <h2 style="margin-top:36px;">Cosa impari con me</h2>
       <ul class="temi">
         {c.temi.map(t => <li>{t}</li>)}
@@ -108,6 +124,21 @@ const faqSchema = {
   .benefit .quote { font-family: var(--font-display); font-style: italic; color: var(--ink); font-size: 1.1rem; line-height: 1.5; margin: 0; }
   .details, .temi { padding-left: 20px; color: var(--ink-soft); }
   .details li, .temi li { margin-bottom: 10px; }
+
+  /* Card delle edizioni — stesso linguaggio visivo del calendario in /landing-ads,
+     così le date/prezzi si presentano allo stesso modo ovunque sul sito. */
+  .edizioni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .edizione-card { background: #fff; border: 1px solid var(--card-line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+  .edizione-head { background: var(--red); color: #fff; text-align: center; font-weight: 600; font-size: 0.85rem; padding: 10px; }
+  .edizione-tag { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 0; }
+  .edizione-tag .livello { font-weight: 700; color: var(--green); font-size: 0.95rem; }
+  .edizione-tag .prezzo { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--red); }
+  .edizione-tag .currency { font-size: 0.78rem; color: var(--ink-soft); margin-right: 4px; font-family: var(--font-body); }
+  .edizione-card ul { list-style: none; margin: 0; padding: 12px 16px; border-top: 1px solid var(--card-line); margin-top: 12px; flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
+  .edizione-card li { font-size: 0.82rem; color: var(--ink-soft); padding-left: 14px; position: relative; }
+  .edizione-card li::before { content: "•"; position: absolute; left: 0; color: var(--red); }
+  .edizione-card .btn.small { margin: 0 16px 16px; text-align: center; font-size: 0.82rem; padding: 10px 16px; }
+
   details { border-top: 1px solid var(--card-line); padding: 16px 0; }
   summary { font-weight: 600; cursor: pointer; }
   details p { margin: 12px 0 0; color: var(--ink-soft); }

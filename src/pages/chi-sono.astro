@@ -12,8 +12,8 @@ import SafeSpace from '../components/SafeSpace.astro';
     <div class="wrap apertura-grid">
       <div class="reveal">
         <span class="eyebrow">Chi sono</span>
-        <h1>Sono Giada, insegnante certificata di italiano — ma prima ancora di essere la tua insegnante, sono stata per 7 anni una polacca d'adozione.</h1>
-        <p class="lede">Ho vissuto a Cracovia. Ho fatto la spesa in polacco, ho litigato in polacco, ho sognato — qualche volta — anche in polacco. E in mezzo a tutto questo, ho imparato una cosa che nei libri di didattica non si trova: so esattamente dove la lingua polacca ti mette i bastoni tra le ruote quando provi a diventare italiana anche solo per un'ora al giorno.</p>
+        <h1>Sono Giada, insegnante certificata di italiano — ma prima ancora di essere la tua insegnante, sono stata per quasi 7 anni una polacca d'adozione.</h1>
+        <p class="lede">Ho vissuto a Cracovia. Ho fatto la spesa in polacco, ho litigato in polacco, ho sognato — qualche volta — anche in polacco. E in mezzo a tutto questo, ho imparato una cosa che nei libri di didattica non si trova: so esattamente dove la lingua polacca ti mette i bastoni tra le ruote quando provi a immergerti nell'italiano anche solo per un'ora al giorno.</p>
       </div>
       <div class="photo main-photo torn-bottom reveal d1">
         <img src="/foto/giada-1.png" alt="Giada Longo" />
@@ -23,24 +23,33 @@ import SafeSpace from '../components/SafeSpace.astro';
 
   <Filmstrip />
 
+  <section class="storia-section">
+    <div class="storia-photo"><img src="/foto/giada-2.jpg" alt="Giada Longo" /></div>
+    <div class="storia-content">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--gold);">La storia, prima ancora della professione</span>
+        <h2>Mi sono laureata in Lingue Moderne, specializzazione in polacco e russo.</h2>
+        <p>Il mio percorso era già improntato alla didattica dell'italiano, e la mia tesi era dedicata proprio a come si studia la lingua italiana in Polonia. Poi la teoria è diventata vita vera: quasi 7 anni a Cracovia passati, tra le altre cose, a lavorare all'Istituto Italiano di Cultura, tra corsi, eventi e persone che come te si erano innamorate dell'Italia prima ancora di metterci piede.</p>
+        <p>Ho visto da vicino cosa funziona e cosa no quando una persona polacca prova a imparare l'italiano. Ho visto la frustrazione di fronte a grammatiche spiegate come fossero teoremi. Ho visto la paura di aprire bocca e sbagliare davanti a qualcuno. E ho capito che il problema, quasi sempre, non era la capacità di imparare — era il modo in cui gli veniva insegnato.</p>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="wrap narrow reveal">
-      <h2>La storia, prima ancora della professione</h2>
-      <p>Mi sono laureata in Lingue Moderne, specializzazione in polacco e russo — la mia tesi era già su come si insegna una lingua a chi ne parla un'altra completamente diversa nella struttura. Poi la teoria è diventata vita vera: 7 anni a Cracovia, e 6 di questi passati a lavorare all'Istituto Italiano di Cultura, tra corsi, eventi e persone — tantissime persone — che come te si erano innamorate dell'Italia prima ancora di metterci piede.</p>
-      <p>Ho visto da vicino cosa funziona e cosa no quando una persona polacca prova a imparare l'italiano. Ho visto la frustrazione di fronte a grammatiche spiegate come fossero teoremi. Ho visto la paura di aprire bocca e sbagliare davanti a qualcuno. E ho capito che il problema, quasi sempre, non era la capacità di imparare — era il modo in cui gli veniva insegnato.</p>
+      <h2>Il metodo</h2>
+      <p>Non insegno l'italiano come una lista di regole da memorizzare. Lo insegno come un modo di stare al mondo, di vivere la lingua italiana e l'Italia in tutte le sfaccettature possibili.</p>
+      <p>Il vantaggio di aver vissuto "dall'altra parte" è che non ti spiego l'italiano come farebbe una persona madrelingua qualunque a uno studente straniero. Te lo spiego partendo da dove sei tu adesso, da come pensa la tua testa quando pensa in polacco, e costruisco un ponte da lì.</p>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <div class="section-head reveal">
-        <h2>Perché è diverso</h2>
-      </div>
       <div class="pillars">
         <div class="pillar-card reveal">
           <div class="mark">🎓</div>
           <h3>Competenza certificata</h3>
-          <p>Laurea in Lingue Moderne, specializzazione slava, tesi sulla didattica dell'italiano a studenti polacchi.</p>
+          <p>Laurea in Lingue Moderne, specializzazione slava, tesi sulla didattica dell'italiano a studenti polacchi, master in didattica dell'italiano a stranieri.</p>
         </div>
         <div class="pillar-card reveal d1">
           <div class="mark" style="background:var(--red);">🏛️</div>
@@ -50,14 +59,14 @@ import SafeSpace from '../components/SafeSpace.astro';
         <div class="pillar-card reveal d2">
           <div class="mark" style="background:var(--gold);">🇵🇱</div>
           <h3>Comprensione autentica</h3>
-          <p>7 anni vissuti in Polonia: non conosco solo la lingua, conosco la mentalità.</p>
+          <p>7 anni vissuti in Polonia: non conosco solo la lingua, conosco la cultura, la storia, la mentalità.</p>
         </div>
       </div>
     </div>
   </section>
 
   <SafeSpace
-    quote="Con me, sbagliare non è un fallimento — è la prova che ci stai provando. Le lezioni sono piccoli salotti di conversazione, massimo 6 persone, pensati apposta perché tu possa aprire bocca senza il terrore del giudizio."
+    quote="Con me, sbagliare non è un fallimento — è la prova che stai imparando. Le lezioni sono piccoli salotti, massimo 6 persone, pensati apposta perché tu possa parlare senza il terrore di essere giudicato."
   />
 
   <section>
@@ -81,6 +90,22 @@ import SafeSpace from '../components/SafeSpace.astro';
   .narrow { max-width: 720px; margin: 0 auto; }
   .narrow p { margin-bottom: 20px; color: var(--ink-soft); }
   .narrow h2 { margin-bottom: 20px; font-size: clamp(1.4rem,2.4vw,1.9rem); }
+
+  /* Blocco "La storia" — stesso trattamento rosso a tutta larghezza della
+     sezione storia in /landing-ads, ripreso qui su richiesta di Stefano. */
+  .storia-section {
+    background: var(--red); color: #fff;
+    display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; align-items: center;
+    padding: 60px 6vw; margin: 40px 0;
+  }
+  .storia-photo { border-radius: 6px; overflow: hidden; height: 340px; }
+  .storia-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+  .storia-content h2 { color: #fff; font-size: clamp(1.3rem,2.2vw,1.7rem); margin: 8px 0 16px; }
+  .storia-content p { color: #F5E4DC; font-size: 0.95rem; margin-bottom: 14px; }
+  @media (max-width: 900px) {
+    .storia-section { grid-template-columns: 1fr; padding: 40px 24px; }
+    .storia-photo { height: 240px; }
+  }
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .pillar-card { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 28px 24px; }
   .pillar-card .mark { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--green); color: #fff; font-size: 1.2rem; margin-bottom: 16px; }

@@ -5,13 +5,34 @@ import PromiseCards from '../components/PromiseCards.astro';
 import CourseCards from '../components/CourseCards.astro';
 import SafeSpace from '../components/SafeSpace.astro';
 import Testimonials from '../components/Testimonials.astro';
-import { faq } from '../data/faq.js';
 
-const faqHome = faq.slice(0, 4);
+// Le 3 FAQ qui sotto sono pensate apposta per la Home (taglio più "da campagna",
+// pensate anche per un assistente AI che cerca risposte rapide) e restano
+// distinte da quelle generali in src/data/faq.js, usate sulla pagina /faq.
+const faqHome = [
+  {
+    q: 'Cosa succede se ho paura di parlare?',
+    a: 'È il punto di partenza più comune, non un ostacolo. Nei primi incontri lavoro apposta per abbassare la pressione: si parla un po\', si ascolta tanto, e la fiducia cresce lezione dopo lezione.',
+  },
+  {
+    q: 'Come si svolgono le lezioni per studenti polacchi?',
+    a: 'Costruisco le lezioni tenendo conto delle difficoltà specifiche di chi parte dal polacco e le affronto insieme a te con paragoni che a me, come madrelingua italiana, non sarebbero mai venuti in mente prima di studiare la lingua polacca e vivere in Polonia.',
+  },
+  {
+    q: 'Devo già sapere un po\' di italiano per iniziare?',
+    a: 'No. Ho pensato "Sbloccati da Zero" apposta per chi parte da zero assoluto.',
+  },
+];
 ---
 
 <MainLayout>
   <Hero ctaHref="/landing-ads" />
+
+  <section class="promessa">
+    <div class="wrap narrow reveal">
+      <p>Non ti insegnerò solo la grammatica. Ti accompagnerò a costruire la sicurezza per tentare, sbagliare, ridere dell'errore e riprovare — finché l'italiano non sarà più "una lingua straniera da studiare", ma un pezzo di te.</p>
+    </div>
+  </section>
 
   <PromiseCards />
 
@@ -19,7 +40,7 @@ const faqHome = faq.slice(0, 4);
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow">I percorsi</span>
-        <h2>Non troverai corsi "di livello".<br>Troverai percorsi pensati per te.</h2>
+        <h2>Non ho creato semplici corsi "di livello".<br>Ho pensato dei percorsi per la persona che sei oggi.</h2>
       </div>
       <CourseCards />
     </div>
@@ -53,14 +74,14 @@ const faqHome = faq.slice(0, 4);
     <div class="wrap finale-grid">
       <div class="chi-teaser reveal">
         <span class="eyebrow">Chi sono</span>
-        <h2>Prima di essere la tua insegnante,<br>sono stata per 7 anni una polacca d'adozione.</h2>
+        <h2>Prima di essere la tua insegnante,<br>sono stata per quasi 7 anni una polacca d'adozione.</h2>
         <p>Ho vissuto a Cracovia, ho lavorato all'Istituto Italiano di Cultura, e so esattamente dove la lingua polacca ti mette i bastoni tra le ruote quando provi a parlare italiano.</p>
         <a class="btn ghost" href="/chi-sono">Scopri la mia storia →</a>
       </div>
       <div class="approf-teaser reveal d1">
         <span class="eyebrow">Approfondimenti</span>
         <h2>Un po' di Italia anche fuori dalle lezioni</h2>
-        <p>Grammatica senza stress, vita in Italia, storie e cucina: piccole letture per restare in contatto con l'italiano anche tra una lezione e l'altra.</p>
+        <p>Grammatica senza stress, storie, cucina, vita vera: piccole letture per restare in contatto con l'italiano anche tra una lezione e l'altra.</p>
         <a class="btn ghost" href="/approfondimenti">Scopri gli approfondimenti →</a>
       </div>
     </div>
@@ -75,6 +96,10 @@ const faqHome = faq.slice(0, 4);
   /* Ritmo cromatico tra le sezioni della home: alterno crema (--bg) e beige
      caldo (--card), palette già esistente nel design system — nessun colore
      nuovo. Il rosso resta riservato solo alle CTA (vedi global.css). */
+  .promessa { padding: 8px 0 6px; }
+  .promessa .narrow { max-width: 700px; margin: 0 auto; text-align: center; }
+  .promessa p { font-family: var(--font-display); font-style: italic; color: var(--ink); font-size: clamp(1.05rem,1.6vw,1.25rem); line-height: 1.55; margin: 0; }
+
   #percorsi { background: var(--card); }
   .faq-home { background: var(--card); padding: 54px 0 74px; }
 

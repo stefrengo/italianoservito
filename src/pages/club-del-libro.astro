@@ -1,40 +1,77 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import SignupForm from '../components/SignupForm.astro';
+import { corsiDolce } from '../data/corsiStagione.js';
 ---
 
-<MainLayout title="Club del Libro — L'Italiano è Servito" description="Un incontro ogni due settimane per leggere, commentare e parlare italiano attorno a un libro.">
+<MainLayout title="Club del Libro e club tematici — L'Italiano è Servito" description="Il Club del Libro e Tè e Riviste: incontri di conversazione ogni due settimane per non perdere quello che hai costruito a lezione.">
   <section class="apertura">
     <div class="wrap apertura-grid">
-      <div>
+      <div class="reveal">
         <span class="eyebrow">Bonus</span>
-        <h1>Club del Libro</h1>
-        <p class="lede">Un incontro ogni due settimane per leggere, commentare e parlare italiano attorno a un libro — non una lezione, una scusa bellissima per restare in contatto con la lingua.</p>
-        <a class="btn" href="/contatti">Unisciti al Club del Libro</a>
+        <h1>Club del Libro e club tematici</h1>
+        <p class="lede">Un incontro ogni due settimane per leggere, commentare e parlare italiano attorno a un libro o a una rivista — non una lezione, una scusa bellissima per restare in contatto con la lingua.</p>
+        <a class="btn" href="#iscrizione">Unisciti al Club</a>
       </div>
-      <div class="photo hero-photo torn-bottom">
+      <div class="photo hero-photo torn-bottom reveal d1">
         <img src="/foto/giada-3-libro.jpg" alt="Giada Longo con un libro" style="object-position:center 12%;" />
       </div>
     </div>
   </section>
 
   <section>
-    <div class="wrap narrow">
+    <div class="wrap narrow reveal">
       <h2>Perché partecipare</h2>
-      <p>Non è un corso di livello, è uno spazio di continuità. Molte persone finiscono un percorso e poi, senza pratica costante, sentono la lingua sfumare via. Il Club del Libro è il modo più piacevole per non perdere quello che hai costruito — leggendo, parlando, confrontandoti con altre persone che come te amano l'Italia.</p>
+      <p>Non sono corsi di livello, sono uno spazio di continuità. Molte persone finiscono un percorso e poi, senza pratica costante, sentono la lingua sfumare via. Il Club del Libro e Tè e Riviste sono il modo più piacevole per non perdere quello che hai costruito — leggendo, parlando, confrontandoti con altre persone che come te amano l'Italia.</p>
     </div>
   </section>
 
   <section>
-    <div class="wrap narrow">
+    <div class="wrap narrow reveal">
       <h2>Come funziona</h2>
       <ul class="details">
-        <li><strong>Formato:</strong> incontro online di discussione, ogni due settimane</li>
+        <li><strong>Formato:</strong> incontro online di discussione, circa ogni due settimane</li>
         <li><strong>Gruppo:</strong> piccolo, stesso spirito "salotto" degli altri percorsi</li>
-        <li><strong>Livello consigliato:</strong> <em>da definire</em></li>
-        <li><strong>Prezzo:</strong> <em>da definire</em></li>
+        <li><strong>Bundle:</strong> abbinando un club a un corso standard hai un prezzo scontato (te lo confermo via email)</li>
       </ul>
     </div>
   </section>
+
+  <section>
+    <div class="wrap reveal">
+      <div class="edizioni-grid">
+        {corsiDolce.map((cl) => (
+          <div class="edizione-card">
+            <div class="edizione-head">
+              {cl.tag} — {cl.edizione}
+              {cl.novita && <span class="novita">Novità</span>}
+            </div>
+            <div class="edizione-body">
+              <p class="come-funziona">{cl.comeFunziona}</p>
+              <ul>
+                <li><strong>Livello:</strong> {cl.livello}</li>
+                <li><strong>Orario:</strong> {cl.orario}</li>
+                <li><strong>Calendario:</strong> {cl.calendario}</li>
+                <li><strong>{cl.lezioni} lezioni</strong> da {cl.minuti} minuti</li>
+              </ul>
+              <div class="prezzi">
+                <div class="prezzo-singolo"><span class="currency">PLN</span>{cl.prezzo}<small>da solo</small></div>
+                <div class="prezzo-bundle"><span class="currency">PLN</span>{cl.prezzoBundle}<small>in bundle con un corso standard</small></div>
+              </div>
+              <button type="button" class="btn small" data-corso={`${cl.tag} — ${cl.livello}`}>Prenota il tuo posto</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SignupForm
+    corsi={corsiDolce}
+    titolo="Iscriviti al Club del Libro o a Tè e Riviste"
+    intro="Compila il modulo per prenotare il tuo posto: non è una semplice richiesta di informazioni, è la tua iscrizione. Ti confermo tutto via email appena la ricevo."
+    fonte="club-del-libro"
+  />
 </MainLayout>
 
 <style>
@@ -46,6 +83,32 @@ import MainLayout from '../layouts/MainLayout.astro';
   h2 { margin-bottom: 16px; font-size: clamp(1.3rem,2.2vw,1.7rem); }
   .details { padding-left: 20px; color: var(--ink-soft); }
   .details li { margin-bottom: 10px; }
+
+  /* Card delle edizioni Dolce — stesso linguaggio visivo del calendario in
+     /landing-ads e nelle pagine /percorsi/*, ma con lo spazio in più che serve
+     per "come funziona" e i due prezzi (singolo / bundle). */
+  .edizioni-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .edizione-card { background: #fff; border: 1px solid var(--card-line); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+  .edizione-head {
+    background: var(--red); color: #fff; font-weight: 600; font-size: 0.95rem;
+    padding: 14px 18px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .edizione-head .novita {
+    background: var(--gold); color: var(--ink); font-size: 0.7rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.03em; padding: 3px 8px; border-radius: 20px;
+  }
+  .edizione-body { padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+  .come-funziona { color: var(--ink-soft); font-size: 0.92rem; margin: 0; }
+  .edizione-body ul { list-style: none; margin: 0; padding: 14px 0; border-top: 1px solid var(--card-line); display: flex; flex-direction: column; gap: 8px; }
+  .edizione-body li { font-size: 0.88rem; color: var(--ink-soft); }
+  .prezzi { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .prezzi > div { background: var(--card); border-radius: var(--radius); padding: 12px 14px; text-align: center; }
+  .prezzi .currency { font-size: 0.72rem; color: var(--ink-soft); margin-right: 3px; }
+  .prezzo-singolo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--red); }
+  .prezzo-bundle { font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--green); }
+  .prezzi small { display: block; font-family: var(--font-body); font-size: 0.7rem; color: var(--ink-soft); font-weight: 400; margin-top: 4px; }
+  .edizione-card .btn.small { align-self: flex-start; font-size: 0.85rem; padding: 11px 18px; }
+
   @media (max-width: 900px) {
     .apertura-grid { grid-template-columns: 1fr; }
     .hero-photo { order: -1; height: 260px; }

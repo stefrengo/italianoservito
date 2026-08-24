@@ -6,7 +6,7 @@
 // campagna estiva (già conclusa): da riempire con i dati veri del semestre in corso.
 import MainLayout from '../layouts/MainLayout.astro';
 import SignupForm from '../components/SignupForm.astro';
-import { STAGIONE, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione } from '../data/corsiStagione.js';
+import { STAGIONE, PERIODO, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione } from '../data/corsiStagione.js';
 
 const perche = [
   { titolo: 'Madrelingua con esperienza', testo: "8 anni di insegnamento a persone adulte di ogni livello linguistico." },
@@ -101,7 +101,7 @@ const perche = [
       <div class="reveal">
         <h2>Dettagli</h2>
         <ul class="dettagli-list">
-          <li>📅 {STAGIONE} — <em>[intervallo date]</em></li>
+          <li>📅 {STAGIONE} — {PERIODO}</li>
           <li>💻 Online su Zoom</li>
           <li>🧑‍🏫 Posti limitati</li>
         </ul>
