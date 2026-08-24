@@ -129,7 +129,7 @@ export async function POST({ request, locals }) {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
       },
       body: JSON.stringify({
         from: "L'Italiano è Servito <giada@italianoservito.it>",
@@ -142,7 +142,7 @@ export async function POST({ request, locals }) {
           ${teERiviste ? '<p style="margin:0 0 14px;">Hai chiesto di abbinare anche <strong>Tè e Riviste</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
           ${messaggio ? `<p style="margin:0 0 14px;">Ho letto quello che mi hai scritto: <em>"${messaggio}"</em>, ne terrò conto quando ti risponderò.</p>` : ''}
           <p style="margin:0 0 14px;">Un'ultima cosa importante: per bloccare effettivamente il posto ti chiederò una piccola caparra di 100 PLN, che verrà poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta dei semestri scorsi, in cui alcuni posti restavano bloccati da persone che poi non si presentavano più, togliendo spazio a chi invece lo desiderava davvero. I gruppi sono piccoli e i posti sono pochi, quindi preferisco che restino a chi è pronto a cominciare: ti spiegherò personalmente come versarla quando ci sentiamo.</p>
-          <p style="margin:0 0 14px;">Ti scrivo personalmente entro 24-48 ore, anche su WhatsApp al numero che mi hai lasciato, per confermarti tutti i dettagli e i prossimi passi.</p>
+          <p style="margin:0 0 14px;">Ti scrivo personalmente entro 24-48 ore per confermarti tutti i dettagli e i prossimi passi.</p>
           <p style="margin:24px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size:16px; color:#A63A32;">A presto,<br>Giada</p>
         `),
       }),
@@ -156,13 +156,18 @@ export async function POST({ request, locals }) {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
       },
       body: JSON.stringify({
         from: 'Sito L\'Italiano è Servito <notifiche@italianoservito.it>',
         to: env.GIADA_NOTIFICATION_EMAIL,
         subject: `Nuova richiesta: ${nome} · ${percorso}${clubDelLibro ? ' + Club del Libro' : ''}${teERiviste ? ' + Tè e Riviste' : ''}`,
-        html: `
+        html: `<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
           <p>Nuova iscrizione (fonte: ${fonte}):</p>
           <ul>
             <li><strong>Nome:</strong> ${nome}</li>
@@ -175,7 +180,8 @@ export async function POST({ request, locals }) {
             ${obiettivo ? `<li><strong>Obiettivo:</strong> ${obiettivo}</li>` : ''}
             ${messaggio ? `<li><strong>Messaggio:</strong> ${messaggio}</li>` : ''}
           </ul>
-        `,
+  </body>
+</html>`,
       }),
     });
     if (!emailNotificaRes.ok) {
