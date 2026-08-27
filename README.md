@@ -4,7 +4,7 @@ Sito costruito con [Astro](https://astro.build) (output `hybrid`: pagine statich
 
 ## Cosa c'è dentro
 
-- `src/pages/` — tutte le pagine del sito (Home, Chi Sono, i 3 Percorsi, Approfondimenti, Club del Libro, Contatti)
+- `src/pages/` — tutte le pagine del sito (Home, Chi Sono, i 3 Percorsi, Club del Libro, Contatti)
 - `src/components/` — pezzi riutilizzabili (Navbar, Footer, Hero, card corsi/promesse)
 - `src/data/corsi.js` — i testi dei 3 percorsi in un unico posto: modifica qui invece che nelle 3 pagine separate
 - `src/styles/global.css` — palette, font e l'"anello conviviale" (l'elemento visivo ripreso dal logo)

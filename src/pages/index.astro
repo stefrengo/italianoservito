@@ -78,12 +78,6 @@ const faqHome = [
         <p>Ho vissuto a Cracovia, ho lavorato all'Istituto Italiano di Cultura, e so esattamente dove la lingua polacca ti mette i bastoni tra le ruote quando provi a parlare italiano.</p>
         <a class="btn ghost" href="/chi-sono">Scopri la mia storia →</a>
       </div>
-      <div class="approf-teaser reveal d1">
-        <span class="eyebrow">Approfondimenti</span>
-        <h2>Un po' di Italia anche fuori dalle lezioni</h2>
-        <p>Grammatica senza stress, storie, cucina, vita vera: piccole letture per restare in contatto con l'italiano anche tra una lezione e l'altra.</p>
-        <a class="btn ghost" href="/approfondimenti">Scopri gli approfondimenti →</a>
-      </div>
     </div>
     <div class="wrap reveal d2" style="text-align:center; margin-top:50px;">
       <h2 style="margin-bottom:24px;">Non serve la perfezione.<br>Basta il primo passo.</h2>
@@ -110,16 +104,13 @@ const faqHome = [
   .faq-home-list details p { margin: 12px 0 0; color: var(--ink-soft); line-height: 1.6; }
 
   .finale { padding: 60px 0 80px; }
-  .finale-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
-  .chi-teaser, .approf-teaser {
+  .finale-grid { display: flex; justify-content: center; }
+  .chi-teaser {
     display: flex; flex-direction: column; align-items: flex-start;
     background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius);
-    padding: 34px 32px;
+    padding: 34px 32px; max-width: 620px;
   }
   .finale-grid h2 { font-size: clamp(1.25rem,2vw,1.55rem); margin: 6px 0 14px; }
   .finale-grid p { color: var(--ink-soft); font-size: 0.94rem; margin-bottom: 18px; }
-  .chi-teaser .btn, .approf-teaser .btn { margin-top: auto; }
-  @media (max-width: 820px) {
-    .finale-grid { grid-template-columns: 1fr; gap: 34px; }
-  }
+  .chi-teaser .btn { margin-top: auto; }
 </style>

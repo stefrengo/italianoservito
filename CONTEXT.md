@@ -23,18 +23,17 @@ Sito web per "L'Italiano è Servito", scuola di italiano online di Giada Longo (
 - **Linguaggio neutro**: evitare forme tipo "persa/o" — riformulare per evitare l'accordo di genere (es. "senza mai perderti" invece di "senza sentirti persa/o")
 
 ## Architettura del sito
-- **Menu**: Home · Chi Sono · I Percorsi (dropdown: 3 corsi + Club del Libro) · Approfondimenti · Contatti, più una voce evidenziata a bottone che punta a `/landing-ads` (oggi "Corsi I semestre 2026/27" — da aggiornare ogni campagna)
+- **Menu**: Home · Chi Sono · I Percorsi (dropdown: 3 corsi + Club del Libro) · Contatti, più una voce evidenziata a bottone che punta a `/landing-ads` (oggi "Corsi I semestre 2026/27" — da aggiornare ogni campagna)
 - **`/landing-ads`**: pagina FUORI dal menu, punto di atterraggio per le sponsorizzate social. Molto ispirata a una pagina reale del vecchio sito (italianoservito.it/corsi-di-italiano-estate-2026...). Contiene ancora placeholder tra `[parentesi quadre]` per date/orari/prezzi del prossimo semestre — vanno riempiti con i dati veri di Giada prima del lancio
-- **Approfondimenti**: in stile "news" (categorie, tag, card), NON un blog attivo — 9 articoli evergreen pensati, i testi completi sono nel documento Word consegnato a Giada, non ancora nel sito
+- **Approfondimenti**: sezione rimossa su richiesta di Stefano (le 10 pagine, la voce di menu e tutti i link interni sono stati eliminati) — non riproporla senza una richiesta esplicita
 
 ## Cosa manca prima del lancio (in ordine di priorità)
 1. Dati veri della landing ads (prezzi, orari, date, scadenza iscrizioni — oggi placeholder)
 2. ~~Collegare davvero Supabase + Resend~~ — fatto: progetto Supabase `italiano-servito` attivo con tabella `leads` (RLS on), dominio `italianoservito.it` verificato su Resend, variabili d'ambiente impostate sul Worker Cloudflare. Endpoint `/api/iscrizione` migrato da Pages Function a route Astro on-demand per essere compatibile col deploy reale (vedi Stack tecnico sopra)
 3. Foto reali mancanti (segnaposto testurizzati ancora presenti in alcune sezioni, es. "tavola imbandita")
-4. Testi completi dei 9 articoli di Approfondimenti (già scritti nel Word doc consegnato a Giada, da trasferire nel sito)
-5. Traduzioni PL/EN
-6. Revisione di Giada sui testi (le è stato consegnato un .docx separato con tutti i contenuti)
-7. ~~Rimuovere `.github/workflows/deploy.yml`~~ — fatto: era un residuo di un tentativo precedente su GitHub Pages, non collegato al deploy reale su Cloudflare
+4. Traduzioni PL/EN
+5. Revisione di Giada sui testi (le è stato consegnato un .docx separato con tutti i contenuti) — prima tornata di correzioni già applicata
+6. ~~Rimuovere `.github/workflows/deploy.yml`~~ — fatto: era un residuo di un tentativo precedente su GitHub Pages, non collegato al deploy reale su Cloudflare
 
 ## Cose esplicitamente scartate (per non riproporle)
 - WordPress/Divi — abbandonato in favore di Astro
