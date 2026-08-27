@@ -23,16 +23,17 @@ Sito web per "L'Italiano è Servito", scuola di italiano online di Giada Longo (
 - **Linguaggio neutro**: evitare forme tipo "persa/o" — riformulare per evitare l'accordo di genere (es. "senza mai perderti" invece di "senza sentirti persa/o")
 
 ## Architettura del sito
-- **Menu**: Home · Chi Sono · I Percorsi (dropdown: 3 corsi + Club del Libro) · Contatti, più una voce evidenziata a bottone che punta a `/landing-ads` (oggi "Corsi I semestre 2026/27" — da aggiornare ogni campagna)
-- **`/landing-ads`**: pagina FUORI dal menu, punto di atterraggio per le sponsorizzate social. Molto ispirata a una pagina reale del vecchio sito (italianoservito.it/corsi-di-italiano-estate-2026...). Contiene ancora placeholder tra `[parentesi quadre]` per date/orari/prezzi del prossimo semestre — vanno riempiti con i dati veri di Giada prima del lancio
+- **Menu**: Home · Chi Sono · I Percorsi (dropdown: 3 corsi + Club del Libro) · FAQ · Contatti, più una voce evidenziata a bottone che punta a `/offerta-formativa` (oggi "Corsi I semestre 2026/27" — da aggiornare ogni campagna)
+- **`/offerta-formativa`**: pagina FUORI dal menu, punto di atterraggio per le sponsorizzate social. Si chiamava `/landing-ads`, rinominata ad agosto 2026: il vecchio URL fa redirect 301 permanente via `public/_redirects` (sintassi Cloudflare Workers Static Assets), quindi eventuali ads/link esterni già attivi non si rompono. Molto ispirata a una pagina reale del vecchio sito (italianoservito.it/corsi-di-italiano-estate-2026...). Contiene ancora placeholder tra `[parentesi quadre]` per date/orari/prezzi del prossimo semestre — vanno riempiti con i dati veri di Giada prima del lancio
+- **`/faq`**: pagina di FAQ generali (distinta dalle 3 FAQ mostrate in Home, pensate per un taglio più "da campagna"), con FAQPage JSON-LD per la SEO/GEO. Le risposte sono in `src/data/faq.js`
 - **Approfondimenti**: sezione rimossa su richiesta di Stefano (le 10 pagine, la voce di menu e tutti i link interni sono stati eliminati) — non riproporla senza una richiesta esplicita
 
 ## Cosa manca prima del lancio (in ordine di priorità)
-1. Dati veri della landing ads (prezzi, orari, date, scadenza iscrizioni — oggi placeholder)
+1. Dati veri della landing (prezzi, orari, date, scadenza iscrizioni — oggi placeholder)
 2. ~~Collegare davvero Supabase + Resend~~ — fatto: progetto Supabase `italiano-servito` attivo con tabella `leads` (RLS on), dominio `italianoservito.it` verificato su Resend, variabili d'ambiente impostate sul Worker Cloudflare. Endpoint `/api/iscrizione` migrato da Pages Function a route Astro on-demand per essere compatibile col deploy reale (vedi Stack tecnico sopra)
 3. Foto reali mancanti (segnaposto testurizzati ancora presenti in alcune sezioni, es. "tavola imbandita")
-4. Traduzioni PL/EN
-5. Revisione di Giada sui testi (le è stato consegnato un .docx separato con tutti i contenuti) — prima tornata di correzioni già applicata
+4. **Traduzioni PL/EN — IN CORSO (ago 2026)**. Scope deciso con Stefano: NON tutto il sito, ma solo 4 pagine in entrambe le lingue — Home, Chi Sono, FAQ, Offerta Formativa (niente pagine `/percorsi/*`, niente `/contatti`, niente `/club-del-libro` in PL/EN). Stessi slug sotto `/pl/` e `/en/` di quelli italiani (i18n Astro già configurato in `astro.config.mjs`). Workflow: bozza di testo in un .md da far rivedere a Stefano/Giada/madrelingua polacca PRIMA di costruire le pagine (mai saltare questo passaggio). Bozza consegnata: `traduzioni-pl-en-bozza.md` nella root del repo (Home, Chi Sono, FAQ, Offerta Formativa, Grazie multilingua, stringhe di Navbar/Footer/SignupForm) — in attesa di revisione, NON ancora approvata, NON ancora costruita sul sito. Note aperte in quel file: (a) le testimonianze di Kamila/Małgosia in Home servono nel testo originale polacco, non vanno ritradotte a ritroso dall'italiano; (b) la sezione "I percorsi" della Home in PL/EN è stata adattata a un blocco unico verso Offerta Formativa, non la griglia a 4 tile (perché le pagine percorso non sono tradotte); (c) la pagina Grazie resta UNICA per le 3 lingue (richiesta esplicita di Stefano), proposta: riconoscimento lingua da referrer con tutti e 3 i testi nell'HTML come fallback
+5. Revisione di Giada sui testi (le è stato consegnato un .docx separato con tutti i contenuti) — prime due tornate di correzioni già applicate (vedi git log)
 6. ~~Rimuovere `.github/workflows/deploy.yml`~~ — fatto: era un residuo di un tentativo precedente su GitHub Pages, non collegato al deploy reale su Cloudflare
 
 ## Cose esplicitamente scartate (per non riproporle)
