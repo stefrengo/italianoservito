@@ -2,15 +2,20 @@
 // percorso — quelle sono già in corsi.js). Le risposte sono scritte per rispondere
 // bene sia a chi legge sul sito sia a un assistente AI che cerca "come imparare
 // l'italiano" per un pubblico polacco: frase diretta, risposta completa in sé.
+//
+// Le risposte con un link (mailto: o pagine interne) contengono markup HTML e
+// vanno renderizzate con set:html, non interpolate come testo semplice — vedi
+// src/pages/faq.astro. Nota: il link a "pagina dei corsi attivi" punta ancora
+// a /landing-ads in attesa di conferma sul nuovo URL /offerta-formativa.
 
 export const faq = [
   {
     q: "Le lezioni sono individuali o di gruppo?",
-    a: "Tutti i corsi de \"L'Italiano è Servito\" sono lezioni di gruppo, mai individuali: piccoli gruppi online, da 3 a un massimo di 6 persone. È una scelta precisa, non un limite: credo nel potere dell'interazione tra le persone. Si impara di più, e più in fretta, parlando con altri che stanno affrontando le tue stesse difficoltà, non ripetendo frasi a un'insegnante in solitudine davanti a uno schermo.",
+    a: "Tutti i corsi de \"L'Italiano è Servito\" sono lezioni di gruppo, mai individuali: piccoli gruppi online, da 3 a un massimo di 6 persone. È una scelta precisa, non un limite: credo nel potere dell'interazione tra le persone. Si impara di più, e più in fretta, parlando con altri che stanno affrontando le tue stesse difficoltà.",
   },
   {
     q: "Perché scegliere un corso di gruppo invece di un'insegnante privata?",
-    a: "Perché la lingua si allena parlando con altre persone, non recitando a memoria davanti a una sola interlocutrice. In un piccolo gruppo ti confronti, ascolti come si esprimono altri al tuo livello, ti correggi a vicenda e, soprattutto, ti alleni a sostenere una vera conversazione, non solo a rispondere a domande. È lo stesso principio su cui ho costruito il mio metodo, maturato in anni di insegnamento in Polonia.",
+    a: "Perché la lingua si allena parlando con altre persone. In un piccolo gruppo ti confronti, ascolti come si esprimono altri al tuo livello e, soprattutto, ti alleni a sostenere una vera conversazione. È lo stesso principio su cui ho costruito il mio metodo, maturato in anni di insegnamento in Polonia.",
   },
   {
     q: "Come si svolgono i corsi e su quale piattaforma?",
@@ -18,15 +23,15 @@ export const faq = [
   },
   {
     q: "Che livello di italiano serve per iniziare?",
-    a: "Nessuno. \"Sbloccati da Zero\" è pensato proprio per chi non ha mai parlato italiano o ha provato altri corsi e ha mollato. Da lì in poi ci sono percorsi per ogni livello, da A1 a C2: \"Trova la tua Voce\" per chi ha le basi ma si blocca a parlare, \"Esplora la Lingua\" per chi vuole cogliere le sfumature culturali più fini. In caso di dubbio, una lezione conoscitiva aiuta a capire da dove partire.",
+    a: "Nessuno. \"Sbloccati da Zero\" è pensato proprio per chi non ha mai parlato italiano o ha solo provato. Da lì in poi ci sono percorsi per ogni livello, da B1 a C2: \"Trova la tua Voce\" per chi ha le basi ma si blocca a parlare, \"Esplora la Lingua\" per chi vuole cogliere le sfumature culturali più fini. In caso di dubbio, un incontro conoscitivo aiuta a capire da dove partire.",
   },
   {
     q: "Le spiegazioni sono disponibili anche in polacco?",
-    a: "Sì. Ho vissuto sette anni in Polonia, di cui sei lavorando all'Istituto Italiano di Cultura di Cracovia, e so esattamente dove la struttura del polacco complica l'apprendimento dell'italiano. Quando serve, spiego la grammatica più ostica partendo proprio da come funziona in polacco, non da un manuale italiano tradotto.",
+    a: "Sì. Ho vissuto sette anni in Polonia, di cui sei lavorando all'Istituto Italiano di Cultura di Cracovia, e so esattamente dove la struttura del polacco complica l'apprendimento dell'italiano. Quando serve, spiego la grammatica più ostica partendo proprio da un paragone con il polacco, non da un manuale italiano tradotto.",
   },
   {
     q: "Quanto costano i corsi e quando iniziano?",
-    a: "Prezzi, orari e date cambiano a ogni edizione: li trovi sempre aggiornati nella pagina dei corsi in corso, con posti limitati per garantire gruppi piccoli. Per qualsiasi dubbio si può scrivere direttamente a giada@italianoservito.it.",
+    a: 'Prezzi, orari e date cambiano a ogni edizione: li trovi sempre aggiornati nella pagina dei corsi in programma, con posti limitati per garantire gruppi piccoli. Per qualsiasi dubbio si può scrivere direttamente a <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a>.',
   },
   {
     q: "Cosa succede se sbaglio o ho paura di parlare davanti agli altri?",
@@ -34,10 +39,10 @@ export const faq = [
   },
   {
     q: "Come mi iscrivo a un corso?",
-    a: "Si compila il modulo nella pagina dei corsi attivi o nella pagina Contatti: dopo l'iscrizione arriva una conferma via email con tutti i dettagli per partecipare.",
+    a: 'Si compila il modulo nella <a href="/landing-ads">pagina dei corsi attivi</a> o nella pagina <a href="/contatti">Contatti</a>: dopo l\'iscrizione arriva una conferma via email con tutti i dettagli per partecipare.',
   },
   {
     q: "Devo versare una caparra per confermare il mio posto?",
-    a: "Sì: per bloccare effettivamente il posto è richiesta una piccola caparra di 100 PLN, che viene poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta: in passato alcune persone si sono iscritte prenotando un posto e poi non si sono più presentate, lasciando fuori chi invece lo desiderava davvero. Visto che i gruppi sono piccoli e i posti sono pochi, è giusto che restino a chi è pronto a iniziare. I dettagli su come versarla vengono spiegati personalmente al momento della conferma.",
+    a: "Sì: per bloccare effettivamente il posto è richiesta una caparra di 100 PLN, che viene poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta: in passato alcune persone si sono iscritte prenotando un posto e poi non si sono più presentate, lasciando fuori chi invece lo desiderava davvero. Visto che i gruppi sono piccoli e i posti sono pochi, è giusto che restino a chi è pronto a iniziare. I dettagli su come versarla vengono spiegati personalmente al momento della conferma.",
   },
 ];

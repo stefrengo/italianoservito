@@ -10,7 +10,7 @@ import { corsiDolce } from '../data/corsiStagione.js';
       <div class="reveal">
         <span class="eyebrow">Bonus</span>
         <h1>Club del Libro e club tematici</h1>
-        <p class="lede">Un incontro ogni due settimane per leggere, commentare e parlare italiano attorno a un libro o a una rivista, non una lezione, una scusa bellissima per restare in contatto con la lingua.</p>
+        <p class="lede">Un incontro ogni due settimane per commentare e parlare italiano attorno a un libro o a una rivista, non una lezione, una scusa bellissima per restare in contatto con la lingua.</p>
         <a class="btn" href="#iscrizione">Unisciti al Club</a>
       </div>
       <div class="photo hero-photo torn-bottom reveal d1">
@@ -19,14 +19,7 @@ import { corsiDolce } from '../data/corsiStagione.js';
     </div>
   </section>
 
-  <section>
-    <div class="wrap narrow reveal">
-      <h2>Perché partecipare</h2>
-      <p>Non sono corsi di livello, sono uno spazio di continuità. Molte persone finiscono un percorso e poi, senza pratica costante, sentono la lingua sfumare via. Il Club del Libro e Tè e Riviste sono il modo più piacevole per non perdere quello che hai costruito, leggendo, parlando, confrontandoti con altre persone che come te amano l'Italia.</p>
-    </div>
-  </section>
-
-  <section>
+  <section class="come-funziona-section">
     <div class="wrap narrow reveal">
       <h2>Come funziona</h2>
       <ul class="details">
@@ -76,6 +69,9 @@ import { corsiDolce } from '../data/corsiStagione.js';
 
 <style>
   .apertura { padding: 70px 0 20px; }
+  /* Senza più la sezione "Perché partecipare", questa segue subito
+     l'apertura: meno spazio sopra rispetto al padding standard. */
+  .come-funziona-section { padding-top: 20px; }
   .apertura-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 44px; align-items: center; }
   .hero-photo { height: 320px; border-radius: 4px 90px 4px 4px; }
   .narrow { max-width: 640px; margin: 0 auto; }

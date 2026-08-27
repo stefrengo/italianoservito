@@ -42,7 +42,7 @@ export const corsiStagione = [
     pasto: 'Primo', tag: 'Trova la tua Voce', livello: 'B1',
     orario: 'Giovedì, 17:00 – 18:00',
     prezzo: 600,
-    tipo: 'Corso di conversazione e grammatica mirata',
+    tipo: 'Corso di gruppo con grammatica mirata',
     lezioni: '15 lezioni da 60 minuti (24.09.26 – 28.01.27).',
     giornoLibero: '12 novembre, 24 e 31 dicembre, 7 gennaio',
   },

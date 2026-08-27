@@ -51,13 +51,13 @@ const faqSchema = {
 
   <section>
     <div class="wrap narrow reveal">
-      <h2>Come lavoro</h2>
+      <h2 style="margin-bottom:20px;">Come lavoro</h2>
       <ul class="details">
-        <li><strong>Formato:</strong> lezioni online in piccolo gruppo (salotto di conversazione, non lezione frontale)</li>
+        <li><strong>Formato:</strong> lezioni online in piccolo gruppo, non lezione frontale</li>
         <li><strong>Gruppo:</strong> massimo 6 persone</li>
       </ul>
 
-      <h2 style="margin-top:36px;">Le edizioni attive · {STAGIONE}</h2>
+      <h2 style="margin-top:44px;">Le edizioni attive · {STAGIONE}</h2>
       <div class="edizioni-grid">
         {corsiDelPercorso.map((cs) => (
           <div class="edizione-card">
@@ -76,7 +76,7 @@ const faqSchema = {
         ))}
       </div>
 
-      <h2 style="margin-top:36px;">Cosa impari con me</h2>
+      <h2 style="margin-top:44px;">Cosa impari con me</h2>
       <ul class="temi">
         {c.temi.map(t => <li>{t}</li>)}
       </ul>
@@ -119,7 +119,7 @@ const faqSchema = {
   .benefit .quote-mark { color: var(--gold); font-size: 1.9rem; display: block; margin-bottom: 4px; }
   .benefit .quote { font-family: var(--font-display); font-style: italic; color: var(--ink); font-size: 1.1rem; line-height: 1.5; margin: 0; }
   .details, .temi { padding-left: 20px; color: var(--ink-soft); }
-  .details li, .temi li { margin-bottom: 10px; }
+  .details li, .temi li { margin-bottom: 14px; line-height: 1.55; }
 
   /* Card delle edizioni — stesso linguaggio visivo del calendario in /landing-ads,
      così le date/prezzi si presentano allo stesso modo ovunque sul sito. */
@@ -135,7 +135,7 @@ const faqSchema = {
   .edizione-card li::before { content: "•"; position: absolute; left: 0; color: var(--red); }
   .edizione-card .btn.small { margin: 0 16px 16px; text-align: center; font-size: 0.82rem; padding: 10px 16px; }
 
-  details { border-top: 1px solid var(--card-line); padding: 16px 0; }
+  details { border-top: 1px solid var(--card-line); padding: 20px 0; }
   summary { font-weight: 600; cursor: pointer; }
   details p { margin: 12px 0 0; color: var(--ink-soft); }
 
