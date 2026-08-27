@@ -1,0 +1,9 @@
+# Redirect statici serviti da Cloudflare Workers Static Assets (stessa sintassi
+# di Cloudflare Pages: https://developers.cloudflare.com/workers/static-assets/redirects/).
+# Questo file NON è servito come pagina: viene letto da Cloudflare per generare
+# i redirect prima ancora che la richiesta arrivi al Worker.
+
+# /landing-ads è stata rinominata in /offerta-formativa (agosto 2026): redirect
+# permanente per non rompere eventuali link/campagne pubblicitarie già attive
+# che puntano al vecchio URL.
+/landing-ads /offerta-formativa 301

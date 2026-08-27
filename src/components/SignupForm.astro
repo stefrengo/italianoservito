@@ -1,6 +1,6 @@
 ---
 // Form di iscrizione riutilizzabile — stesso form, stesso endpoint
-// (/api/iscrizione), sia su /landing-ads (tutti i corsi della stagione) sia
+// (/api/iscrizione), sia su /offerta-formativa (tutti i corsi della stagione) sia
 // sulle singole pagine /percorsi/* (solo i corsi di quel percorso). Iscriversi
 // dalla landing o dalla pagina del corso deve essere un'esperienza identica.
 //
@@ -15,7 +15,7 @@
 //                                  Riviste (solo)" tra le opzioni del select
 //                                  (solo sulla landing, non sulle pagine percorso)
 //   titolo, intro: testi della sezione, personalizzabili per contesto
-//   fonte: da quale pagina arriva il lead (es. 'landing-ads', 'percorso:sbloccati-da-zero'),
+//   fonte: da quale pagina arriva il lead (es. 'offerta-formativa', 'percorso:sbloccati-da-zero'),
 //          salvata su Supabase per sapere dove si iscrive di più la gente
 
 import { corsiDolce } from '../data/corsiStagione.js';

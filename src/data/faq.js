@@ -5,8 +5,8 @@
 //
 // Le risposte con un link (mailto: o pagine interne) contengono markup HTML e
 // vanno renderizzate con set:html, non interpolate come testo semplice — vedi
-// src/pages/faq.astro. Nota: il link a "pagina dei corsi attivi" punta ancora
-// a /landing-ads in attesa di conferma sul nuovo URL /offerta-formativa.
+// src/pages/faq.astro. Il link a "pagina dei corsi attivi" punta a
+// /offerta-formativa (ex /landing-ads, ora redirect 301 — vedi public/_redirects).
 
 export const faq = [
   {
@@ -39,7 +39,7 @@ export const faq = [
   },
   {
     q: "Come mi iscrivo a un corso?",
-    a: 'Si compila il modulo nella <a href="/landing-ads">pagina dei corsi attivi</a> o nella pagina <a href="/contatti">Contatti</a>: dopo l\'iscrizione arriva una conferma via email con tutti i dettagli per partecipare.',
+    a: 'Si compila il modulo nella <a href="/offerta-formativa">pagina dei corsi attivi</a> o nella pagina <a href="/contatti">Contatti</a>: dopo l\'iscrizione arriva una conferma via email con tutti i dettagli per partecipare.',
   },
   {
     q: "Devo versare una caparra per confermare il mio posto?",

@@ -1,4 +1,4 @@
-// Corsi attivi nella stagione in corso — fonte unica condivisa da /landing-ads
+// Corsi attivi nella stagione in corso — fonte unica condivisa da /offerta-formativa
 // e dalle singole pagine /percorsi/*, così il calendario è definito in un solo
 // posto e non rischia di disallinearsi tra le pagine.
 //

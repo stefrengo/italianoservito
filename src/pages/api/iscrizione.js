@@ -83,7 +83,7 @@ export async function POST({ request, locals }) {
     // e nelle pagine percorso (si apre solo scegliendo "non ho ancora deciso").
     const messaggio = data.get('messaggio')?.toString().trim() || '';
     // Da quale pagina arriva il lead: ogni form manda un campo nascosto "fonte"
-    // (landing-ads, percorso:<slug>, contatti) — vedi SignupForm.astro e contatti.astro.
+    // (offerta-formativa, percorso:<slug>, contatti) — vedi SignupForm.astro e contatti.astro.
     const fonte = data.get('fonte')?.toString().trim() || 'sconosciuta';
 
     if (!nome || !email || !telefono) {
