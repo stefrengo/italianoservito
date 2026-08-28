@@ -1,0 +1,102 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// FAQ in inglese — le stesse 9 domande della pagina italiana (src/data/faq.js),
+// tradotte e adattate (link interni verso /en/offerta-formativa invece di
+// /offerta-formativa e /contatti, che non hanno versione EN).
+const faq = [
+  {
+    q: 'Are the lessons individual or group lessons?',
+    a: 'All "L\'Italiano è Servito" courses are group lessons, never individual ones: small online groups, from 3 to a maximum of 6 people. It\'s a deliberate choice, not a limitation: I believe in the power of interaction between people. You learn more, and faster, by talking with others who are facing the same challenges as you.',
+  },
+  {
+    q: 'Why choose a group course instead of a private tutor?',
+    a: "Because a language is trained by talking with other people. In a small group you compare notes, listen to how others at your level express themselves, and above all, you train yourself to hold a real conversation. It's the same principle my method is built on, developed over years of teaching in Poland.",
+  },
+  {
+    q: 'How do the courses work and on which platform?',
+    a: "Lessons are online, live on Zoom, in small groups (six people maximum). They're not pre-recorded video lessons: you speak, ask questions, and have real conversations from the very first lesson.",
+  },
+  {
+    q: 'What level of Italian do I need to start?',
+    a: '"Unlock from Zero" was designed exactly for people who have never spoken Italian, or have only tried. From there, there are paths for every level, from B1 to C2: "Find Your Voice" for those who have the basics but freeze up when speaking, "Explore the Language" for those who want to grasp the finest cultural nuances. If you\'re unsure, a get-to-know-you session helps figure out where to start.',
+  },
+  {
+    q: 'Are explanations also available in Polish?',
+    a: 'Yes. I lived in Poland for seven years, six of them working at the Italian Institute of Culture in Kraków, and I know exactly where the structure of Polish makes learning Italian harder. When needed, I explain the trickiest grammar starting from a comparison with Polish, not from a translated Italian textbook.',
+  },
+  {
+    q: 'How much do the courses cost, and when do they start?',
+    a: 'Prices, times and dates change with every session: you\'ll always find them up to date on the <a href="/en/offerta-formativa">current course offering page</a>, with limited spots to keep groups small. For any questions, you can write directly to <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a>.',
+  },
+  {
+    q: "What happens if I make a mistake or I'm afraid to speak in front of others?",
+    a: "It's the most common starting point, not an obstacle. Groups are small on purpose so trust builds quickly, and in every lesson, making mistakes is part of the process: it's proof that you're trying, not a failure.",
+  },
+  {
+    q: 'How do I sign up for a course?',
+    a: 'You fill in the form on the <a href="/en/offerta-formativa">current course offering page</a>, or you can write directly to <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a>: after signing up, you\'ll receive an email confirmation with all the details you need to take part.',
+  },
+  {
+    q: 'Do I need to pay a deposit to confirm my spot?',
+    a: "Yes: to reserve your spot, a 100 PLN deposit is required, which is then subtracted from the total cost of the course. This came from a real experience: in the past, some people signed up, reserving a spot, and then never showed up, leaving out people who genuinely wanted it. Since groups are small and spots are limited, it's only fair that they go to people who are ready to start. The details on how to pay it are explained personally when your spot is confirmed.",
+  },
+];
+
+const stripHtml = (html) => html.replace(/<[^>]+>/g, '');
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: stripHtml(item.a) },
+  })),
+};
+---
+
+<MainLayout
+  locale="en"
+  title="Frequently asked questions | Online Italian courses | L'Italiano è Servito"
+  description="How Giada Longo's online Italian courses work: group lessons, levels, prices, support in Polish, and enrollment."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="apertura">
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <span class="eyebrow">Frequently asked questions</span>
+      <h1>Everything you want to know before you start</h1>
+      <p class="lede">If you have other questions, a get-to-know-you lesson or a message to <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a> is still the fastest way to get an answer tailored to you.</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="wrap narrow">
+      {faq.map((item) => (
+        <details class="reveal">
+          <summary>{item.q}</summary>
+          <p set:html={item.a} />
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <a class="btn" href="/en/offerta-formativa">See the course offering</a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 70px 0 20px; }
+  .narrow { max-width: 700px; margin: 0 auto; }
+  .lede { color: var(--ink-soft); margin-top: 14px; }
+  .faq-section { padding: 20px 0 60px; }
+  details { border-top: 1px solid var(--card-line); padding: 18px 0; }
+  details:last-child { border-bottom: 1px solid var(--card-line); }
+  summary { font-weight: 600; cursor: pointer; font-size: 1.02rem; }
+  details p { margin: 14px 0 0; color: var(--ink-soft); line-height: 1.6; }
+  details p :global(a), .lede :global(a) { color: var(--red); font-weight: 600; }
+  details p :global(a):hover, .lede :global(a):hover { text-decoration: underline; }
+</style>

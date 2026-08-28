@@ -43,6 +43,6 @@ export const faq = [
   },
   {
     q: "Devo versare una caparra per confermare il mio posto?",
-    a: "Sì: per bloccare effettivamente il posto è richiesta una caparra di 100 PLN, che viene poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta: in passato alcune persone si sono iscritte prenotando un posto e poi non si sono più presentate, lasciando fuori chi invece lo desiderava davvero. Visto che i gruppi sono piccoli e i posti sono pochi, è giusto che restino a chi è pronto a iniziare. I dettagli su come versarla vengono spiegati personalmente al momento della conferma.",
+    a: "Sì: per bloccare il posto è richiesta una caparra di 100 PLN, che viene poi scalata dal costo totale del corso. È una scelta nata da un'esperienza concreta: in passato alcune persone si sono iscritte prenotando un posto e poi non si sono più presentate, lasciando fuori chi invece lo desiderava davvero. Visto che i gruppi sono piccoli e i posti sono pochi, è giusto che restino a chi è pronto a iniziare. I dettagli su come versarla vengono spiegati personalmente al momento della conferma.",
   },
 ];

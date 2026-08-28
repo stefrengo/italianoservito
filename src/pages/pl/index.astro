@@ -1,0 +1,140 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Hero from '../../components/Hero.astro';
+import PromiseCards from '../../components/PromiseCards.astro';
+import SafeSpace from '../../components/SafeSpace.astro';
+
+// Home in polacco — lingua di conversione principale del sito (vedi brief
+// di progetto, "Asimmetria Intelligente"). Solo 4 pagine esistono in PL:
+// Home, Chi Sono, FAQ, Offerta Formativa — niente /percorsi/*, /contatti,
+// /club-del-libro in questa lingua (vedi traduzioni-pl-en-bozza.md).
+//
+// La sezione "I percorsi" qui è un blocco unico verso Offerta Formativa
+// (non la griglia CourseCards a 4 riquadri, perché le pagine percorso non
+// hanno versione PL) — vedi bozza traduzioni, nota 3.
+//
+// Le testimonianze di Kamila/Małgosia sono OMESSE in questa lingua: sono
+// già una traduzione dal polacco all'italiano fatta in precedenza, e
+// ritradurle dall'italiano al polacco rischierebbe di snaturare le parole
+// vere di due persone reali — vedi nota 4 nella bozza traduzioni. Da
+// aggiungere quando sarà recuperato il testo originale polacco.
+const faqHome = [
+  {
+    q: 'Co się stanie, jeśli boję się mówić?',
+    a: 'To punkt wyjścia, a nie przeszkoda. Na pierwszych spotkaniach celowo obniżam presję: trochę się mówi, dużo się słucha, a pewność siebie rośnie z lekcji na lekcję.',
+  },
+  {
+    q: 'Jak wyglądają lekcje dla polskich uczniów?',
+    a: 'Buduję lekcje, biorąc pod uwagę specyficzne trudności Polaków, i pokonuję je razem z Tobą, używając porównań, które mnie — jako rodzimej Włoszce — nigdy by nie przyszły do głowy, gdybym nie nauczyła się polskiego i nie mieszkała w Polsce.',
+  },
+  {
+    q: 'Czy muszę już znać trochę włoskiego, żeby zacząć?',
+    a: 'Nie jest to konieczne: kurs „Odblokuj się od zera" stworzyłam właśnie z myślą o osobach zaczynających od zera.',
+  },
+];
+
+const promiseItems = [
+  { name: 'Samodzielność', text: 'Podróżujesz po Włoszech, nigdy się nie gubiąc.' },
+  { name: 'Głos', text: 'Mówisz bez lęku przed oceną.' },
+  { name: 'Kultura', text: 'Wchodzisz w gesty, tradycje, włoski sposób myślenia.' },
+];
+---
+
+<MainLayout
+  locale="pl"
+  title="Kursy włoskiego online dla Polaków | L'Italiano è Servito"
+  description="Kursy włoskiego online z Giadą Longo: droga transformacji językowej dla osób zakochanych we Włoszech."
+>
+  <Hero
+    locale="pl"
+    eyebrow="Cześć, nazywam się Giada!"
+    title="To nie są lekcje włoskiego.<br>To droga prosto <em>do serca</em> Włoch."
+    lede="Kursy włoskiego online dla osób zakochanych we Włoszech. Jestem Giada Longo, dyplomowana nauczycielka, która dokładnie wie, w którym miejscu się blokujesz — bo sama, po drugiej stronie, przeszłam przez to samo."
+    ctaLabel="Znajdź swoją ścieżkę do włoskiego"
+    ctaHref="/pl/offerta-formativa"
+    ghostLabel="Poznaj moją historię"
+    ghostHref="/pl/chi-sono"
+  />
+
+  <section class="promessa">
+    <div class="wrap narrow reveal">
+      <p>Nie nauczę cię tylko gramatyki. Będę przy tobie, kiedy będziesz budować pewność siebie, żeby próbować, mylić się, śmiać się z błędów i próbować dalej — aż włoski przestanie być „obcym językiem do nauki", a stanie się częścią ciebie.</p>
+    </div>
+  </section>
+
+  <PromiseCards items={promiseItems} />
+
+  <section id="oferta">
+    <div class="wrap">
+      <div class="section-head reveal" style="text-align:center;">
+        <span class="eyebrow">Oferta</span>
+        <div style="margin-top:18px;">
+          <a class="btn" href="/pl/offerta-formativa">Zobacz aktualną ofertę kursów</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SafeSpace quote="Tutaj błąd jest częścią drogi, a nie porażką. Grupy są małe (maksymalnie 6 osób), bo zaufanie buduje się tylko wtedy, gdy naprawdę się znamy." />
+
+  <section class="faq-home">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Najczęściej zadawane pytania</span>
+        <h2>Pytania, które słyszę najczęściej</h2>
+      </div>
+      <div class="faq-home-list">
+        {faqHome.map((item) => (
+          <details class="reveal">
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+      <div class="wrap reveal" style="text-align:center; margin-top:30px; padding:0;">
+        <a class="btn ghost" href="/pl/faq">Zobacz wszystkie najczęściej zadawane pytania →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="finale">
+    <div class="wrap finale-grid">
+      <div class="chi-teaser reveal">
+        <span class="eyebrow">Kim jestem</span>
+        <h2>Zanim zostałam twoją nauczycielką, przez prawie 7 lat byłam „przybraną" Polką.</h2>
+        <p>Mieszkałam w Krakowie, pracowałam we Włoskim Instytucie Kultury i dokładnie wiem, gdzie polski język stawia ci kłody pod nogi, kiedy próbujesz mówić po włosku.</p>
+        <a class="btn ghost" href="/pl/chi-sono">Poznaj moją historię →</a>
+      </div>
+    </div>
+    <div class="wrap reveal d2" style="text-align:center; margin-top:50px;">
+      <h2 style="margin-bottom:24px;">Nie potrzebujesz perfekcji, żeby zacząć przygodę.<br>Wystarczy pierwszy krok.</h2>
+      <a class="btn" href="/pl/offerta-formativa">Zobacz ofertę kursów</a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .promessa { padding: 8px 0 6px; }
+  .promessa .narrow { max-width: 700px; margin: 0 auto; text-align: center; }
+  .promessa p { font-family: var(--font-display); font-style: italic; color: var(--ink); font-size: clamp(1.05rem,1.6vw,1.25rem); line-height: 1.55; margin: 0; }
+
+  #oferta { background: var(--card); padding: 54px 0; }
+  .faq-home { background: var(--card); padding: 54px 0 74px; }
+
+  .faq-home-list { max-width: 720px; margin: 0 auto; }
+  .faq-home-list details { border-top: 1px solid var(--card-line); padding: 16px 0; }
+  .faq-home-list details:last-child { border-bottom: 1px solid var(--card-line); }
+  .faq-home-list summary { font-weight: 600; cursor: pointer; }
+  .faq-home-list details p { margin: 12px 0 0; color: var(--ink-soft); line-height: 1.6; }
+
+  .finale { padding: 60px 0 80px; }
+  .finale-grid { display: flex; justify-content: center; }
+  .chi-teaser {
+    display: flex; flex-direction: column; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius);
+    padding: 34px 32px; max-width: 620px;
+  }
+  .finale-grid h2 { font-size: clamp(1.25rem,2vw,1.55rem); margin: 6px 0 14px; }
+  .finale-grid p { color: var(--ink-soft); font-size: 0.94rem; margin-bottom: 18px; }
+  .chi-teaser .btn { margin-top: auto; }
+</style>

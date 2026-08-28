@@ -21,12 +21,15 @@ export const PERIODO = '21 settembre 2026 – 28 gennaio 2027'; // <- dal primo 
 export const SCADENZA_LABEL = '14 settembre 2026';
 export const SCADENZA_ISO = '2026-09-14T23:59:59'; // <- data reale per il countdown
 
+// tipoPl/tipoEn: traduzione dell'etichetta "tipo" per le pagine /pl e /en di
+// Offerta Formativa (vedi tabella "Etichette e testi delle card corso" nella
+// bozza traduzioni). Date/orari/prezzi restano invariati in tutte le lingue.
 export const corsiStagione = [
   {
     pasto: 'Antipasto', tag: 'Sbloccati da Zero', livello: 'A1',
     orario: 'Martedì, 16:05 – 17:05',
     prezzo: 600,
-    tipo: 'Corso base da zero',
+    tipo: 'Corso base da zero', tipoPl: 'Kurs podstawowy od zera', tipoEn: 'Basic course from zero',
     lezioni: '15 lezioni da 60 minuti (22.09.26 – 19.01.27).',
     giornoLibero: '10 novembre, 29 dicembre, 5 gennaio',
   },
@@ -34,7 +37,7 @@ export const corsiStagione = [
     pasto: 'Antipasto', tag: 'Sbloccati da Zero', livello: 'A2',
     orario: 'Lunedì, 16:00 – 17:00',
     prezzo: 600,
-    tipo: 'Corso di consolidamento delle basi',
+    tipo: 'Corso di consolidamento delle basi', tipoPl: 'Kurs utrwalający podstawy', tipoEn: 'Foundations consolidation course',
     lezioni: '15 lezioni da 60 minuti (21.09.26 – 18.01.27).',
     giornoLibero: '9 novembre, 28 dicembre, 4 gennaio',
   },
@@ -42,7 +45,7 @@ export const corsiStagione = [
     pasto: 'Primo', tag: 'Trova la tua Voce', livello: 'B1',
     orario: 'Giovedì, 17:00 – 18:00',
     prezzo: 600,
-    tipo: 'Corso di gruppo con grammatica mirata',
+    tipo: 'Corso di gruppo', tipoPl: 'Kurs grupowy', tipoEn: 'Group course',
     lezioni: '15 lezioni da 60 minuti (24.09.26 – 28.01.27).',
     giornoLibero: '12 novembre, 24 e 31 dicembre, 7 gennaio',
   },
@@ -50,7 +53,7 @@ export const corsiStagione = [
     pasto: 'Secondo', tag: 'Esplora la Lingua', livello: 'C1',
     orario: 'Lunedì, 18:15 – 19:45',
     prezzo: 800,
-    tipo: 'Corso di approfondimento avanzato',
+    tipo: 'Corso di approfondimento avanzato', tipoPl: 'Kurs zaawansowany', tipoEn: 'Advanced in-depth course',
     lezioni: '15 lezioni da 90 minuti (21.09.26 – 18.01.27).',
     giornoLibero: '9 novembre, 28 dicembre, 4 gennaio',
   },
@@ -58,7 +61,7 @@ export const corsiStagione = [
     pasto: 'Secondo', tag: 'Esplora la Lingua', livello: 'C1/C2',
     orario: 'Lunedì, 8:00 – 9:00',
     prezzo: 600,
-    tipo: 'Corso di approfondimento avanzato',
+    tipo: 'Corso di approfondimento avanzato', tipoPl: 'Kurs zaawansowany', tipoEn: 'Advanced in-depth course',
     lezioni: '15 lezioni da 60 minuti (21.09.26 – 18.01.27).',
     giornoLibero: '9 novembre, 28 dicembre, 4 gennaio',
   },
@@ -66,7 +69,7 @@ export const corsiStagione = [
     pasto: 'Secondo', tag: 'Esplora la Lingua', livello: 'C2',
     orario: 'Giovedì, 18:00 – 19:00',
     prezzo: 600,
-    tipo: 'Corso di approfondimento avanzato',
+    tipo: 'Corso di approfondimento avanzato', tipoPl: 'Kurs zaawansowany', tipoEn: 'Advanced in-depth course',
     lezioni: '15 lezioni da 60 minuti (24.09.26 – 28.01.27).',
     giornoLibero: '12 novembre, 24 e 31 dicembre, 7 gennaio',
   },
@@ -80,6 +83,8 @@ export const corsiDolce = [
   {
     tag: 'Tè e Riviste', edizione: '1° edizione', novita: true,
     comeFunziona: "A casa leggi un articolo da una rivista italiana che ti fornisco io; a lezione (circa ogni due settimane) lo analizziamo e commentiamo insieme. Le riviste e gli articoli cambiano ogni volta genere e argomento.",
+    comeFunzionaPl: 'W domu czytasz artykuł z włoskiego czasopisma, które Ci dostarczam; na spotkaniu (mniej więcej co dwa tygodnie) analizujemy go i komentujemy razem. Czasopisma i artykuły za każdym razem zmieniają gatunek i temat.',
+    comeFunzionaEn: 'At home, you read an article from an Italian magazine that I provide; in the session (roughly every two weeks) we analyze and discuss it together. The magazines and articles change genre and topic each time.',
     livello: 'B1/B2',
     orario: 'Venerdì, 16:15 – 17:15',
     calendario: '25 settembre, 9 e 23 ottobre, 6 e 20 novembre, 4 e 18 dicembre, 15 gennaio',
@@ -89,6 +94,8 @@ export const corsiDolce = [
   {
     tag: 'Il Club del Libro', edizione: '3° edizione', novita: false,
     comeFunziona: "A casa leggi un brano da un libro italiano che ti fornisco io; a lezione (circa ogni due settimane) lo analizziamo e commentiamo insieme.",
+    comeFunzionaPl: 'W domu czytasz fragment włoskiej książki, którą Ci dostarczam; na spotkaniu (mniej więcej co dwa tygodnie) analizujemy go i komentujemy razem.',
+    comeFunzionaEn: 'At home, you read a passage from an Italian book that I provide; in the session (roughly every two weeks) we analyze and discuss it together.',
     livello: 'Da B2 a C2',
     orario: 'Venerdì, 17:30 – 18:45',
     calendario: '25 settembre, 9 e 23 ottobre, 6 e 20 novembre, 4 e 18 dicembre, 15 gennaio',

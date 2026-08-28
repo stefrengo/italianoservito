@@ -1,9 +1,11 @@
 ---
-const items = [
-  { name: 'Autonomia', text: 'Viaggi in Italia senza mai perderti.' },
-  { name: 'Voce', text: 'Parli senza il terrore del giudizio.' },
-  { name: 'Cultura', text: 'Entri nei gesti, nelle tradizioni, nel modo di pensare italiano.' },
-];
+const {
+  items = [
+    { name: 'Autonomia', text: 'Viaggi in Italia senza mai perderti.' },
+    { name: 'Voce', text: 'Parli senza il terrore del giudizio.' },
+    { name: 'Cultura', text: 'Entri nei gesti, nelle tradizioni, nel modo di pensare italiano.' },
+  ],
+} = Astro.props;
 ---
 
 <section class="promessa-strip">

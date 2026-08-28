@@ -20,36 +20,88 @@
 
 import { corsiDolce } from '../data/corsiStagione.js';
 
+// locale: 'it' (default) | 'pl' | 'en' — traduce le etichette fisse del
+// form (vedi tabella "Stringhe condivise" nella bozza traduzioni). titolo/
+// intro restano personalizzabili via prop per contesto (pagine percorso),
+// ma di default seguono la lingua.
 const {
   corsi,
   includiClubStandalone = false,
-  titolo = 'Iscriviti ora',
-  intro = "Compila il modulo per prenotare il tuo posto: non è una semplice richiesta di informazioni, è la tua iscrizione. Ti confermo tutto via email appena la ricevo.",
+  titolo,
+  intro,
   fonte = 'sconosciuta',
+  locale = 'it',
 } = Astro.props;
+
+const L = {
+  it: {
+    titolo: 'Iscriviti ora',
+    intro: "Compila il modulo per prenotare il tuo posto: non è una semplice richiesta di informazioni, è la tua iscrizione. Ti confermo tutto via email appena la ricevo.",
+    nome: 'Nome', email: 'Email', telefono: 'Telefono (anche WhatsApp)', telefonoPh: 'Es. +48 123 456 789',
+    quale: 'A quale corso vuoi iscriverti?', scegli: 'Scegli il corso', solo: '(solo)',
+    nonDeciso: 'Non ho ancora deciso, aiutami a scegliere',
+    bundleIntro: 'Vuoi abbinare anche un club di conversazione? (prezzo bundle da confermare via email)',
+    bundleVoglio: (tag, orario, prezzo) => `Voglio abbinare anche <strong>${tag}</strong>, ${orario} (a partire da PLN ${prezzo}).`,
+    raccontami: 'Raccontami di più (facoltativo)',
+    raccontamiPh: 'Il tuo livello, i tuoi obiettivi, qualunque dubbio: aiutami a capire qual è il corso giusto per te.',
+    newsletter: 'Iscrivimi anche alla newsletter',
+    privacy: 'Ho letto e accetto la Privacy Policy', privacyHref: '/privacy',
+    submit: 'Prenota il tuo posto',
+  },
+  pl: {
+    titolo: 'Zapisz się teraz',
+    intro: 'Wypełnij formularz, żeby zarezerwować swoje miejsce: to nie jest zwykłe zapytanie o informacje, to Twój zapis. Potwierdzę wszystko mailowo, jak tylko go otrzymam.',
+    nome: 'Imię', email: 'Email', telefono: 'Telefon (także WhatsApp)', telefonoPh: 'Np. +48 123 456 789',
+    quale: 'Na jaki kurs chcesz się zapisać?', scegli: 'Wybierz kurs', solo: '(samodzielnie)',
+    nonDeciso: 'Jeszcze nie zdecydowałam/em, pomóż mi wybrać',
+    bundleIntro: 'Chcesz dołączyć też do klubu konwersacyjnego? (cenę pakietu potwierdzę mailowo)',
+    bundleVoglio: (tag, orario, prezzo) => `Chcę dołączyć też do <strong>${tag}</strong>, ${orario} (już od ${prezzo} PLN).`,
+    raccontami: 'Opowiedz mi więcej o Tobie (opcjonalnie)',
+    raccontamiPh: 'Twój poziom, Twoje cele, wszelkie wątpliwości: pomóż mi zrozumieć, który kurs będzie dla Ciebie odpowiedni.',
+    newsletter: 'Zapisz mnie też na newsletter',
+    privacy: 'Przeczytałam/em i akceptuję Politykę Prywatności', privacyHref: '/privacy',
+    submit: 'Zarezerwuj swoje miejsce',
+  },
+  en: {
+    titolo: 'Enroll now',
+    intro: "Fill in the form to reserve your spot: this isn't a simple information request, it's your enrollment. I'll confirm everything by email as soon as I receive it.",
+    nome: 'Name', email: 'Email', telefono: 'Phone (WhatsApp works too)', telefonoPh: 'E.g. +48 123 456 789',
+    quale: 'Which course would you like to join?', scegli: 'Choose a course', solo: '(standalone)',
+    nonDeciso: "I haven't decided yet, help me choose",
+    bundleIntro: 'Would you like to add a conversation club too? (bundle price to be confirmed by email)',
+    bundleVoglio: (tag, orario, prezzo) => `I'd also like to add <strong>${tag}</strong>, ${orario} (starting from PLN ${prezzo}).`,
+    raccontami: 'Tell me more (optional)',
+    raccontamiPh: 'Your level, your goals, any doubts: help me understand which course is right for you.',
+    newsletter: 'Sign me up for the newsletter too',
+    privacy: 'I have read and accept the Privacy Policy', privacyHref: '/privacy',
+    submit: 'Reserve your spot',
+  },
+}[locale];
+
+const T = { titolo: titolo ?? L.titolo, intro: intro ?? L.intro };
 ---
 
 <section id="iscrizione" class="iscrizione-section">
   <div class="wrap">
     <div class="form-card reveal">
       <div class="section-head">
-        <h2>{titolo}</h2>
-        <p class="intro">{intro}</p>
+        <h2>{T.titolo}</h2>
+        <p class="intro">{T.intro}</p>
       </div>
       <form class="signup-form" method="POST" action="/api/iscrizione">
         <input type="hidden" name="fonte" value={fonte} />
         <div class="row">
-          <label>Nome<input type="text" name="nome" required /></label>
-          <label>Email<input type="email" name="email" required /></label>
+          <label>{L.nome}<input type="text" name="nome" required /></label>
+          <label>{L.email}<input type="email" name="email" required /></label>
         </div>
         <label>
-          Telefono (anche WhatsApp)
-          <input type="tel" name="telefono" placeholder="Es. +48 123 456 789" required />
+          {L.telefono}
+          <input type="tel" name="telefono" placeholder={L.telefonoPh} required />
         </label>
         <label>
-          A quale corso vuoi iscriverti?
+          {L.quale}
           <select name="percorso" id="corso-select" required>
-            <option value="">Scegli il corso</option>
+            <option value="">{L.scegli}</option>
             {corsi.map((c) => {
               const eDolce = corsiDolce.some((d) => d.tag === c.tag);
               return (
@@ -57,35 +109,35 @@ const {
               );
             })}
             {includiClubStandalone && corsiDolce.map((c) => (
-              <option value={`${c.tag} (solo)`} data-standalone="true">{c.tag} (solo)</option>
+              <option value={`${c.tag} (solo)`} data-standalone="true">{c.tag} {L.solo}</option>
             ))}
-            <option value="Non ho ancora deciso">Non ho ancora deciso, aiutami a scegliere</option>
+            <option value="Non ho ancora deciso">{L.nonDeciso}</option>
           </select>
         </label>
         <div id="bundle-wrap" class="conditional-field" hidden>
-          <p class="bundle-intro">Vuoi abbinare anche un club di conversazione? (prezzo bundle da confermare via email)</p>
+          <p class="bundle-intro">{L.bundleIntro}</p>
           {corsiDolce.map((c) => (
             <label class="checkbox bundle">
               <input type="checkbox" name={c.tag === 'Il Club del Libro' ? 'club_del_libro' : 'te_e_riviste'} value="si" />
-              <span>Voglio abbinare anche <strong>{c.tag}</strong>, {c.orario} (a partire da PLN {c.prezzoBundle}).</span>
+              <span set:html={L.bundleVoglio(c.tag, c.orario, c.prezzoBundle)} />
             </label>
           ))}
         </div>
         <div id="messaggio-wrap" class="conditional-field" hidden>
           <label>
-            Raccontami di più (facoltativo)
-            <textarea name="messaggio" rows="4" placeholder="Il tuo livello, i tuoi obiettivi, qualunque dubbio: aiutami a capire qual è il corso giusto per te."></textarea>
+            {L.raccontami}
+            <textarea name="messaggio" rows="4" placeholder={L.raccontamiPh}></textarea>
           </label>
         </div>
         <label class="checkbox">
           <input type="checkbox" name="newsletter" value="si" />
-          <span>Iscrivimi anche alla newsletter</span>
+          <span>{L.newsletter}</span>
         </label>
         <label class="checkbox">
           <input type="checkbox" name="privacy" required />
-          <span>Ho letto e accetto la <a href="/privacy">Privacy Policy</a> *</span>
+          <span>{L.privacy} <a href={L.privacyHref}>Privacy Policy</a> *</span>
         </label>
-        <button type="submit" class="btn">Prenota il tuo posto</button>
+        <button type="submit" class="btn">{L.submit}</button>
       </form>
     </div>
   </div>

@@ -1,0 +1,117 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Filmstrip from '../../components/Filmstrip.astro';
+import SafeSpace from '../../components/SafeSpace.astro';
+---
+
+<MainLayout
+  locale="en"
+  title="About me | Giada Longo | L'Italiano è Servito"
+  description="Certified Italian teacher, 7 years in Kraków and 6 years at the Italian Institute of Culture. Discover my story."
+>
+  <section class="apertura">
+    <div class="wrap apertura-grid">
+      <div class="reveal">
+        <span class="eyebrow">About me</span>
+        <h1>I'm Giada, a certified Italian teacher — but before that, I was an adopted Pole for almost seven years.</h1>
+        <p class="lede">I lived in Kraków. I did my grocery shopping in Polish, argued in Polish, and sometimes even dreamed in Polish. And somewhere in the middle of all that, I learned something you won't find in any teaching manual: I know exactly where the Polish language trips you up when you try to immerse yourself in Italian, even for just an hour a day.</p>
+      </div>
+      <div class="photo main-photo torn-bottom reveal d1">
+        <img src="/foto/giada-6-tavolo-cane.jpg" alt="Giada Longo with her dog" />
+      </div>
+    </div>
+  </section>
+
+  <Filmstrip />
+
+  <section class="storia-section">
+    <div class="storia-photo"><img src="/foto/giada-4-plaid.jpg" alt="Giada Longo" /></div>
+    <div class="storia-content">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--gold);">The story of my passion, before the profession</span>
+        <h2>I graduated in Languages, specializing in Polish and Russian.</h2>
+        <p>My studies were already geared toward teaching Italian, and my thesis focused specifically on how Italian is taught in Poland. Then theory became real life: almost seven years in Kraków, spent, among other things, working at the Italian Institute of Culture, leading courses and meeting people who — just like you — had fallen in love with Italy before ever setting foot there.</p>
+        <p>I saw up close what works and what doesn't when a Polish speaker tries to learn Italian. I saw the frustration of grammar explained like mathematical theorems. I saw the fear of speaking and getting it wrong in front of someone. And I understood that the problem almost never was the ability to learn — it was how it was being taught.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow reveal">
+      <h2>The method</h2>
+      <p>I don't teach Italian as a list of rules to memorize. I teach it as a way of being in the world, of living the Italian language and Italy in all their possible facets.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="pillars">
+        <div class="pillar-card reveal">
+          <div class="mark">🎓</div>
+          <h3>Certified expertise</h3>
+          <p>Degree in Slavic Philology, thesis on teaching Italian to Polish students, master's in teaching Italian to foreigners.</p>
+        </div>
+        <div class="pillar-card reveal d1">
+          <div class="mark" style="background:var(--red);">🏛️</div>
+          <h3>Hands-on experience</h3>
+          <p>6 years at the Italian Institute of Culture in Kraków, hundreds of students guided along the way.</p>
+        </div>
+        <div class="pillar-card reveal d2">
+          <div class="mark" style="background:var(--gold);">🇵🇱</div>
+          <h3>Genuine understanding</h3>
+          <p>7 years lived in Poland: I don't just know the language, I know the culture, the history, the mindset.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SafeSpace
+    quote="With me, making a mistake isn't a failure — it's proof that you're learning. Lessons are small, intimate groups, six people maximum, designed specifically so you can speak without the fear of being judged."
+  />
+
+  <section>
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <h2>If you're looking for someone to explain grammar to you in a cold, textbook way, I'm probably not the right teacher for you.</h2>
+      <p style="margin-top:18px;">But if you're looking for a guide who will truly bring you into the language, into the culture, into Italy — then maybe we've found each other.</p>
+      <div class="cta-row" style="justify-content:center; margin-top:28px;">
+        <a class="btn" href="/en/offerta-formativa">See the course offering</a>
+        <a class="btn ghost" href="mailto:giada@italianoservito.it">Write to me</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 60px 0 20px; }
+  .apertura-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 46px; align-items: center; }
+  .apertura h1 { font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.22; margin: 10px 0 20px; }
+  .lede { color: var(--ink-soft); font-size: 1.02rem; }
+  .main-photo { height: 380px; border-radius: 4px 90px 4px 4px; }
+  .narrow { max-width: 720px; margin: 0 auto; }
+  .narrow p { margin-bottom: 20px; color: var(--ink-soft); }
+  .narrow h2 { margin-bottom: 20px; font-size: clamp(1.4rem,2.4vw,1.9rem); }
+
+  .storia-section {
+    background: var(--red); color: #fff;
+    display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; align-items: center;
+    padding: 60px 6vw; margin: 40px 0;
+  }
+  .storia-photo { border-radius: 6px; overflow: hidden; aspect-ratio: 4 / 3; }
+  .storia-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .storia-content h2 { color: #fff; font-size: clamp(1.3rem,2.2vw,1.7rem); margin: 8px 0 16px; }
+  .storia-content p { color: #F5E4DC; font-size: 0.95rem; margin-bottom: 14px; }
+  @media (max-width: 900px) {
+    .storia-section { grid-template-columns: 1fr; padding: 40px 24px; }
+  }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pillar-card { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 28px 24px; }
+  .pillar-card .mark { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--green); color: #fff; font-size: 1.2rem; margin-bottom: 16px; }
+  .pillar-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .pillar-card p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+  .cta-row { display: flex; gap: 18px; flex-wrap: wrap; }
+  @media (max-width: 900px) {
+    .apertura-grid { grid-template-columns: 1fr; }
+    .main-photo { order: -1; height: 280px; }
+    .pillars { grid-template-columns: 1fr; }
+  }
+</style>

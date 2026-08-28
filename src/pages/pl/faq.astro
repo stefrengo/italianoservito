@@ -1,0 +1,108 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+
+// FAQ in polacco — le stesse 9 domande della pagina italiana (src/data/faq.js),
+// tradotte e adattate (link interni verso /pl/offerta-formativa invece di
+// /offerta-formativa e /contatti, che non hanno versione PL). Vedi
+// traduzioni-pl-en-bozza.md per lo storico delle correzioni di Giada.
+//
+// Nota aperta sulla domanda 1: nella correzione di Giada compare la nota
+// "DA ELIMINARE IN TUTTE LE LINGUE" vicino a "kursy grupowe, nigdy
+// indywidualne" ma non è chiaro a quale parola si riferisca — da chiarire
+// con lei prima del lancio (vedi bozza traduzioni).
+const faq = [
+  {
+    q: 'Czy lekcje są indywidualne, czy grupowe?',
+    a: 'Wszystkie kursy „L\'Italiano è Servito" to kursy grupowe, nigdy indywidualne: małe grupy online, od 3 do maksymalnie 6 osób. To świadomy wybór, a nie ograniczenie: wierzę w siłę interakcji między ludźmi. Uczysz się więcej i szybciej, rozmawiając z innymi, którzy mierzą się z tymi samymi trudnościami co Ty.',
+  },
+  {
+    q: "Dlaczego wybrać kurs grupowy zamiast prywatnej nauczycielki?",
+    a: 'Ponieważ języka uczysz się, rozmawiając z innymi ludźmi. W małej grupie masz do czynienia z innymi ludźmi, słuchasz, jak wyrażają się osoby na Twoim poziomie, a przede wszystkim ćwiczysz prowadzenie prawdziwej rozmowy. To ta sama zasada, na której zbudowałam swoją metodę, wypracowaną przez lata nauczania w Polsce.',
+  },
+  {
+    q: 'Jak wyglądają kursy i na jakiej platformie się odbywają?',
+    a: 'Lekcje są online, na żywo na Zoomie, w małych grupach (maksymalnie 6 osób). To nie są nagrane wideolekcje: mówi się, zadaje się pytania, naprawdę rozmawia się już od pierwszej lekcji.',
+  },
+  {
+    q: 'Jaki poziom włoskiego jest potrzebny, żeby zacząć?',
+    a: 'Żaden. Kurs „Odblokuj się od zera" został pomyślany właśnie dla osób, które nigdy nie mówiły po włosku albo tylko próbowały. Od tego miejsca dalej są ścieżki na każdy poziom, od B1 do C2: „Znajdź swój głos" dla osób, które mają podstawy, ale blokują się przy mówieniu, „Odkryj język" dla tych, którzy chcą uchwycić najsubtelniejsze niuanse kulturowe. W razie wątpliwości spotkanie zapoznawcze pomaga zrozumieć, od czego zacząć.',
+  },
+  {
+    q: 'Czy wyjaśnienia są dostępne również po polsku?',
+    a: 'Tak. Mieszkałam siedem lat w Polsce, w tym sześć pracując we Włoskim Instytucie Kultury w Krakowie, i dokładnie wiem, gdzie struktura polskiego utrudnia naukę włoskiego. Kiedy trzeba, tłumaczę najtrudniejszą gramatykę, zaczynając właśnie od porównania z polskim, a nie z przetłumaczonego włoskiego podręcznika.',
+  },
+  {
+    q: 'Ile kosztują kursy i kiedy się zaczynają?',
+    a: 'Ceny, godziny i daty zmieniają się przy każdej edycji: zawsze znajdziesz aktualne informacje na <a href="/pl/offerta-formativa">stronie z bieżącą ofertą kursów</a>, z ograniczoną liczbą miejsc, żeby zagwarantować małe grupy. W razie wątpliwości można napisać bezpośrednio na <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a>.',
+  },
+  {
+    q: 'Co się stanie, jeśli się pomylę albo boję się mówić przy innych?',
+    a: 'To najczęstszy punkt wyjścia, a nie przeszkoda. Grupy są celowo małe, żeby zaufanie budowało się szybko, a na każdej lekcji błąd jest częścią drogi: to dowód, że próbujesz, a nie porażka.',
+  },
+  {
+    q: 'Jak zapisać się na kurs?',
+    a: 'Wypełniasz formularz na <a href="/pl/offerta-formativa">stronie z aktualną ofertą kursów</a> albo piszesz bezpośrednio na <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a>: po zapisaniu się otrzymujesz potwierdzenie mailowe ze wszystkimi szczegółami dotyczącymi udziału.',
+  },
+  {
+    q: 'Czy muszę wpłacić zadatek, żeby potwierdzić rezerwację miejsca w grupie?',
+    a: 'Tak: żeby zarezerwować miejsce, potrzebny jest zadatek w wysokości 100 PLN, który później jest odejmowany od całkowitego kosztu kursu. To rozwiązanie wynikające z konkretnego doświadczenia: w przeszłości niektóre osoby zapisywały się, rezerwując miejsce, a potem się nie pojawiały, zabierając miejsce tym, którym naprawdę na nim zależało. Ponieważ grupy są małe, a miejsc jest niewiele, słusznie jest, żeby zostały dla osób gotowych zacząć. Szczegóły dotyczące wpłaty wyjaśniam osobiście w momencie potwierdzenia.',
+  },
+];
+
+const stripHtml = (html) => html.replace(/<[^>]+>/g, '');
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: stripHtml(item.a) },
+  })),
+};
+---
+
+<MainLayout
+  locale="pl"
+  title="Najczęściej zadawane pytania | Kursy włoskiego online | L'Italiano è Servito"
+  description="Jak działają kursy włoskiego online Giady Longo: lekcje grupowe, poziomy, ceny, wsparcie po polsku i zapisy."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="apertura">
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <span class="eyebrow">Najczęściej zadawane pytania</span>
+      <h1>Wszystko, co warto wiedzieć, zanim zaczniesz</h1>
+      <p class="lede">Jeśli masz inne wątpliwości, spotkanie zapoznawcze lub wiadomość na <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a> to wciąż najszybszy sposób, żeby uzyskać odpowiedź skrojoną na miarę.</p>
+    </div>
+  </section>
+
+  <section class="faq-section">
+    <div class="wrap narrow">
+      {faq.map((item) => (
+        <details class="reveal">
+          <summary>{item.q}</summary>
+          <p set:html={item.a} />
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <a class="btn" href="/pl/offerta-formativa">Zobacz ofertę kursów</a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 70px 0 20px; }
+  .narrow { max-width: 700px; margin: 0 auto; }
+  .lede { color: var(--ink-soft); margin-top: 14px; }
+  .faq-section { padding: 20px 0 60px; }
+  details { border-top: 1px solid var(--card-line); padding: 18px 0; }
+  details:last-child { border-bottom: 1px solid var(--card-line); }
+  summary { font-weight: 600; cursor: pointer; font-size: 1.02rem; }
+  details p { margin: 14px 0 0; color: var(--ink-soft); line-height: 1.6; }
+  details p :global(a), .lede :global(a) { color: var(--red); font-weight: 600; }
+  details p :global(a):hover, .lede :global(a):hover { text-decoration: underline; }
+</style>

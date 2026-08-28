@@ -1,16 +1,12 @@
 ---
-// Pagina volutamente FUORI dal menu di navigazione (non linkata da Navbar.astro).
-// Punto di atterraggio dedicato alle campagne social a pagamento.
-// Struttura molto ispirata a italianoservito.it/corsi-di-italiano-estate-2026...
-// ma con placeholder chiaramente etichettati al posto delle date/prezzi di quella
-// campagna estiva (già conclusa): da riempire con i dati veri del semestre in corso.
-import MainLayout from '../layouts/MainLayout.astro';
-import SignupForm from '../components/SignupForm.astro';
-import { STAGIONE, PERIODO, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione, corsiDolce } from '../data/corsiStagione.js';
+// Versione inglese della landing /offerta-formativa — stessa struttura di
+// dati (corsiStagione.js) della pagina italiana, con le etichette e i testi
+// tradotti (vedi traduzioni-pl-en-bozza.md). Fuori dal menu di navigazione,
+// come la versione italiana.
+import MainLayout from '../../layouts/MainLayout.astro';
+import SignupForm from '../../components/SignupForm.astro';
+import { STAGIONE, PERIODO, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione, corsiDolce } from '../../data/corsiStagione.js';
 
-// Griglia unica: i corsi della stagione + i due corsi "Dolce" (bonus di
-// conversazione), questi ultimi contrassegnati da un timbro "Bonus" al posto
-// di Antipasto/Primo/Secondo — per il resto stessa identica card.
 const tutteLeCard = [
   ...corsiStagione.map((c) => ({ ...c, dolce: false })),
   ...corsiDolce.map((c) => ({ ...c, dolce: true })),
@@ -19,26 +15,27 @@ const tutteLeCard = [
 const stagionePiana = STAGIONE.replace(' | ', ' ');
 
 const perche = [
-  { titolo: 'Madrelingua con esperienza', testo: "10 anni di insegnamento a persone adulte di ogni livello linguistico." },
-  { titolo: 'Spiegazioni chiare anche in polacco', testo: 'Capisci la grammatica più difficile grazie al supporto nella tua lingua madre.' },
-  { titolo: 'Lezioni pratiche, mai solo teoria', testo: 'Parli fin dal primo giorno, in contesti reali, e quando serve grammatica te la spiego subito, senza fronzoli.' },
-  { titolo: 'Massimo 6 partecipanti a gruppo', testo: 'Il giusto spazio per parlare e fare domande a ogni lezione.' },
+  { titolo: 'Experienced native speaker', testo: '10 years teaching adults at every language level.' },
+  { titolo: 'Clear explanations, in Polish too', testo: 'You understand even the hardest grammar thanks to support in your native language.' },
+  { titolo: 'Practical lessons, never just theory', testo: 'You speak from day one, in real contexts, and when grammar is needed, I explain it right away, no frills.' },
+  { titolo: 'Six people per group, maximum', testo: 'The right amount of space to speak and ask questions in every lesson.' },
 ];
 ---
 
 <MainLayout
-  title={`Corsi di italiano ${STAGIONE} | L'Italiano è Servito`}
-  description="Corsi online di italiano con Giada Longo. Posti limitati: prenota il tuo posto ora."
+  locale="en"
+  title={`Italian courses ${STAGIONE} | L'Italiano è Servito`}
+  description="Online Italian courses with Giada Longo. Limited spots: reserve your spot now."
 >
   <section class="hero-ads">
     <div class="wrap hero-grid">
       <div class="reveal">
-        <span class="stamp ink">Iscriviti ai nuovi corsi</span>
-        <h1>Corsi online<br>di lingua italiana</h1>
-        <p class="stagione">Perché l'italiano è un piacere!</p>
-        <p class="lede">Ciao! Sono Giada, insegnante di lingua e cultura italiana per stranieri. Dopo anni di insegnamento in Polonia, ho fondato "L'Italiano è Servito" per aiutare chi viene dal mondo slavo a immergersi davvero nella lingua italiana, non solo a studiarla.</p>
-        <p class="lede">Per me, insegnare l'italiano significa entrare nel cuore dell'Italia: nei gesti, nei sapori, nelle tradizioni.</p>
-        <a class="btn" href="#iscrizione">Prenota il tuo posto</a>
+        <span class="stamp ink">Enroll in the new courses</span>
+        <h1>Online Italian<br>language courses</h1>
+        <p class="stagione">Because Italian is a pleasure!</p>
+        <p class="lede">Hi! I'm Giada, a teacher of Italian language and culture for people from abroad. After years of teaching in Poland, I founded "L'Italiano è Servito" to help people from the Slavic world truly immerse themselves in the Italian language, not just study it.</p>
+        <p class="lede">To me, teaching Italian means stepping into the heart of Italy: into its gestures, its flavors, its traditions.</p>
+        <a class="btn" href="#iscrizione">Reserve your spot</a>
       </div>
       <div class="photo main-photo torn-bottom reveal d1">
         <img src="/foto/giada-1.png" alt="Giada Longo" />
@@ -49,8 +46,8 @@ const perche = [
   <section id="corsi" class="corsi-section">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Calendario dei corsi | {stagionePiana}</h2>
-        <p class="intro">Questo semestre ti propongo corsi online in piccoli gruppi (da 3 a 6 persone) per imparare e migliorare il tuo italiano in un ambiente accogliente. Qualunque sia il tuo livello, trovi un corso pensato per te, con un programma adatto alle tue esigenze e al tuo ritmo.</p>
+        <h2>Course calendar | {stagionePiana}</h2>
+        <p class="intro">This semester I'm offering online courses in small groups (3 to 6 people) so you can learn and improve your Italian in a welcoming environment. Whatever your level, you'll find a course designed for you, with a program suited to your needs and your pace.</p>
       </div>
 
       <div class="price-grid">
@@ -65,30 +62,30 @@ const perche = [
             <div class="price-amount"><span class="currency">PLN</span>{c.prezzo}</div>
             {c.dolce ? (
               <ul>
-                <li>{c.comeFunziona}</li>
-                <li>{c.lezioni} lezioni da {c.minuti} minuti</li>
-                <li>In abbinamento a un corso: PLN {c.prezzoBundle}</li>
+                <li>{c.comeFunzionaEn}</li>
+                <li>{c.lezioni} lessons of {c.minuti} minutes</li>
+                <li>Bundled with a course: PLN {c.prezzoBundle}</li>
               </ul>
             ) : (
               <ul>
-                <li>{c.tipo}</li>
+                <li>{c.tipoEn}</li>
                 <li>{c.lezioni}</li>
-                <li>Giorno libero: {c.giornoLibero}</li>
+                <li>Day off: {c.giornoLibero}</li>
               </ul>
             )}
-            <button type="button" class="btn small" data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} · ${c.livello}`}>Prenota il tuo posto</button>
+            <button type="button" class="btn small" data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} · ${c.livello}`}>Reserve your spot</button>
           </div>
         ))}
       </div>
 
-      <p class="info-line reveal">Hai bisogno di ulteriori informazioni? Scrivimi a <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a></p>
+      <p class="info-line reveal">Need more information? Write to me at <a href="mailto:giada@italianoservito.it">giada@italianoservito.it</a></p>
     </div>
   </section>
 
   <section class="perche-section">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Perché scegliere i miei corsi</h2>
+        <h2>Why choose my courses</h2>
       </div>
       <div class="perche-grid">
         {perche.map((p, i) => (
@@ -105,11 +102,11 @@ const perche = [
     <div class="storia-photo"><img src="/foto/giada-5-cane.png" alt="Giada Longo" /></div>
     <div class="storia-content">
       <div class="reveal">
-        <span class="eyebrow" style="color:var(--gold);">La mia storia</span>
-        <h2>Ciao! Sono Giada Longo, e ho la fortuna di fare il lavoro più bello del mondo: insegnare italiano agli stranieri.</h2>
-        <p>Mi sono laureata in Lingue con specializzazione in polacco e russo, con una tesi magistrale dedicata proprio alla didattica dell'italiano in Polonia.</p>
-        <p>Della Polonia, poi, mi sono davvero innamorata: dopo un tirocinio all'Università Jagellonica di Cracovia, ho scelto di viverci per sette anni, costruendo lì la mia esperienza nell'insegnamento, con un'attenzione particolare a chi ha origini polacche o slave.</p>
-        <p>Ho lavorato sei anni all'Istituto Italiano di Cultura di Cracovia, aggiornandomi con workshop tematici e perfezionandomi nella didattica online.</p>
+        <span class="eyebrow" style="color:var(--gold);">My story</span>
+        <h2>Hi! I'm Giada Longo, and I'm lucky enough to do the most beautiful job in the world: teaching Italian to foreigners.</h2>
+        <p>I graduated in Languages with a specialization in Polish and Russian, with a master's thesis focused specifically on teaching Italian in Poland.</p>
+        <p>As for Poland, I truly fell in love with it: after an internship at the Jagiellonian University in Kraków, I chose to live there for seven years, building my teaching experience with particular attention to people of Polish or Slavic origin.</p>
+        <p>I worked for six years at the Italian Institute of Culture in Kraków, keeping up to date with themed workshops and refining my skills in online teaching.</p>
       </div>
     </div>
   </section>
@@ -117,34 +114,30 @@ const perche = [
   <section class="dettagli-section">
     <div class="wrap dettagli-grid">
       <div class="reveal">
-        <h2>Dettagli</h2>
+        <h2>Details</h2>
         <ul class="dettagli-list">
           <li>📅 {PERIODO}</li>
-          <li>💻 Online su Zoom</li>
-          <li>🧑‍🏫 Posti limitati: per confermare il tuo posto, i dettagli te li spiego personalmente.</li>
+          <li>💻 Online on Zoom</li>
+          <li>🧑‍🏫 Limited spots: to confirm your spot, I'll explain the details personally.</li>
         </ul>
       </div>
       <div class="scadenza-card reveal d1">
-        <h3>Scadenza iscrizioni: {SCADENZA_LABEL}</h3>
+        <h3>Enrollment deadline: {SCADENZA_LABEL}</h3>
         <div class="countdown" id="countdown" data-target={SCADENZA_ISO}>
-          <div><span id="cd-days">00</span><small>Giorni</small></div>
-          <div><span id="cd-hours">00</span><small>Ore</small></div>
+          <div><span id="cd-days">00</span><small>Days</small></div>
+          <div><span id="cd-hours">00</span><small>Hours</small></div>
           <div><span id="cd-min">00</span><small>Min</small></div>
           <div><span id="cd-sec">00</span><small>Sec</small></div>
         </div>
-        <a class="btn" href="#iscrizione">Prenota il tuo posto ora</a>
+        <a class="btn" href="#iscrizione">Reserve your spot now</a>
       </div>
     </div>
   </section>
 
-  <SignupForm corsi={corsiStagione} includiClubStandalone={true} fonte="offerta-formativa" />
+  <SignupForm corsi={corsiStagione} includiClubStandalone={true} fonte="offerta-formativa-en" locale="en" />
 </MainLayout>
 
 <script>
-  // I bottoni "Prenota il tuo posto" per corso e i campi condizionali del form
-  // sono gestiti dallo script dentro il componente <SignupForm />.
-
-  // Countdown alla scadenza iscrizioni
   const el = document.getElementById('countdown');
   if (el) {
     const target = new Date(el.dataset.target).getTime();

@@ -59,6 +59,60 @@ function mailConfermaHtml(corpo) {
 </html>`;
 }
 
+// Rilevamento automatico della lingua: si basa sull'header Referer della
+// richiesta POST (il form è un <form method="POST"> nativo, quindi il
+// browser manda sempre come Referer l'URL della pagina da cui si è
+// iscritti — /pl/offerta-formativa, /en/offerta-formativa o quella
+// italiana di default). Nessuna modifica a Resend o Supabase: la lingua
+// serve solo per scegliere il testo dell'email e per passare un
+// parametro a /grazie, che lo usa per mostrare il blocco giusto.
+function rilevaLingua(request) {
+  const referer = request.headers.get('referer') || '';
+  try {
+    const path = new URL(referer).pathname;
+    if (path === '/pl' || path.startsWith('/pl/')) return 'pl';
+    if (path === '/en' || path.startsWith('/en/')) return 'en';
+  } catch {
+    // Referer assente o non parsabile: si resta sull'italiano di default.
+  }
+  return 'it';
+}
+
+// Testo dell'email di conferma nelle tre lingue. Le parti tra ${} sono
+// generate dai dati del form (nome, corso, bundle, messaggio libero).
+const TESTI_CONFERMA = {
+  it: {
+    subject: 'Il tuo posto è prenotato! 🇮🇹',
+    saluto: (nome) => `Ciao ${nome},`,
+    intro: (corso) => `ho ricevuto la tua iscrizione al corso <strong>${corso}</strong>: il tuo posto è prenotato.`,
+    club: 'Hai chiesto di abbinare anche il <strong>Club del Libro</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.',
+    te: 'Hai chiesto di abbinare anche <strong>Tè e Riviste</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.',
+    messaggio: (msg) => `Ho letto quello che mi hai scritto: <em>"${msg}"</em>, ne terrò conto quando ti risponderò.`,
+    chiusura: 'Ti scrivo personalmente entro 24-48 ore per confermarti tutti i dettagli e i prossimi passi.',
+    firma: 'A presto,<br>Giada',
+  },
+  pl: {
+    subject: 'Twoje miejsce jest zarezerwowane! 🇮🇹',
+    saluto: (nome) => `Cześć ${nome},`,
+    intro: (corso) => `otrzymałam Twoje zgłoszenie na kurs <strong>${corso}</strong>: Twoje miejsce jest zarezerwowane.`,
+    club: 'Poprosiłaś/eś też o dołączenie <strong>Klubu Książki</strong>: cenę i szczegóły pakietu potwierdzę razem z resztą.',
+    te: 'Poprosiłaś/eś też o dołączenie <strong>Herbaty i Czasopism</strong>: cenę i szczegóły pakietu potwierdzę razem z resztą.',
+    messaggio: (msg) => `Przeczytałam to, co do mnie napisałaś/eś: <em>„${msg}"</em>, wezmę to pod uwagę, kiedy będę odpowiadać.`,
+    chiusura: 'Napiszę do Ciebie osobiście w ciągu 24-48 godzin, żeby potwierdzić wszystkie szczegóły i kolejne kroki.',
+    firma: 'Do zobaczenia,<br>Giada',
+  },
+  en: {
+    subject: 'Your spot is reserved! 🇮🇹',
+    saluto: (nome) => `Hi ${nome},`,
+    intro: (corso) => `I've received your enrollment for the <strong>${corso}</strong> course: your spot is reserved.`,
+    club: 'You also asked to add the <strong>Book Club</strong>: I\'ll confirm the bundle price and details along with everything else.',
+    te: 'You also asked to add <strong>Tea &amp; Magazines</strong>: I\'ll confirm the bundle price and details along with everything else.',
+    messaggio: (msg) => `I've read what you wrote me: <em>"${msg}"</em>, I'll keep it in mind when I get back to you.`,
+    chiusura: 'I\'ll write to you personally within 24-48 hours to confirm all the details and next steps.',
+    firma: 'See you soon,<br>Giada',
+  },
+};
+
 export async function POST({ request, locals }) {
   try {
     const env = locals?.runtime?.env;
@@ -85,6 +139,7 @@ export async function POST({ request, locals }) {
     // Da quale pagina arriva il lead: ogni form manda un campo nascosto "fonte"
     // (offerta-formativa, percorso:<slug>, contatti) — vedi SignupForm.astro e contatti.astro.
     const fonte = data.get('fonte')?.toString().trim() || 'sconosciuta';
+    const lingua = rilevaLingua(request);
 
     if (!nome || !email || !telefono) {
       return new Response(JSON.stringify({ error: 'Nome, email e telefono sono obbligatori.' }), { status: 400 });
@@ -125,6 +180,7 @@ export async function POST({ request, locals }) {
     }
 
     // 2) Email di conferma alla persona iscritta (testo personalizzabile qui sotto)
+    const t = TESTI_CONFERMA[lingua] || TESTI_CONFERMA.it;
     const emailConfermaRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -134,15 +190,15 @@ export async function POST({ request, locals }) {
       body: JSON.stringify({
         from: "L'Italiano è Servito <giada@italianoservito.it>",
         to: email,
-        subject: 'Il tuo posto è prenotato! 🇮🇹',
+        subject: t.subject,
         html: mailConfermaHtml(`
-          <p style="margin:0 0 18px; font-family: Georgia, 'Times New Roman', serif; font-size:21px; font-weight:600; color:#2F6B4F;">Ciao ${nome},</p>
-          <p style="margin:0 0 14px;">ho ricevuto la tua iscrizione al corso <strong>${percorso}</strong>: il tuo posto è prenotato.</p>
-          ${clubDelLibro ? '<p style="margin:0 0 14px;">Hai chiesto di abbinare anche il <strong>Club del Libro</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
-          ${teERiviste ? '<p style="margin:0 0 14px;">Hai chiesto di abbinare anche <strong>Tè e Riviste</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.</p>' : ''}
-          ${messaggio ? `<p style="margin:0 0 14px;">Ho letto quello che mi hai scritto: <em>"${messaggio}"</em>, ne terrò conto quando ti risponderò.</p>` : ''}
-          <p style="margin:0 0 14px;">Ti scrivo personalmente entro 24-48 ore per confermarti tutti i dettagli e i prossimi passi.</p>
-          <p style="margin:24px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size:16px; color:#A63A32;">A presto,<br>Giada</p>
+          <p style="margin:0 0 18px; font-family: Georgia, 'Times New Roman', serif; font-size:21px; font-weight:600; color:#2F6B4F;">${t.saluto(nome)}</p>
+          <p style="margin:0 0 14px;">${t.intro(percorso)}</p>
+          ${clubDelLibro ? `<p style="margin:0 0 14px;">${t.club}</p>` : ''}
+          ${teERiviste ? `<p style="margin:0 0 14px;">${t.te}</p>` : ''}
+          ${messaggio ? `<p style="margin:0 0 14px;">${t.messaggio(messaggio)}</p>` : ''}
+          <p style="margin:0 0 14px;">${t.chiusura}</p>
+          <p style="margin:24px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size:16px; color:#A63A32;">${t.firma}</p>
         `),
       }),
     });
@@ -160,7 +216,11 @@ export async function POST({ request, locals }) {
       body: JSON.stringify({
         from: 'Sito L\'Italiano è Servito <notifiche@italianoservito.it>',
         to: env.GIADA_NOTIFICATION_EMAIL,
-        subject: `Nuova richiesta: ${nome} · ${percorso}${clubDelLibro ? ' + Club del Libro' : ''}${teERiviste ? ' + Tè e Riviste' : ''}`,
+        // Etichetta di lingua nell'oggetto (solo per PL/EN, per non appesantire
+        // l'oggetto sulla maggioranza dei lead che restano italiani) — così
+        // Giada vede a colpo d'occhio da che sito arriva la richiesta senza
+        // dover aprire Supabase.
+        subject: `${lingua !== 'it' ? `[${lingua.toUpperCase()}] ` : ''}Nuova richiesta: ${nome} · ${percorso}${clubDelLibro ? ' + Club del Libro' : ''}${teERiviste ? ' + Tè e Riviste' : ''}`,
         html: `<!DOCTYPE html>
 <html lang="it">
   <head>
@@ -191,7 +251,12 @@ export async function POST({ request, locals }) {
     // il browser alla pagina di ringraziamento invece di restituire JSON
     // grezzo. 303 = "See Other": il browser rifà una GET verso /grazie
     // invece di ripetere la POST (comportamento corretto dopo un form submit).
-    return Response.redirect(new URL('/grazie', request.url), 303);
+    // Il parametro ?lang= porta con sé la lingua già rilevata dal Referer:
+    // più affidabile che ri-rilevarla su /grazie, dato che il Referer della
+    // GET di redirect non è garantito da tutti i browser.
+    const grazieUrl = new URL('/grazie', request.url);
+    grazieUrl.searchParams.set('lang', lingua);
+    return Response.redirect(grazieUrl, 303);
   } catch (err) {
     console.error('Errore imprevisto:', err && err.stack ? err.stack : err);
     return new Response(JSON.stringify({ error: 'Errore imprevisto.' }), {

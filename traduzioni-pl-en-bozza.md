@@ -1,9 +1,17 @@
 # Traduzioni PL / EN — bozza per revisione
 
+> **Stato (28/08/2026): COSTRUITO SUL SITO.** Dopo le correzioni di Giada
+> (vedi le note "Modifica di Giada" sparse nel documento), ho aggiornato
+> questo testo e costruito le 8 pagine `/pl/*` e `/en/*` sul sito, oltre ad
+> applicare le stesse correzioni al sito italiano live dove pertinente. Il
+> documento resta come riferimento/cronologia delle decisioni prese, non è
+> più una bozza in attesa. Un solo punto è ancora aperto — vedi la nota
+> "⚠️ Punto da chiarire con te" nella sezione FAQ, domanda 1.
+
 Bozza di traduzione delle 4 pagine concordate (Home, Chi Sono, FAQ, Offerta
 Formativa) più la pagina Grazie (unica per le tre lingue). Percorso di
-lavoro: **prima approvi/correggi questo testo, poi lo costruisco sul sito.**
-Non ho ancora toccato nessun file `.astro`.
+lavoro seguito: **prima testo approvato/corretto, poi costruzione sul
+sito.**
 
 Non sono madrelingua polacca: il polacco qui sotto è scritto con cura ma **va
 fatto rileggere da te, da Giada o da una madrelingua polacca** prima di andare
@@ -46,11 +54,16 @@ una rilettura veloce non guasta comunque.
    percorso non hanno versione PL/EN.
 
 6. **Pagina Grazie**: resta un'unica pagina per tutti e tre i siti, come
-   richiesto. Propongo di riconoscere la lingua da dove arriva la persona
-   (se viene da `/pl/...` mostro il blocco polacco, da `/en/...` quello
-   inglese, altrimenti l'italiano di default) e di tenere comunque tutti e
-   tre i testi nell'HTML come fallback, per sicurezza SEO/accessibilità.
-   Il testo delle tre versioni è qui sotto.
+   richiesto — **implementata**. Invece del rilevamento da referrer diretto
+   su `/grazie` (poco affidabile: non tutti i browser mandano il Referer
+   originale dopo un redirect), la lingua viene rilevata una volta sola in
+   `/api/iscrizione` (dal Referer della pagina con il form, che è sempre
+   presente lì) e passata avanti come `/grazie?lang=pl`. La pagina legge
+   quel parametro e mostra il blocco giusto; se manca o non è pl/en, mostra
+   l'italiano di default. Tecnicamente questo ha richiesto di rendere
+   `/grazie` "on-demand" (`prerender = false`, come `/api/iscrizione`)
+   invece che statica, perché una pagina statica ignorerebbe la query
+   string. Il testo delle tre versioni è qui sotto.
 
 7. Le etichette del **form di iscrizione** (Nome, Email, Telefono...) e delle
    **card dei corsi** (Livello, Orario, Giorno libero...) sono in un
@@ -59,12 +72,14 @@ una rilettura veloce non guasta comunque.
 
 8. **Lingua della mail di conferma iscrizione**: confermato con Stefano —
    nessuna modifica su Resend o su Supabase, rilevamento automatico della
-   lingua dalla pagina di provenienza (il sito la conosce già, non c'è
-   bisogno di indovinarla). La mail di **notifica interna a Giada** resta
-   sempre in italiano, con in più un'etichetta della lingua di provenienza
-   nell'oggetto (es. "[PL] Nuova richiesta: ..."), così a colpo d'occhio si
-   sa da che sito arriva senza dover aprire Supabase. Testo delle due mail
-   in fondo, sezione "Mail di conferma iscrizione".
+   lingua dalla pagina di provenienza — **implementato**: `/api/iscrizione`
+   legge l'header Referer della richiesta (la pagina da cui arriva
+   l'iscrizione) e sceglie il testo giusto tra IT/PL/EN. La mail di
+   **notifica interna a Giada** resta sempre in italiano, con in più
+   un'etichetta della lingua di provenienza nell'oggetto quando non è
+   italiano (es. "[PL] Nuova richiesta: ..."), così a colpo d'occhio si sa
+   da che sito arriva senza dover aprire Supabase. Testo delle due mail in
+   fondo, sezione "Mail di conferma iscrizione".
 
 ---
 
@@ -80,7 +95,7 @@ una rilettura veloce non guasta comunque.
 - CTA vuota: *Scopri la mia storia* → Chi Sono
 
 **PL**
-- Eyebrow: *Cześć, jestem Giada!*
+- Eyebrow: *Cześć, nazywam się Giada!*
 - Titolo: *To nie są lekcje włoskiego. To droga prosto* do serca *Włoch.*
 - Sottotitolo: *Kursy włoskiego online dla osób zakochanych we Włoszech. Jestem Giada Longo, dyplomowana nauczycielka, która dokładnie wie, w którym miejscu się blokujesz — bo sama, po drugiej stronie, przeszłam przez to samo.*
 - CTA piena: *Znajdź swoją ścieżkę do włoskiego* → /pl/offerta-formativa
@@ -111,21 +126,21 @@ una rilettura veloce non guasta comunque.
 
 ### Sezione percorsi (adattata: un blocco unico invece della griglia a 4)
 
+> **Modifica di Giada**: il sottotitolo/H2 di questo blocco è stato eliminato in tutte le lingue (lo stesso H2 è stato tolto anche dalla Home italiana live: restano solo l'eyebrow "I percorsi" e la griglia/CTA sotto).
+
 **PL**
 - Eyebrow: *Oferta*
-- H2: *Nie stworzyłam zwykłych kursów „na poziomie". Stworzyłam ścieżki dla osoby, którą jesteś dziś.*
 - CTA: *Zobacz aktualną ofertę kursów* → /pl/offerta-formativa
 
 **EN**
 - Eyebrow: *The paths*
-- H2: *I didn't build simple "leveled" courses. I designed paths for the person you are today.*
 - CTA: *See the current course offering* → /en/offerta-formativa
 
 ### Citazione "spazio sicuro"
 
 **IT**: *Qui sbagliare fa parte del percorso, non è un fallimento. I gruppi sono piccoli (massimo 6 persone) perché la fiducia si costruisce solo quando ci si conosce davvero.*
 
-**PL**: *Tutaj błądzenie jest częścią drogi, a nie porażką. Grupy są małe (maksymalnie 6 osób), bo zaufanie buduje się tylko wtedy, gdy naprawdę się poznajemy.*
+**PL**: *Tutaj błąd jest częścią drogi, a nie porażką. Grupy są małe (maksymalnie 6 osób), bo zaufanie buduje się tylko wtedy, gdy naprawdę się znamy.*
 
 **EN**: *Here, making mistakes is part of the journey, not a failure. Groups are small (six people maximum), because trust only builds when people truly get to know each other.*
 
@@ -137,23 +152,25 @@ una rilettura veloce non guasta comunque.
 
 ### FAQ in Home (3 domande brevi)
 
+> **Modifiche di Giada**: (1) tolto "il più comune" dalla risposta 1 — applicato anche all'italiano live (Home). (2) "chi parte dal polacco" → semplificato in "le persone polacche" — applicato anche all'italiano live (Home). (3) la risposta 3 non deve iniziare con un secco "No" — riformulata; e tolto "assoluto/zupełnego" da "zero assoluto" in tutte le lingue — applicato anche all'italiano live.
+
 **PL**
-1. **Co się stanie, jeśli boję się mówić?** — *To najczęstszy punkt wyjścia, a nie przeszkoda. Na pierwszych spotkaniach celowo obniżam presję: trochę się mówi, dużo się słucha, a pewność siebie rośnie z lekcji na lekcję.*
-2. **Jak wyglądają lekcje dla polskich uczniów?** — *Buduję lekcje, biorąc pod uwagę specyficzne trudności osób, które zaczynają od polskiego, i pokonuję je razem z tobą, używając porównań, które mnie — jako rodzimej Włoszce — nigdy by nie przyszły do głowy, gdybym nie nauczyła się polskiego i nie mieszkała w Polsce.*
-3. **Czy muszę już znać trochę włoskiego, żeby zacząć?** — *Nie. Kurs „Odblokuj się od zera" stworzyłam właśnie z myślą o osobach zaczynających od zupełnego zera.*
+1. **Co się stanie, jeśli boję się mówić?** — *To punkt wyjścia, a nie przeszkoda. Na pierwszych spotkaniach celowo obniżam presję: trochę się mówi, dużo się słucha, a pewność siebie rośnie z lekcji na lekcję.*
+2. **Jak wyglądają lekcje dla polskich uczniów?** — *Buduję lekcje, biorąc pod uwagę specyficzne trudności Polaków, i pokonuję je razem z Tobą, używając porównań, które mnie — jako rodzimej Włoszce — nigdy by nie przyszły do głowy, gdybym nie nauczyła się polskiego i nie mieszkała w Polsce.*
+3. **Czy muszę już znać trochę włoskiego, żeby zacząć?** — *Nie jest to konieczne: kurs „Odblokuj się od zera" stworzyłam właśnie z myślą o osobach zaczynających od zera.*
 - Link: *Zobacz wszystkie najczęściej zadawane pytania →* /pl/faq
 
 **EN**
-1. **What happens if I'm afraid to speak?** — *It's the most common starting point, not an obstacle. In the first sessions I work on purpose to lower the pressure: you speak a little, listen a lot, and confidence grows lesson after lesson.*
-2. **How are lessons structured for Polish-speaking students?** — *I build lessons around the specific difficulties people face when starting from Polish, and I work through them with you using comparisons that, as a native Italian speaker, I would never have thought of before learning Polish myself and living in Poland.*
-3. **Do I need to already know some Italian to start?** — *No. "Unlock from Zero" was designed exactly for people starting from absolute zero.*
+1. **What happens if I'm afraid to speak?** — *It's a starting point, not an obstacle. In the first sessions I work on purpose to lower the pressure: you speak a little, listen a lot, and confidence grows lesson after lesson.*
+2. **How are lessons structured for Polish-speaking students?** — *I build lessons around the specific difficulties Polish speakers face, and I work through them with you using comparisons that, as a native Italian speaker, I would never have thought of before learning Polish myself and living in Poland.*
+3. **Do I need to already know some Italian to start?** — *Not necessary: "Unlock from Zero" was designed exactly for people starting from zero.*
 - Link: *See all frequently asked questions →* /en/faq
 
 ### Teaser "Chi sono"
 
 **PL**
 - Eyebrow: *Kim jestem*
-- H2: *Zanim zostałam twoją nauczycielką, przez prawie 7 lat byłam adoptowaną Polką.*
+- H2: *Zanim zostałam twoją nauczycielką, przez prawie 7 lat byłam „przybraną" Polką.*
 - P: *Mieszkałam w Krakowie, pracowałam we Włoskim Instytucie Kultury i dokładnie wiem, gdzie polski język stawia ci kłody pod nogi, kiedy próbujesz mówić po włosku.*
 - CTA: *Poznaj moją historię →* /pl/chi-sono
 
@@ -165,9 +182,11 @@ una rilettura veloce non guasta comunque.
 
 ### Blocco finale
 
-**PL**: H2 *Nie potrzebujesz perfekcji. Wystarczy pierwszy krok.* — CTA *Zobacz ofertę kursów* → /pl/offerta-formativa
+> **Modifica di Giada**: aggiunto "per iniziare l'avventura" in tutte le lingue — applicato anche all'italiano live.
 
-**EN**: H2 *You don't need perfection. Just the first step.* — CTA *See the course offering* → /en/offerta-formativa
+**PL**: H2 *Nie potrzebujesz perfekcji, żeby zacząć przygodę. Wystarczy pierwszy krok.* — CTA *Zobacz ofertę kursów* → /pl/offerta-formativa
+
+**EN**: H2 *You don't need perfection to start the adventure. Just the first step.* — CTA *See the course offering* → /en/offerta-formativa
 
 ---
 
@@ -177,7 +196,7 @@ una rilettura veloce non guasta comunque.
 
 **PL**
 - Eyebrow: *O mnie*
-- H1: *Jestem Giada, dyplomowana nauczycielka języka włoskiego, ale zanim nią zostałam, przez prawie 7 lat byłam adoptowaną Polką.*
+- H1: *Jestem Giada, dyplomowana nauczycielka języka włoskiego, ale zanim nią zostałam, przez prawie 7 lat byłam „przybraną" Polką.*
 - Lede: *Mieszkałam w Krakowie. Robiłam zakupy po polsku, kłóciłam się po polsku, czasem nawet śniłam po polsku. I pośród tego wszystkiego nauczyłam się czegoś, czego nie znajdziesz w żadnym podręczniku metodyki: dokładnie wiem, gdzie polski język stawia ci przeszkody, kiedy próbujesz zanurzyć się we włoskim choćby na godzinę dziennie.*
 
 **EN**
@@ -185,41 +204,45 @@ una rilettura veloce non guasta comunque.
 - H1: *I'm Giada, a certified Italian teacher — but before that, I was an adopted Pole for almost seven years.*
 - Lede: *I lived in Kraków. I did my grocery shopping in Polish, argued in Polish, and sometimes even dreamed in Polish. And somewhere in the middle of all that, I learned something you won't find in any teaching manual: I know exactly where the Polish language trips you up when you try to immerse yourself in Italian, even for just an hour a day.*
 
-### "La storia, prima ancora della professione"
+### "La storia della mia passione, prima ancora della professione"
+
+> **Modifiche di Giada**: (1) titolo cambiato in "La storia della mia passione..." in tutte le lingue — applicato anche all'italiano live. (2) tolto "Moderne/nowożytną" dal grado di laurea in tutte le lingue — applicato anche all'italiano live. (3) tolti gli "eventi" dal racconto dei 7 anni a Cracovia, restano corsi e persone — applicato anche all'italiano live. (4) "aprire bocca" → "parlare" in tutte le lingue — applicato anche all'italiano live.
 
 **PL**
-- Eyebrow: *Historia, zanim jeszcze zawód*
-- H2: *Ukończyłam filologię nowożytną ze specjalizacją w języku polskim i rosyjskim.*
-- P1: *Moja ścieżka od początku była nastawiona na dydaktykę włoskiego, a moja praca magisterska poświęcona była właśnie temu, jak uczy się języka włoskiego w Polsce. Potem teoria stała się prawdziwym życiem: prawie 7 lat w Krakowie, spędzonych między innymi na pracy we Włoskim Instytucie Kultury, wśród kursów, wydarzeń i ludzi, którzy — tak jak ty — zakochali się we Włoszech, jeszcze zanim tam pojechali.*
-- P2: *Widziałam z bliska, co działa, a co nie, kiedy Polka lub Polak próbuje nauczyć się włoskiego. Widziałam frustrację wobec gramatyki tłumaczonej jak twierdzenia matematyczne. Widziałam strach przed otwarciem ust i popełnieniem błędu przy kimś. I zrozumiałam, że problemem prawie nigdy nie była zdolność do nauki — tylko sposób, w jaki tej nauki uczono.*
+- Eyebrow: *Historia mojej pasji, jeszcze zanim stała się moim zawodem*
+- H2: *Ukończyłam filologię ze specjalizacją w języku polskim i rosyjskim.*
+- P1: *Moja ścieżka od początku była nastawiona na dydaktykę włoskiego, a moja praca magisterska poświęcona była właśnie temu, jak uczy się języka włoskiego w Polsce. Potem teoria stała się prawdziwym życiem: prawie 7 lat w Krakowie, spędzonych między innymi pracując we Włoskim Instytucie Kultury, prowadząc kursy, podczas których poznałam ludzi, którzy — tak jak Ty — zakochali się we Włoszech, jeszcze zanim tam pojechali.*
+- P2: *Widziałam z bliska, co działa, a co nie, kiedy Polka lub Polak próbuje nauczyć się włoskiego. Widziałam frustrację wobec gramatyki tłumaczonej jak twierdzenia matematyczne. Widziałam strach przed mówieniem i popełnieniem błędu przy kimś. I zrozumiałam, że problemem prawie nigdy nie była zdolność do nauki — tylko sposób, w jaki tej nauki uczono.*
 
 **EN**
-- Eyebrow: *The story, before the profession*
-- H2: *I graduated in Modern Languages, specializing in Polish and Russian.*
-- P1: *My studies were already geared toward teaching Italian, and my thesis focused specifically on how Italian is taught in Poland. Then theory became real life: almost seven years in Kraków, spent, among other things, working at the Italian Institute of Culture, surrounded by courses, events, and people who — just like you — had fallen in love with Italy before ever setting foot there.*
-- P2: *I saw up close what works and what doesn't when a Polish speaker tries to learn Italian. I saw the frustration of grammar explained like mathematical theorems. I saw the fear of opening your mouth and getting it wrong in front of someone. And I understood that the problem almost never was the ability to learn — it was how it was being taught.*
+- Eyebrow: *The story of my passion, before the profession*
+- H2: *I graduated in Languages, specializing in Polish and Russian.*
+- P1: *My studies were already geared toward teaching Italian, and my thesis focused specifically on how Italian is taught in Poland. Then theory became real life: almost seven years in Kraków, spent, among other things, working at the Italian Institute of Culture, leading courses and meeting people who — just like you — had fallen in love with Italy before ever setting foot there.*
+- P2: *I saw up close what works and what doesn't when a Polish speaker tries to learn Italian. I saw the frustration of grammar explained like mathematical theorems. I saw the fear of speaking and getting it wrong in front of someone. And I understood that the problem almost never was the ability to learn — it was how it was being taught.*
 
 ### "Il metodo"
+
+> **Modifica di Giada**: eliminato il secondo paragrafo ("il vantaggio di aver vissuto dall'altra parte...") in tutte le lingue — applicato anche all'italiano live, resta solo il primo paragrafo.
 
 **PL**
 - H2: *Metoda*
 - P1: *Nie uczę włoskiego jako listy reguł do zapamiętania. Uczę go jako sposobu bycia w świecie, przeżywania języka włoskiego i Włoch we wszystkich możliwych odcieniach.*
-- P2: *Zaletą tego, że mieszkałam „po drugiej stronie", jest to, że nie tłumaczę ci włoskiego tak, jak zrobiłaby to przypadkowa rodzima Włoszka wobec zagranicznego ucznia. Wyjaśniam ci go, wychodząc od miejsca, w którym teraz jesteś, od tego, jak myśli twoja głowa, kiedy myśli po polsku — i stamtąd buduję most.*
 
 **EN**
 - H2: *The method*
 - P1: *I don't teach Italian as a list of rules to memorize. I teach it as a way of being in the world, of living the Italian language and Italy in all their possible facets.*
-- P2: *The advantage of having lived "on the other side" is that I don't explain Italian to you the way any native speaker would explain it to a foreign student. I explain it starting from where you are right now, from how your mind thinks when it thinks in Polish — and I build a bridge from there.*
 
 ### Tre pillole (competenza / esperienza / comprensione)
 
+> **Modifica di Giada**: "filologia nowożytna, specjalizacja slawistyczna" collassato in un unico titolo, "filologia slava" — applicato anche all'italiano live ("Laurea in Filologia Slava").
+
 **PL**
-1. 🎓 *Certyfikowane kompetencje* — *Studia z filologii nowożytnej, specjalizacja slawistyczna, praca magisterska o dydaktyce włoskiego dla polskich studentów, studia podyplomowe z nauczania włoskiego jako języka obcego.*
+1. 🎓 *Certyfikowane kompetencje* — *Studia z filologii słowiańskiej, praca magisterska o dydaktyce włoskiego dla polskich studentów, studia podyplomowe z nauczania włoskiego jako języka obcego.*
 2. 🏛️ *Doświadczenie w praktyce* — *6 lat we Włoskim Instytucie Kultury w Krakowie, setki osób, którym towarzyszyłam w nauce.*
 3. 🇵🇱 *Autentyczne zrozumienie* — *7 lat życia w Polsce: znam nie tylko język, znam kulturę, historię, mentalność.*
 
 **EN**
-1. 🎓 *Certified expertise* — *Degree in Modern Languages, Slavic specialization, thesis on teaching Italian to Polish students, master's in teaching Italian to foreigners.*
+1. 🎓 *Certified expertise* — *Degree in Slavic Philology, thesis on teaching Italian to Polish students, master's in teaching Italian to foreigners.*
 2. 🏛️ *Hands-on experience* — *6 years at the Italian Institute of Culture in Kraków, hundreds of students guided along the way.*
 3. 🇵🇱 *Genuine understanding* — *7 years lived in Poland: I don't just know the language, I know the culture, the history, the mindset.*
 
@@ -257,7 +280,10 @@ una rilettura veloce non guasta comunque.
 ### Le 9 domande
 
 **1. Le lezioni sono individuali o di gruppo?**
-- PL: *Czy lekcje są indywidualne, czy grupowe?* — *Wszystkie kursy „L'Italiano è Servito" to lekcje grupowe, nigdy indywidualne: małe grupy online, od 3 do maksymalnie 6 osób. To świadomy wybór, a nie ograniczenie: wierzę w siłę interakcji między ludźmi. Uczysz się więcej i szybciej, rozmawiając z innymi, którzy mierzą się z tymi samymi trudnościami co ty.*
+
+> ⚠️ **Punto da chiarire con te**: nella tua correzione, vicino a "kursy grupowe, nigdy indywidualne" c'è la nota "DA ELIMINARE IN TUTTE LE LINGUE", ma non capisco a quale parola/frase esatta si riferisca (l'unica differenza visibile rispetto alla mia bozza è "lekcje" → "kursy", che ho comunque applicato). Dimmi cosa intendevi togliere e lo sistemo.
+
+- PL: *Czy lekcje są indywidualne, czy grupowe?* — *Wszystkie kursy „L'Italiano è Servito" to kursy grupowe, nigdy indywidualne: małe grupy online, od 3 do maksymalnie 6 osób. To świadomy wybór, a nie ograniczenie: wierzę w siłę interakcji między ludźmi. Uczysz się więcej i szybciej, rozmawiając z innymi, którzy mierzą się z tymi samymi trudnościami co ty.*
 - EN: *Are the lessons individual or group lessons?* — *All "L'Italiano è Servito" courses are group lessons, never individual ones: small online groups, from 3 to a maximum of 6 people. It's a deliberate choice, not a limitation: I believe in the power of interaction between people. You learn more, and faster, by talking with others who are facing the same challenges as you.*
 
 **2. Perché scegliere un corso di gruppo invece di un'insegnante privata?**
@@ -289,8 +315,11 @@ una rilettura veloce non guasta comunque.
 - EN: *How do I sign up for a course?* — *You fill in the form on the current course offering page, or you can write directly to giada@italianoservito.it: after signing up, you'll receive an email confirmation with all the details you need to take part.* (link a /en/offerta-formativa + mailto)
 
 **9. Devo versare una caparra per confermare il mio posto?**
-- PL: *Czy muszę wpłacić zadatek, żeby potwierdzić swoje miejsce?* — *Tak: żeby realnie zarezerwować miejsce, potrzebny jest zadatek w wysokości 100 PLN, który później jest odejmowany od całkowitego kosztu kursu. To rozwiązanie wynikające z konkretnego doświadczenia: w przeszłości niektóre osoby zapisywały się, rezerwując miejsce, a potem się nie pojawiały, zabierając miejsce tym, którym naprawdę na nim zależało. Ponieważ grupy są małe, a miejsc jest niewiele, słusznie jest, żeby zostały dla osób gotowych zacząć. Szczegóły dotyczące wpłaty wyjaśniam osobiście w momencie potwierdzenia.*
-- EN: *Do I need to pay a deposit to confirm my spot?* — *Yes: to actually reserve your spot, a 100 PLN deposit is required, which is then subtracted from the total cost of the course. This came from a real experience: in the past, some people signed up, reserving a spot, and then never showed up, leaving out people who genuinely wanted it. Since groups are small and spots are limited, it's only fair that they go to people who are ready to start. The details on how to pay it are explained personally when your spot is confirmed.*
+
+> **Modifica di Giada**: tolto "realmente/effettivamente" davanti a "prenotare/riservare il posto" in tutte le lingue — applicato anche all'italiano live (pagina FAQ generale).
+
+- PL: *Czy muszę wpłacić zadatek, żeby potwierdzić rezerwację miejsca w grupie?* — *Tak: żeby zarezerwować miejsce, potrzebny jest zadatek w wysokości 100 PLN, który później jest odejmowany od całkowitego kosztu kursu. To rozwiązanie wynikające z konkretnego doświadczenia: w przeszłości niektóre osoby zapisywały się, rezerwując miejsce, a potem się nie pojawiały, zabierając miejsce tym, którym naprawdę na nim zależało. Ponieważ grupy są małe, a miejsc jest niewiele, słusznie jest, żeby zostały dla osób gotowych zacząć. Szczegóły dotyczące wpłaty wyjaśniam osobiście w momencie potwierdzenia.*
+- EN: *Do I need to pay a deposit to confirm my spot?* — *Yes: to reserve your spot, a 100 PLN deposit is required, which is then subtracted from the total cost of the course. This came from a real experience: in the past, some people signed up, reserving a spot, and then never showed up, leaving out people who genuinely wanted it. Since groups are small and spots are limited, it's only fair that they go to people who are ready to start. The details on how to pay it are explained personally when your spot is confirmed.*
 
 ---
 
@@ -302,7 +331,7 @@ una rilettura veloce non guasta comunque.
 - Timbro: *Zapisz się na nowe kursy*
 - H1: *Kursy online języka włoskiego*
 - Sottotitolo verde: *Bo włoski to przyjemność!*
-- Lede 1: *Cześć! Jestem Giada, nauczycielka języka i kultury włoskiej dla osób obcokrajowców. Po latach nauczania w Polsce założyłam „L'Italiano è Servito", żeby pomóc osobom ze świata słowiańskiego naprawdę przeżywać język włoski, a nie tylko się go uczyć.*
+- Lede 1: *Cześć! Jestem Giada, nauczycielka języka i kultury włoskiej dla obcokrajowców. Po latach nauczania w Polsce założyłam „L'Italiano è Servito", żeby pomóc osobom ze świata słowiańskiego naprawdę zanurzyć się w języku włoskim, a nie tylko się go uczyć.*
 - Lede 2: *Dla mnie nauczanie włoskiego oznacza wejście w samo serce Włoch: w gesty, smaki, tradycje.*
 - CTA: *Zarezerwuj swoje miejsce*
 
@@ -310,15 +339,17 @@ una rilettura veloce non guasta comunque.
 - Timbro: *Enroll in the new courses*
 - H1: *Online Italian language courses*
 - Sottotitolo verde: *Because Italian is a pleasure!*
-- Lede 1: *Hi! I'm Giada, a teacher of Italian language and culture for people from abroad. After years of teaching in Poland, I founded "L'Italiano è Servito" to help people from the Slavic world truly experience the Italian language, not just study it.*
+- Lede 1: *Hi! I'm Giada, a teacher of Italian language and culture for people from abroad. After years of teaching in Poland, I founded "L'Italiano è Servito" to help people from the Slavic world truly immerse themselves in the Italian language, not just study it.*
 - Lede 2: *To me, teaching Italian means stepping into the heart of Italy: into its gestures, its flavors, its traditions.*
 - CTA: *Reserve your spot*
 
 ### Intestazione calendario corsi
 
-**PL**: H2 *Kalendarz kursów | {sezon}* — Intro *W tym semestrze proponuję ci kursy online w małych grupach (od 3 do 6 osób), żeby uczyć się, rozmawiać i doskonalić swój włoski w przyjaznej atmosferze. Niezależnie od twojego poziomu, znajdziesz kurs pomyślany właśnie dla ciebie, z programem dopasowanym do twoich potrzeb i twojego tempa.*
+> **Modifica di Giada**: tolto il riferimento a "conversare/rozmawiać/converse" dall'intro — lo avevamo già tolto dall'italiano in una tornata precedente, ora l'ho allineato anche qui e su offerta-formativa.astro (dove era rimasto per errore) e su PL/EN.
 
-**EN**: H2 *Course calendar | {season}* — Intro *This semester I'm offering online courses in small groups (3 to 6 people) so you can learn, converse, and improve your Italian in a welcoming environment. Whatever your level, you'll find a course designed for you, with a program suited to your needs and your pace.*
+**PL**: H2 *Kalendarz kursów | {sezon}* — Intro *W tym semestrze proponuję Ci kursy online w małych grupach (od 3 do 6 osób), żeby uczyć się i doskonalić swój włoski w przyjaznej atmosferze. Niezależnie od twojego poziomu, znajdziesz kurs pomyślany właśnie dla Ciebie, z programem dopasowanym do twoich potrzeb i twojego tempa.*
+
+**EN**: H2 *Course calendar | {season}* — Intro *This semester I'm offering online courses in small groups (3 to 6 people) so you can learn and improve your Italian in a welcoming environment. Whatever your level, you'll find a course designed for you, with a program suited to your needs and your pace.*
 
 ### Riga info
 
@@ -327,45 +358,51 @@ una rilettura veloce non guasta comunque.
 
 ### "Perché scegliere i miei corsi" (4 voci)
 
+> **Modifica di Giada**: gli anni di esperienza sono 10, non 8 — corretto ovunque, anche sull'italiano live.
+
 **PL** — H2 *Dlaczego warto wybrać moje kursy*
-1. *Doświadczona native speakerka* — *8 lat nauczania osób dorosłych na każdym poziomie językowym.*
+1. *Doświadczona native speakerka* — *10 lat nauczania osób dorosłych na każdym poziomie językowym.*
 2. *Jasne wyjaśnienia także po polsku* — *Rozumiesz najtrudniejszą gramatykę dzięki wsparciu w twoim ojczystym języku.*
 3. *Praktyczne lekcje, nigdy sama teoria* — *Mówisz od pierwszego dnia, w realnych sytuacjach, a kiedy potrzeba gramatyki, wyjaśniam ją od razu, bez zbędnych ozdobników.*
 4. *Maksymalnie 6 osób w grupie* — *Odpowiednia przestrzeń, żeby mówić i zadawać pytania na każdej lekcji.*
 
 **EN** — H2 *Why choose my courses*
-1. *Experienced native speaker* — *8 years teaching adults at every language level.*
+1. *Experienced native speaker* — *10 years teaching adults at every language level.*
 2. *Clear explanations, in Polish too* — *You understand even the hardest grammar thanks to support in your native language.*
 3. *Practical lessons, never just theory* — *You speak from day one, in real contexts, and when grammar is needed, I explain it right away, no frills.*
 4. *Six people per group, maximum* — *The right amount of space to speak and ask questions in every lesson.*
 
 ### Sezione "La mia storia"
 
+> **Modifiche di Giada**: "osoby spoza Włoch" → "obcokrajowców" (stranieri) e tolto "nowożytną" (Moderne) dal grado di laurea — applicato anche all'italiano live.
+
 **PL**
 - Eyebrow: *Moja historia*
-- H2: *Cześć! Jestem Giada Longo i mam szczęście wykonywać najpiękniejszy zawód świata: uczę włoskiego osoby spoza Włoch.*
-- P1: *Ukończyłam filologię nowożytną ze specjalizacją w języku polskim i rosyjskim, a moja praca magisterska poświęcona była właśnie dydaktyce włoskiego w Polsce.*
+- H2: *Cześć! Jestem Giada Longo i mam szczęście wykonywać najpiękniejszy zawód świata: uczę włoskiego obcokrajowców.*
+- P1: *Ukończyłam filologię ze specjalizacją w języku polskim i rosyjskim, a moja praca magisterska poświęcona była właśnie dydaktyce włoskiego w Polsce.*
 - P2: *W Polsce naprawdę się zakochałam: po stażu na Uniwersytecie Jagiellońskim w Krakowie zdecydowałam się mieszkać tam przez siedem lat, budując tam swoje doświadczenie w nauczaniu, ze szczególną uwagą poświęconą osobom polskiego lub słowiańskiego pochodzenia.*
 - P3: *Przez sześć lat pracowałam we Włoskim Instytucie Kultury w Krakowie, doskonaląc się na tematycznych warsztatach i rozwijając swoje umiejętności w nauczaniu online.*
 
 **EN**
 - Eyebrow: *My story*
-- H2: *Hi! I'm Giada Longo, and I'm lucky enough to do the most beautiful job in the world: teaching Italian to people from abroad.*
-- P1: *I graduated in Modern Languages with a specialization in Polish and Russian, with a master's thesis focused specifically on teaching Italian in Poland.*
+- H2: *Hi! I'm Giada Longo, and I'm lucky enough to do the most beautiful job in the world: teaching Italian to foreigners.*
+- P1: *I graduated in Languages with a specialization in Polish and Russian, with a master's thesis focused specifically on teaching Italian in Poland.*
 - P2: *As for Poland, I truly fell in love with it: after an internship at the Jagiellonian University in Kraków, I chose to live there for seven years, building my teaching experience with particular attention to people of Polish or Slavic origin.*
 - P3: *I worked for six years at the Italian Institute of Culture in Kraków, keeping up to date with themed workshops and refining my skills in online teaching.*
 
 ### Sezione "Dettagli"
 
+> **Modifica di Giada**: hai segnalato che il riferimento alla caparra qui andava reso vago come già fatto nella mail di conferma (l'avevamo tolto lì ma non su questa pagina) — ho riformulato in tutte le lingue, coerente con la modifica già applicata al bullet "Posti limitati" sull'italiano live.
+
 **PL**
 - H2: *Szczegóły*
-- 📅 {okres} · 💻 *Online na Zoomie* · 🧑‍🏫 *Ograniczona liczba miejsc: żeby realnie zarezerwować swoje miejsce, poproszę cię o niewielki zadatek w wysokości 100 PLN.*
+- 📅 {okres} · 💻 *Online na Zoomie* · 🧑‍🏫 *Ograniczona liczba miejsc: żeby zarezerwować swoje miejsce, szczegóły wyjaśnię Ci osobiście.*
 - Card scadenza: *Termin zapisów: {data}* — countdown *Dni / Godziny / Min / Sek*
 - CTA: *Zarezerwuj swoje miejsce już teraz*
 
 **EN**
 - H2: *Details*
-- 📅 {period} · 💻 *Online on Zoom* · 🧑‍🏫 *Limited spots: to actually reserve your spot, I'll ask you for a small 100 PLN deposit.*
+- 📅 {period} · 💻 *Online on Zoom* · 🧑‍🏫 *Limited spots: to confirm your spot, I'll explain the details personally.*
 - Card scadenza: *Enrollment deadline: {date}* — countdown *Days / Hours / Min / Sec*
 - CTA: *Reserve your spot now*
 
@@ -373,7 +410,7 @@ una rilettura veloce non guasta comunque.
 
 Questi sono valori dati, non testo statico della pagina: quando costruisco
 la versione multilingua aggiungo i campi PL/EN accanto a quelli italiani in
-`corsiStagione.js`. Traduzioni pronte:
+`corsiStagione.js`. Traduzioni pronte (etichetta del corso B1 "Trova la tua Voce" semplificata da Giada, tolto "con grammatica mirata"/"z ukierunkowaną gramatyką" — applicato anche a `corsiStagione.js` sul sito italiano live):
 
 | Campo | IT | PL | EN |
 |---|---|---|---|
@@ -381,8 +418,8 @@ la versione multilingua aggiungo i campi PL/EN accanto a quelli italiani in
 | Etichetta bundle | In abbinamento a un corso: | W pakiecie z kursem: | Bundled with a course: |
 | Tipo — Sbloccati A1 | Corso base da zero | Kurs podstawowy od zera | Basic course from zero |
 | Tipo — Sbloccati A2 | Corso di consolidamento delle basi | Kurs utrwalający podstawy | Foundations consolidation course |
-| Tipo — Trova la tua Voce B1 | Corso di gruppo con grammatica mirata | Kurs grupowy z ukierunkowaną gramatyką | Group course with targeted grammar |
-| Tipo — Esplora la Lingua (C1/C1-C2/C2) | Corso di approfondimento avanzato | Kurs pogłębiony, poziom zaawansowany | Advanced in-depth course |
+| Tipo — Trova la tua Voce B1 | Corso di gruppo | Kurs grupowy | Group course |
+| Tipo — Esplora la Lingua (C1/C1-C2/C2) | Corso di approfondimento avanzato | Kurs zaawansowany | Advanced in-depth course |
 | Tè e Riviste — come funziona | A casa leggi un articolo da una rivista italiana che ti fornisco io; a lezione (circa ogni due settimane) lo analizziamo e commentiamo insieme. Le riviste e gli articoli cambiano ogni volta genere e argomento. | W domu czytasz artykuł z włoskiego czasopisma, które ci dostarczam; na spotkaniu (mniej więcej co dwa tygodnie) analizujemy go i komentujemy razem. Czasopisma i artykuły za każdym razem zmieniają gatunek i temat. | At home, you read an article from an Italian magazine that I provide; in the session (roughly every two weeks) we analyze and discuss it together. The magazines and articles change genre and topic each time. |
 | Club del Libro — come funziona | A casa leggi un brano da un libro italiano che ti fornisco io; a lezione (circa ogni due settimane) lo analizziamo e commentiamo insieme. | W domu czytasz fragment włoskiej książki, którą ci dostarczam; na spotkaniu (mniej więcej co dwa tygodnie) analizujemy go i komentujemy razem. | At home, you read a passage from an Italian book that I provide; in the session (roughly every two weeks) we analyze and discuss it together. |
 
@@ -424,7 +461,7 @@ approccio diverso (es. un parametro nell'URL tipo `/grazie?lang=pl`).
 
 | IT | PL | EN |
 |---|---|---|
-| Un percorso di trasformazione linguistica, non una lista di regole da studiare. | Droga transformacji językowej, a nie lista reguł do wykucia. | A path of linguistic transformation, not a list of rules to memorize. |
+| Un percorso di trasformazione linguistica, non una lista di regole da studiare. | Droga przemiany językowej, a nie lista reguł do wykucia. | A path of linguistic transformation, not a list of rules to memorize. |
 | Il sito | Strona | Site |
 | Chi Sono | O mnie | About me |
 | FAQ | FAQ | FAQ |
@@ -498,14 +535,18 @@ non cambia):
 
 ---
 
-## Cosa mi serve da te per procedere
+## Cosa mi serve ancora da te
 
-1. Conferma (o correzioni) sul testo PL ed EN qui sopra — anche solo un
-   "ok, vai" o correzioni puntuali per sezione.
+1. **Il punto aperto sulla FAQ, domanda 1** (vedi nota "⚠️ Punto da
+   chiarire con te" più sopra): cosa intendevi eliminare esattamente vicino
+   a "kursy grupowe, nigdy indywidualne"?
 2. Il testo originale in polacco delle testimonianze di Kamila e Małgosia,
-   se vuoi che compaiano nella Home in PL (vedi nota 4).
-3. Un parere sulla pagina Grazie: va bene il riconoscimento automatico
-   della lingua dal referrer, o preferisci un altro modo?
-4. Una volta approvato, costruisco le 4 pagine × 2 lingue + Grazie
-   aggiornata, aggiorno Navbar/Footer/SignupForm, e poi verifico tutto con
-   build e screenshot prima di consegnare.
+   se vuoi che compaiano anche nella Home in PL (oggi omesse, vedi nota 4).
+3. Una rilettura del polacco da parte tua/di Giada/di una madrelingua
+   prima del lancio pubblico — resta il punto più delicato, come segnalato
+   in cima al documento.
+4. **Fatto**: le 4 pagine × 2 lingue sono costruite, Navbar/Footer/
+   SignupForm sono localizzati, `/grazie` mostra il blocco giusto, la mail
+   di conferma è nella lingua giusta — tutto verificato con build e
+   screenshot. Resta da consegnarti i file e (quando deciderai) fare il
+   push su GitHub.

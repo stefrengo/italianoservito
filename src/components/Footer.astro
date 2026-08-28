@@ -1,5 +1,13 @@
 ---
 const year = new Date().getFullYear();
+const { locale = 'it' } = Astro.props;
+const prefix = locale === 'it' ? '' : `/${locale}`;
+
+const t = {
+  it: { tagline: 'Un percorso di trasformazione linguistica, non una lista di regole da studiare.', ilSito: 'Il sito', chiSono: 'Chi Sono', percorsi: 'I Percorsi', faq: 'FAQ', contatti: 'Contatti', privacy: 'Privacy Policy', seguimi: 'Seguimi' },
+  pl: { tagline: 'Droga przemiany językowej, a nie lista reguł do wykucia.', ilSito: 'Strona', chiSono: 'O mnie', faq: 'FAQ', privacy: 'Privacy Policy', seguimi: 'Obserwuj mnie' },
+  en: { tagline: 'A path of linguistic transformation, not a list of rules to memorize.', ilSito: 'Site', chiSono: 'About me', faq: 'FAQ', privacy: 'Privacy Policy', seguimi: 'Follow me' },
+}[locale];
 ---
 
 <footer>
@@ -10,20 +18,21 @@ const year = new Date().getFullYear();
           <span class="ring" style="padding:5px;"><img src="/logo.png" alt="" width="34" height="34" /></span>
           <div class="brandname">L'Italiano<span>è servito</span></div>
         </div>
-        <p class="tagline">Un percorso di trasformazione linguistica, non una lista di regole da studiare.</p>
+        <p class="tagline">{t.tagline}</p>
       </div>
       <div>
-        <h4>Il sito</h4>
+        <h4>{t.ilSito}</h4>
         <ul>
-          <li><a href="/chi-sono">Chi Sono</a></li>
-          <li><a href="/percorsi">I Percorsi</a></li>
-          <li><a href="/faq">FAQ</a></li>
-          <li><a href="/contatti">Contatti</a></li>
-          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href={`${prefix}/chi-sono`}>{t.chiSono}</a></li>
+          {locale === 'it' && <li><a href="/percorsi">{t.percorsi}</a></li>}
+          <li><a href={`${prefix}/faq`}>{t.faq}</a></li>
+          {locale === 'it' && <li><a href="/contatti">{t.contatti}</a></li>}
+          <!-- La Privacy Policy resta un'unica pagina in italiano, non ancora tradotta. -->
+          <li><a href="/privacy">{t.privacy}</a></li>
         </ul>
       </div>
       <div>
-        <h4>Seguimi</h4>
+        <h4>{t.seguimi}</h4>
         <ul>
           <li><a href="#">Instagram</a></li>
           <li><a href="#">Facebook</a></li>

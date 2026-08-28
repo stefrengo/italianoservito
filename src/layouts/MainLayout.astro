@@ -10,6 +10,10 @@ const {
   // Pagine "di servizio" (es. /grazie dopo un'iscrizione) non devono comparire
   // nei motori di ricerca: passare noindex={true} per escluderle.
   noindex = false,
+  // Lingua della pagina: 'it' (default) | 'pl' | 'en'. Determina l'attributo
+  // lang dell'HTML e la versione di Navbar/Footer (semplificate in PL/EN,
+  // vedi Navbar.astro/Footer.astro).
+  locale = 'it',
 } = Astro.props;
 
 // Dati strutturati globali (schema.org), presenti su ogni pagina: aiutano sia i
@@ -29,7 +33,7 @@ const organizationSchema = {
     '@type': 'Person',
     name: 'Giada Longo',
     jobTitle: 'Insegnante certificata di lingua e cultura italiana',
-    description: "Laurea in Lingue Moderne (specializzazione polacco e russo), 7 anni vissuti a Cracovia, 6 anni di insegnamento presso l'Istituto Italiano di Cultura di Cracovia.",
+    description: "Laurea in Lingue (specializzazione polacco e russo), 7 anni vissuti a Cracovia, 6 anni di insegnamento presso l'Istituto Italiano di Cultura di Cracovia.",
   },
   areaServed: ['PL', 'IT'],
   audience: {
@@ -42,7 +46,7 @@ const organizationSchema = {
 ---
 
 <!doctype html>
-<html lang="it">
+<html lang={locale}>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -53,11 +57,11 @@ const organizationSchema = {
   <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
 </head>
 <body>
-  <Navbar />
+  <Navbar locale={locale} />
   <main>
     <slot />
   </main>
-  <Footer />
+  <Footer locale={locale} />
   <CookieConsent />
   <script>
     const io = new IntersectionObserver((entries) => {

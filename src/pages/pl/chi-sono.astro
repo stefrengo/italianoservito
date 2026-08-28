@@ -1,0 +1,117 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Filmstrip from '../../components/Filmstrip.astro';
+import SafeSpace from '../../components/SafeSpace.astro';
+---
+
+<MainLayout
+  locale="pl"
+  title="O mnie | Giada Longo | L'Italiano è Servito"
+  description="Dyplomowana nauczycielka włoskiego, 7 lat w Krakowie i 6 lat we Włoskim Instytucie Kultury. Poznaj moją historię."
+>
+  <section class="apertura">
+    <div class="wrap apertura-grid">
+      <div class="reveal">
+        <span class="eyebrow">O mnie</span>
+        <h1>Jestem Giada, dyplomowana nauczycielka języka włoskiego, ale zanim nią zostałam, przez prawie 7 lat byłam „przybraną" Polką.</h1>
+        <p class="lede">Mieszkałam w Krakowie. Robiłam zakupy po polsku, kłóciłam się po polsku, czasem nawet śniłam po polsku. I pośród tego wszystkiego nauczyłam się czegoś, czego nie znajdziesz w żadnym podręczniku metodyki: dokładnie wiem, gdzie polski język stawia ci przeszkody, kiedy próbujesz zanurzyć się we włoskim choćby na godzinę dziennie.</p>
+      </div>
+      <div class="photo main-photo torn-bottom reveal d1">
+        <img src="/foto/giada-6-tavolo-cane.jpg" alt="Giada Longo z psem" />
+      </div>
+    </div>
+  </section>
+
+  <Filmstrip />
+
+  <section class="storia-section">
+    <div class="storia-photo"><img src="/foto/giada-4-plaid.jpg" alt="Giada Longo" /></div>
+    <div class="storia-content">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--gold);">Historia mojej pasji, jeszcze zanim stała się moim zawodem</span>
+        <h2>Ukończyłam filologię ze specjalizacją w języku polskim i rosyjskim.</h2>
+        <p>Moja ścieżka od początku była nastawiona na dydaktykę włoskiego, a moja praca magisterska poświęcona była właśnie temu, jak uczy się języka włoskiego w Polsce. Potem teoria stała się prawdziwym życiem: prawie 7 lat w Krakowie, spędzonych między innymi pracując we Włoskim Instytucie Kultury, prowadząc kursy, podczas których poznałam ludzi, którzy — tak jak Ty — zakochali się we Włoszech, jeszcze zanim tam pojechali.</p>
+        <p>Widziałam z bliska, co działa, a co nie, kiedy Polka lub Polak próbuje nauczyć się włoskiego. Widziałam frustrację wobec gramatyki tłumaczonej jak twierdzenia matematyczne. Widziałam strach przed mówieniem i popełnieniem błędu przy kimś. I zrozumiałam, że problemem prawie nigdy nie była zdolność do nauki — tylko sposób, w jaki tej nauki uczono.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow reveal">
+      <h2>Metoda</h2>
+      <p>Nie uczę włoskiego jako listy reguł do zapamiętania. Uczę go jako sposobu bycia w świecie, przeżywania języka włoskiego i Włoch we wszystkich możliwych odcieniach.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="pillars">
+        <div class="pillar-card reveal">
+          <div class="mark">🎓</div>
+          <h3>Certyfikowane kompetencje</h3>
+          <p>Studia z filologii słowiańskiej, praca magisterska o dydaktyce włoskiego dla polskich studentów, studia podyplomowe z nauczania włoskiego jako języka obcego.</p>
+        </div>
+        <div class="pillar-card reveal d1">
+          <div class="mark" style="background:var(--red);">🏛️</div>
+          <h3>Doświadczenie w praktyce</h3>
+          <p>6 lat we Włoskim Instytucie Kultury w Krakowie, setki osób, którym towarzyszyłam w nauce.</p>
+        </div>
+        <div class="pillar-card reveal d2">
+          <div class="mark" style="background:var(--gold);">🇵🇱</div>
+          <h3>Autentyczne zrozumienie</h3>
+          <p>7 lat życia w Polsce: znam nie tylko język, znam kulturę, historię, mentalność.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SafeSpace
+    quote="Ze mną błąd to nie porażka: to dowód, że się uczysz. Lekcje to małe, kameralne spotkania, maksymalnie 6 osób, zaprojektowane specjalnie po to, żebyś mogła/mógł mówić bez lęku przed oceną."
+  />
+
+  <section>
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <h2>Jeśli szukasz kogoś, kto wytłumaczy ci gramatykę w chłodny, podręcznikowy sposób, prawdopodobnie nie jestem odpowiednią nauczycielką dla ciebie.</h2>
+      <p style="margin-top:18px;">Jeśli natomiast szukasz przewodniczki, która naprawdę wprowadzi cię w język, w kulturę, we Włochy — to być może właśnie się odnalazłyśmy.</p>
+      <div class="cta-row" style="justify-content:center; margin-top:28px;">
+        <a class="btn" href="/pl/offerta-formativa">Zobacz ofertę kursów</a>
+        <a class="btn ghost" href="mailto:giada@italianoservito.it">Napisz do mnie</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 60px 0 20px; }
+  .apertura-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 46px; align-items: center; }
+  .apertura h1 { font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.22; margin: 10px 0 20px; }
+  .lede { color: var(--ink-soft); font-size: 1.02rem; }
+  .main-photo { height: 380px; border-radius: 4px 90px 4px 4px; }
+  .narrow { max-width: 720px; margin: 0 auto; }
+  .narrow p { margin-bottom: 20px; color: var(--ink-soft); }
+  .narrow h2 { margin-bottom: 20px; font-size: clamp(1.4rem,2.4vw,1.9rem); }
+
+  .storia-section {
+    background: var(--red); color: #fff;
+    display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; align-items: center;
+    padding: 60px 6vw; margin: 40px 0;
+  }
+  .storia-photo { border-radius: 6px; overflow: hidden; aspect-ratio: 4 / 3; }
+  .storia-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+  .storia-content h2 { color: #fff; font-size: clamp(1.3rem,2.2vw,1.7rem); margin: 8px 0 16px; }
+  .storia-content p { color: #F5E4DC; font-size: 0.95rem; margin-bottom: 14px; }
+  @media (max-width: 900px) {
+    .storia-section { grid-template-columns: 1fr; padding: 40px 24px; }
+  }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pillar-card { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 28px 24px; }
+  .pillar-card .mark { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--green); color: #fff; font-size: 1.2rem; margin-bottom: 16px; }
+  .pillar-card h3 { font-size: 1.05rem; margin-bottom: 8px; }
+  .pillar-card p { margin: 0; color: var(--ink-soft); font-size: 0.92rem; }
+  .cta-row { display: flex; gap: 18px; flex-wrap: wrap; }
+  @media (max-width: 900px) {
+    .apertura-grid { grid-template-columns: 1fr; }
+    .main-photo { order: -1; height: 280px; }
+    .pillars { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,10 +1,11 @@
 ---
-const links = [
-  { href: '/', label: 'Home' },
-  { href: '/chi-sono', label: 'Chi Sono' },
-  { href: '/faq', label: 'FAQ' },
-  { href: '/contatti', label: 'Contatti' },
-];
+// locale: 'it' (default) | 'pl' | 'en'. Il menu PL/EN è volutamente più
+// snello — solo Home, Chi Sono, FAQ + il bottone CTA — perché le pagine
+// "I Percorsi" e "Contatti" non hanno versione PL/EN (vedi asimmetria
+// intelligente nel brief di progetto).
+const { locale = 'it' } = Astro.props;
+
+const prefix = locale === 'it' ? '' : `/${locale}`;
 
 const percorsiLinks = [
   { href: '/percorsi/sbloccati-da-zero', label: 'Sbloccati da Zero', hint: 'Base · A1-A2' },
@@ -12,67 +13,96 @@ const percorsiLinks = [
   { href: '/percorsi/esplora-la-lingua', label: 'Esplora la Lingua', hint: 'Avanzato · C1-C2' },
   { href: '/club-del-libro', label: 'Club del Libro', hint: 'Bonus · club tematici' },
 ];
+
+const t = {
+  it: { home: 'Home', chiSono: 'Chi Sono', percorsi: 'I Percorsi ▾', faq: 'FAQ', contatti: 'Contatti', ctaFull: 'Corsi I semestre 2026/27', ctaShort: 'Iscriviti', menuAria: 'Apri il menu' },
+  pl: { home: 'Home', chiSono: 'O mnie', faq: 'FAQ', ctaFull: 'Kursy, I semestr 2026/27', ctaShort: 'Zapisz się', menuAria: 'Otwórz menu' },
+  en: { home: 'Home', chiSono: 'About me', faq: 'FAQ', ctaFull: 'I semester 2026/27 courses', ctaShort: 'Enroll', menuAria: 'Open menu' },
+}[locale];
+
+// Selettore lingua: prova a restare sulla stessa pagina cambiando lingua
+// (es. /pl/chi-sono → /en/chi-sono), ma solo per le 4 pagine che esistono
+// in tutte e tre le lingue (Home, Chi Sono, FAQ, Offerta Formativa) — per
+// tutte le altre (percorsi, contatti, club-del-libro...) il selettore porta
+// alla home nella lingua scelta, per non rischiare un link rotto.
+const SLUG_CONDIVISI = ['/', '/chi-sono', '/faq', '/offerta-formativa'];
+let slugBase = Astro.url.pathname;
+if (slugBase.startsWith('/pl/')) slugBase = slugBase.slice(3);
+else if (slugBase === '/pl') slugBase = '/';
+else if (slugBase.startsWith('/en/')) slugBase = slugBase.slice(3);
+else if (slugBase === '/en') slugBase = '/';
+if (slugBase !== '/' && slugBase.endsWith('/')) slugBase = slugBase.slice(0, -1);
+const condiviso = SLUG_CONDIVISI.includes(slugBase);
+const langHref = (loc) => {
+  if (!condiviso) return loc === 'it' ? '/' : `/${loc}`;
+  if (loc === 'it') return slugBase;
+  return slugBase === '/' ? `/${loc}` : `/${loc}${slugBase}`;
+};
 ---
 
 <header>
   <div class="wrap navrow">
-    <button type="button" id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Apri il menu">
+    <button type="button" id="menu-toggle" class="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label={t.menuAria}>
       <span></span><span></span><span></span>
     </button>
-    <a href="/" class="brandmark">
+    <a href={prefix || '/'} class="brandmark">
       <img src="/logo.png" alt="Logo L'Italiano è Servito" width="44" height="44" class="logo-img" />
       <div class="brandname">L'Italiano<span>è servito</span></div>
     </a>
     <nav class="desktop-nav">
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/chi-sono">Chi Sono</a></li>
-        <li class="has-dropdown">
-          <a href="/percorsi">I Percorsi ▾</a>
-          <div class="dropdown">
-            {percorsiLinks.map(link => (
-              <a href={link.href} class="dropdown-item">
-                <span class="label">{link.label}</span>
-                <span class="hint">{link.hint}</span>
-              </a>
-            ))}
-          </div>
-        </li>
-        <li><a href="/faq">FAQ</a></li>
-        <li><a href="/contatti">Contatti</a></li>
+        <li><a href={prefix || '/'}>{t.home}</a></li>
+        <li><a href={`${prefix}/chi-sono`}>{t.chiSono}</a></li>
+        {locale === 'it' && (
+          <li class="has-dropdown">
+            <a href="/percorsi">{t.percorsi}</a>
+            <div class="dropdown">
+              {percorsiLinks.map(link => (
+                <a href={link.href} class="dropdown-item">
+                  <span class="label">{link.label}</span>
+                  <span class="hint">{link.hint}</span>
+                </a>
+              ))}
+            </div>
+          </li>
+        )}
+        <li><a href={`${prefix}/faq`}>{t.faq}</a></li>
+        {locale === 'it' && <li><a href="/contatti">{t.contatti}</a></li>}
       </ul>
     </nav>
     <div class="nav-right">
       <!-- Voce evidenziata, da aggiornare a ogni semestre (oggi punta alla landing ads) -->
-      <a href="/offerta-formativa" class="cta-nav">
-        <span class="cta-full">Corsi I semestre 2026/27</span>
-        <span class="cta-short">Iscriviti</span>
+      <a href={`${prefix}/offerta-formativa`} class="cta-nav">
+        <span class="cta-full">{t.ctaFull}</span>
+        <span class="cta-short">{t.ctaShort}</span>
       </a>
       <div class="langsel">
-        <a href="/" class="active">IT</a>·<a href="/pl">PL</a>·<a href="/en">EN</a>
+        <a href={langHref('it')} class:list={{ active: locale === 'it' }}>IT</a>·<a href={langHref('pl')} class:list={{ active: locale === 'pl' }}>PL</a>·<a href={langHref('en')} class:list={{ active: locale === 'en' }}>EN</a>
       </div>
     </div>
   </div>
 
   <nav id="mobile-menu" class="mobile-menu" hidden>
     <ul>
-      <li><a href="/">Home</a></li>
-      <li><a href="/chi-sono">Chi Sono</a></li>
-      <li class="mobile-group">
-        <span class="mobile-group-label">I Percorsi</span>
-        <ul class="mobile-sublist">
-          {percorsiLinks.map(link => (
-            <li>
-              <a href={link.href}>
-                <span class="label">{link.label}</span>
-                <span class="hint">{link.hint}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </li>
-      <li><a href="/faq">FAQ</a></li>
-      <li><a href="/contatti">Contatti</a></li>
+      <li><a href={prefix || '/'}>{t.home}</a></li>
+      <li><a href={`${prefix}/chi-sono`}>{t.chiSono}</a></li>
+      {locale === 'it' && (
+        <li class="mobile-group">
+          <span class="mobile-group-label">I Percorsi</span>
+          <ul class="mobile-sublist">
+            {percorsiLinks.map(link => (
+              <li>
+                <a href={link.href}>
+                  <span class="label">{link.label}</span>
+                  <span class="hint">{link.hint}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      )}
+      <li><a href={`${prefix}/faq`}>{t.faq}</a></li>
+      {locale === 'it' && <li><a href="/contatti">{t.contatti}</a></li>}
     </ul>
   </nav>
 </header>

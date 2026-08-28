@@ -1,0 +1,146 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Hero from '../../components/Hero.astro';
+import PromiseCards from '../../components/PromiseCards.astro';
+import SafeSpace from '../../components/SafeSpace.astro';
+import Testimonials from '../../components/Testimonials.astro';
+
+// Home in inglese — versione "vetrina/istituzionale" snella (vedi brief di
+// progetto). Solo 4 pagine esistono in EN: Home, Chi Sono, FAQ, Offerta
+// Formativa — niente /percorsi/*, /contatti, /club-del-libro in questa lingua.
+//
+// La sezione "I percorsi" qui è un blocco unico verso Offerta Formativa
+// (non la griglia CourseCards a 4 riquadri) — vedi bozza traduzioni, nota 3.
+const faqHome = [
+  {
+    q: "What happens if I'm afraid to speak?",
+    a: "It's a starting point, not an obstacle. In the first sessions I work on purpose to lower the pressure: you speak a little, listen a lot, and confidence grows lesson after lesson.",
+  },
+  {
+    q: 'How are lessons structured for Polish-speaking students?',
+    a: 'I build lessons around the specific difficulties Polish speakers face, and I work through them with you using comparisons that, as a native Italian speaker, I would never have thought of before learning Polish myself and living in Poland.',
+  },
+  {
+    q: 'Do I need to already know some Italian to start?',
+    a: 'Not necessary: "Unlock from Zero" was designed exactly for people starting from zero.',
+  },
+];
+
+const promiseItems = [
+  { name: 'Independence', text: 'You travel through Italy without ever feeling lost.' },
+  { name: 'Voice', text: 'You speak without the fear of being judged.' },
+  { name: 'Culture', text: 'You step into the gestures, traditions, and the Italian way of thinking.' },
+];
+
+// Solo Kamila e Małgosia: tradotte con cautela dall'italiano (vedi nota 4
+// nella bozza traduzioni), niente Marta (placeholder non ancora tradotto).
+const testimonialItems = [
+  { nome: 'Kamila, Explore the Language course', testo: '"Genuine professionalism, combined with a smart and enjoyable way of teaching the language."' },
+  { nome: 'Małgosia, Find Your Voice course', testo: '"I highly recommend Giada, a professional and warm teacher with whom you learn to hold a conversation in Italian naturally — and when things get difficult, you can ask for explanations in Polish to really understand what you need. Signing up for one of her courses was one of the nicest things I\'ve done for myself lately, and it certainly won\'t end after just one semester."' },
+];
+---
+
+<MainLayout
+  locale="en"
+  title="Online Italian courses for Polish speakers | L'Italiano è Servito"
+  description="Online Italian courses with Giada Longo: a path of linguistic transformation for anyone who has fallen in love with Italy."
+>
+  <Hero
+    locale="en"
+    eyebrow="Hi, I'm Giada!"
+    title="Not just Italian lessons.<br>A path <em>into the heart</em> of Italy."
+    lede="Online Italian courses for anyone who has fallen in love with Italy. I'm Giada Longo, a certified teacher who knows exactly where you get stuck — because I've been on the other side of it myself."
+    ctaLabel="Find your path in Italian"
+    ctaHref="/en/offerta-formativa"
+    ghostLabel="Discover my story"
+    ghostHref="/en/chi-sono"
+  />
+
+  <section class="promessa">
+    <div class="wrap narrow reveal">
+      <p>I won't just teach you grammar. I'll help you build the confidence to try, get it wrong, laugh about the mistake, and try again — until Italian stops being "a foreign language to study" and becomes a part of you.</p>
+    </div>
+  </section>
+
+  <PromiseCards items={promiseItems} />
+
+  <section id="paths">
+    <div class="wrap">
+      <div class="section-head reveal" style="text-align:center;">
+        <span class="eyebrow">The paths</span>
+        <div style="margin-top:18px;">
+          <a class="btn" href="/en/offerta-formativa">See the current course offering</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <SafeSpace quote="Here, making mistakes is part of the journey, not a failure. Groups are small (six people maximum), because trust only builds when people truly get to know each other." />
+
+  <Testimonials
+    eyebrow="Voices"
+    heading="People who found their path"
+    items={testimonialItems}
+  />
+
+  <section class="faq-home">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Frequently asked questions</span>
+        <h2>The questions I hear most often</h2>
+      </div>
+      <div class="faq-home-list">
+        {faqHome.map((item) => (
+          <details class="reveal">
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+      <div class="wrap reveal" style="text-align:center; margin-top:30px; padding:0;">
+        <a class="btn ghost" href="/en/faq">See all frequently asked questions →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="finale">
+    <div class="wrap finale-grid">
+      <div class="chi-teaser reveal">
+        <span class="eyebrow">About me</span>
+        <h2>Before I was your teacher, I was an adopted Pole for almost 7 years.</h2>
+        <p>I lived in Kraków, worked at the Italian Institute of Culture, and know exactly where the Polish language trips you up when you try to speak Italian.</p>
+        <a class="btn ghost" href="/en/chi-sono">Discover my story →</a>
+      </div>
+    </div>
+    <div class="wrap reveal d2" style="text-align:center; margin-top:50px;">
+      <h2 style="margin-bottom:24px;">You don't need perfection to start the adventure.<br>Just the first step.</h2>
+      <a class="btn" href="/en/offerta-formativa">See the course offering</a>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .promessa { padding: 8px 0 6px; }
+  .promessa .narrow { max-width: 700px; margin: 0 auto; text-align: center; }
+  .promessa p { font-family: var(--font-display); font-style: italic; color: var(--ink); font-size: clamp(1.05rem,1.6vw,1.25rem); line-height: 1.55; margin: 0; }
+
+  #paths { background: var(--card); padding: 54px 0; }
+  .faq-home { background: var(--card); padding: 54px 0 74px; }
+
+  .faq-home-list { max-width: 720px; margin: 0 auto; }
+  .faq-home-list details { border-top: 1px solid var(--card-line); padding: 16px 0; }
+  .faq-home-list details:last-child { border-bottom: 1px solid var(--card-line); }
+  .faq-home-list summary { font-weight: 600; cursor: pointer; }
+  .faq-home-list details p { margin: 12px 0 0; color: var(--ink-soft); line-height: 1.6; }
+
+  .finale { padding: 60px 0 80px; }
+  .finale-grid { display: flex; justify-content: center; }
+  .chi-teaser {
+    display: flex; flex-direction: column; align-items: flex-start;
+    background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius);
+    padding: 34px 32px; max-width: 620px;
+  }
+  .finale-grid h2 { font-size: clamp(1.25rem,2vw,1.55rem); margin: 6px 0 14px; }
+  .finale-grid p { color: var(--ink-soft); font-size: 0.94rem; margin-bottom: 18px; }
+  .chi-teaser .btn { margin-top: auto; }
+</style>

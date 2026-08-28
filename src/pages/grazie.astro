@@ -9,13 +9,61 @@
 // dimenticarli in una versione. La vecchia versione del sito (ancora live
 // su italianoservito.it/grazie) fa lo stesso identico ragionamento, con un
 // unico messaggio multilingua su una sola pagina.
+//
+// IMPORTANTE: questa pagina legge ?lang= dalla query string per scegliere il
+// blocco di testo giusto, quindi NON può essere prerenderizzata come le
+// altre pagine (in output "hybrid" sarebbe statica per default, e una pagina
+// statica ignora la query string: verrebbe servita sempre la stessa identica
+// HTML). "prerender = false" la rende on-demand, come /api/iscrizione.
+export const prerender = false;
+
 import MainLayout from '../layouts/MainLayout.astro';
+
+// Lingua passata da /api/iscrizione come ?lang=pl|en (rilevata lì dal
+// Referer della pagina di provenienza — vedi iscrizione.js). Se manca o non
+// è riconosciuta (es. qualcuno apre /grazie direttamente) si mostra
+// l'italiano di default.
+const langParam = Astro.url.searchParams.get('lang');
+const lang = langParam === 'pl' || langParam === 'en' ? langParam : 'it';
+
+const testi = {
+  it: {
+    htmlLang: 'it',
+    stamp: 'Iscrizione ricevuta',
+    h1: 'Grazie! Il tuo posto è prenotato.',
+    lede: "Ho ricevuto i tuoi dati e ti scrivo personalmente entro 24-48 ore, per confermarti tutti i dettagli e i prossimi passi.",
+    ledeSoft: "Nel frattempo, se hai già controllato la posta e non trovi nulla, dai un'occhiata anche nella cartella spam: a volte le email di conferma finiscono lì.",
+    cta: 'Torna alla home',
+    ctaHref: '/',
+  },
+  pl: {
+    htmlLang: 'pl',
+    stamp: 'Zgłoszenie zostało odebrane',
+    h1: 'Dziękuję! Twoje miejsce jest zarezerwowane.',
+    lede: 'Otrzymałam Twoje dane i napiszę do Ciebie osobiście w ciągu 24-48 godzin, żeby potwierdzić wszystkie szczegóły i kolejne kroki.',
+    ledeSoft: 'W międzyczasie, jeśli sprawdziłaś/eś już pocztę i nic nie widzisz, zajrzyj też do folderu spam: czasem maile potwierdzające tam trafiają.',
+    cta: 'Wróć do strony głównej',
+    ctaHref: '/pl',
+  },
+  en: {
+    htmlLang: 'en',
+    stamp: 'Enrollment received',
+    h1: 'Thank you! Your spot is reserved.',
+    lede: "I've received your details and I'll write to you personally within 24-48 hours to confirm all the details and next steps.",
+    ledeSoft: "In the meantime, if you've already checked your inbox and can't find anything, take a look in your spam folder too: confirmation emails sometimes end up there.",
+    cta: 'Back to home',
+    ctaHref: '/en',
+  },
+};
+
+const t = testi[lang];
 ---
 
 <MainLayout
   title="Grazie! | L'Italiano è Servito"
   description="La tua iscrizione è stata ricevuta: Giada ti risponde entro 24-48 ore."
   noindex={true}
+  locale={lang}
 >
   <!--
     Evento di conversione: si attiva solo se GA4/Meta Pixel sono già stati
@@ -35,18 +83,12 @@ import MainLayout from '../layouts/MainLayout.astro';
 
   <section class="grazie-section">
     <div class="wrap narrow reveal">
-      <span class="stamp green">Iscrizione ricevuta</span>
-      <h1>Grazie! Il tuo posto è prenotato.</h1>
-      <p class="lede">
-        Ho ricevuto i tuoi dati e ti scrivo personalmente entro 24-48 ore, per confermarti
-        tutti i dettagli e i prossimi passi.
-      </p>
-      <p class="lede-soft">
-        Nel frattempo, se hai già controllato la posta e non trovi nulla, dai un'occhiata anche
-        nella cartella spam: a volte le email di conferma finiscono lì.
-      </p>
+      <span class="stamp green">{t.stamp}</span>
+      <h1>{t.h1}</h1>
+      <p class="lede">{t.lede}</p>
+      <p class="lede-soft">{t.ledeSoft}</p>
       <div class="azioni">
-        <a href="/" class="btn">Torna alla home</a>
+        <a href={t.ctaHref} class="btn">{t.cta}</a>
       </div>
     </div>
   </section>
