@@ -1,0 +1,48 @@
+---
+// Pagina 404 personalizzata. Cloudflare Workers la serve automaticamente
+// per qualunque URL non esistente (config in wrangler.jsonc,
+// "assets.not_found_handling": "404-page") — copre anche i vecchi link
+// del sito WordPress che non hanno un corrispettivo qui.
+//
+// È una pagina unica per tutti i percorsi (anche /pl/... e /en/...): il
+// meccanismo not_found_handling di Cloudflare non permette di servire una
+// 404 diversa per lingua, quindi il contenuto principale è in italiano ma
+// con link rapidi alle Home page PL/EN, per non lasciare bloccata una
+// visitatrice che arriva da un vecchio link polacco o inglese.
+import MainLayout from '../layouts/MainLayout.astro';
+---
+
+<MainLayout
+  title="Pagina non trovata | L'Italiano è Servito"
+  description="Questa pagina non esiste più, ma il sito e i corsi di italiano di Giada Longo sì."
+  noindex={true}
+>
+  <section class="not-found">
+    <div class="wrap narrow reveal">
+      <span class="eyebrow">Pagina non trovata</span>
+      <h1>Questa pagina non c'è più, ma la strada per l'italiano sì.</h1>
+      <p class="lede">
+        Il link che hai seguito potrebbe essere vecchio, oppure c'è stato un piccolo errore di battitura:
+        capita, fa parte del percorso. Prenditi un momento e ripartiamo da qui.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="/">Torna alla Home</a>
+        <a class="btn ghost" href="/contatti">Scrivimi</a>
+      </div>
+      <p class="lang-row">
+        Strona w innym języku? <a href="/pl">Strona główna po polsku</a> ·
+        Looking for the English page? <a href="/en">English homepage</a>
+      </p>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .not-found { padding: 90px 0 110px; text-align: center; }
+  .narrow { max-width: 640px; margin: 0 auto; }
+  .not-found h1 { font-size: clamp(1.6rem, 2.8vw, 2.2rem); line-height: 1.28; margin: 10px 0 18px; }
+  .lede { color: var(--ink-soft); font-size: 1.02rem; margin-bottom: 30px; }
+  .cta-row { display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: wrap; margin-bottom: 34px; }
+  .lang-row { font-size: 0.9rem; color: var(--ink-soft); }
+  .lang-row a { color: var(--red); text-decoration: underline; text-underline-offset: 3px; }
+</style>

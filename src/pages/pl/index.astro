@@ -3,6 +3,7 @@ import MainLayout from '../../layouts/MainLayout.astro';
 import Hero from '../../components/Hero.astro';
 import PromiseCards from '../../components/PromiseCards.astro';
 import SafeSpace from '../../components/SafeSpace.astro';
+import Testimonials from '../../components/Testimonials.astro';
 
 // Home in polacco — lingua di conversione principale del sito (vedi brief
 // di progetto, "Asimmetria Intelligente"). Solo 4 pagine esistono in PL:
@@ -13,11 +14,17 @@ import SafeSpace from '../../components/SafeSpace.astro';
 // (non la griglia CourseCards a 4 riquadri, perché le pagine percorso non
 // hanno versione PL) — vedi bozza traduzioni, nota 3.
 //
-// Le testimonianze di Kamila/Małgosia sono OMESSE in questa lingua: sono
-// già una traduzione dal polacco all'italiano fatta in precedenza, e
-// ritradurle dall'italiano al polacco rischierebbe di snaturare le parole
-// vere di due persone reali — vedi nota 4 nella bozza traduzioni. Da
-// aggiungere quando sarà recuperato il testo originale polacco.
+// Testimonianze di Kamila e Małgosia: testo originale polacco autentico
+// (ricevuto da Stefano — vedi nota 4 nella bozza traduzioni), senza le
+// faccine presenti nel testo originale di Małgosia. Stephan: frase
+// semplice scritta ad hoc su indicazione di Stefano (corso "Odblokuj się
+// od zera").
+const testimonialItems = [
+  { nome: 'Kamila, kurs Odkryj język', testo: '"Profesjonalizm pedagoga, a jednocześnie mądre i zabawne podejście do nauki języka."' },
+  { nome: 'Małgosia, kurs Odkryj język', testo: '"Bardzo polecam Giadę – profesjonalną i serdeczną lektorkę, z którą nauczycie się swobodnie konwersować po włosku, a w chwili desperacji dopytacie po polsku, o co trzeba. Zapisanie się na kurs u niej to jedna z najmilszych rzeczy, jakie ostatnio zrobiłam dla siebie, i na jednym semestrze się nie skończy."' },
+  { nome: 'Stephan, kurs Odblokuj się od zera', testo: '"Dzięki Giadzie przestałem bać się błędów: pierwsze zdania po włosku wypowiedziałem właśnie na jej kursie."' },
+];
+
 const faqHome = [
   {
     q: 'Co się stanie, jeśli boję się mówić?',
@@ -76,6 +83,12 @@ const promiseItems = [
   </section>
 
   <SafeSpace quote="Tutaj błąd jest częścią drogi, a nie porażką. Grupy są małe (maksymalnie 6 osób), bo zaufanie buduje się tylko wtedy, gdy naprawdę się znamy." />
+
+  <Testimonials
+    eyebrow="Głosy"
+    heading="Osoby, które znalazły swoją drogę"
+    items={testimonialItems}
+  />
 
   <section class="faq-home">
     <div class="wrap">

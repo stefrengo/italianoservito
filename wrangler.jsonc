@@ -13,7 +13,11 @@
   "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "binding": "ASSETS",
-    "directory": "./dist"
+    "directory": "./dist",
+    // Serve la 404.astro personalizzata (src/pages/404.astro) per qualunque
+    // URL non esistente, invece della 404 generica di Cloudflare — copre
+    // anche i vecchi link del sito WordPress. Vedi commento in 404.astro.
+    "not_found_handling": "404-page"
   },
   "observability": {
     "enabled": true

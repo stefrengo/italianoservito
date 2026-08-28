@@ -30,7 +30,7 @@ const {
           <div class="postcard"><img src="/foto/cartoline/toscana.jpg" alt="Cartolina dalla Toscana" /></div>
           <div class="postcard"><img src="/foto/cartoline/genova.jpg" alt="Cartolina da Genova" /></div>
         </div>
-        <div class="photo main torn-bottom"><img src="/foto/giada-1.png" alt="Giada Longo" /></div>
+        <div class="photo main torn-bottom"><img src="/foto/giada-12-maglione.jpg" alt="Giada Longo" /></div>
       </div>
     )}
   </div>
@@ -46,6 +46,11 @@ const {
 
   .hero-collage { display: flex; align-items: stretch; gap: 16px; height: 400px; }
   .hero-collage .photo.main { position: relative; flex: 1; border-radius: 4px 120px 4px 4px; }
+  /* La foto (verticale, maglione bianco e blu) è più stretta del riquadro
+     (orizzontale): object-position spostato più in basso rispetto al
+     default globale (15%) per non tagliare il viso e mostrare comunque
+     il maglione, non solo la scollatura — vedi richiesta di Stefano. */
+  .hero-collage .photo.main img { object-position: center 25%; }
 
   .postcards { display: flex; flex-direction: column; justify-content: space-between; gap: 10px; width: 92px; flex-shrink: 0; }
   .postcard {
