@@ -57,6 +57,15 @@ una rilettura veloce non guasta comunque.
    componente condiviso: le trovi tradotte in fondo al documento, sezione
    "Stringhe condivise".
 
+8. **Lingua della mail di conferma iscrizione**: confermato con Stefano —
+   nessuna modifica su Resend o su Supabase, rilevamento automatico della
+   lingua dalla pagina di provenienza (il sito la conosce già, non c'è
+   bisogno di indovinarla). La mail di **notifica interna a Giada** resta
+   sempre in italiano, con in più un'etichetta della lingua di provenienza
+   nell'oggetto (es. "[PL] Nuova richiesta: ..."), così a colpo d'occhio si
+   sa da che sito arriva senza dover aprire Supabase. Testo delle due mail
+   in fondo, sezione "Mail di conferma iscrizione".
+
 ---
 
 ## HOME
@@ -445,6 +454,47 @@ approccio diverso (es. un parametro nell'URL tipo `/grazie?lang=pl`).
 | Iscrivimi anche alla newsletter | Zapisz mnie też na newsletter | Sign me up for the newsletter too |
 | Ho letto e accetto la Privacy Policy * | Przeczytałam/em i akceptuję Politykę Prywatności * | I have read and accept the Privacy Policy * |
 | Prenota il tuo posto (bottone invio) | Zarezerwuj swoje miejsce | Reserve your spot |
+
+---
+
+## Mail di conferma iscrizione
+
+Mail automatica che parte subito dopo l'iscrizione dal modulo. Oggetto e
+corpo cambiano in base alla lingua rilevata dalla pagina di provenienza
+(vedi nota 8). Le parti tra `{ }` sono generate dal sito (nome, corso,
+eventuali bundle, messaggio libero) e restano identiche nella struttura.
+
+**IT (per riferimento, testo già online)**
+- Oggetto: *Il tuo posto è prenotato! 🇮🇹*
+- Corpo: *Ciao {nome}, ho ricevuto la tua iscrizione al corso {corso}: il tuo posto è prenotato.* [+ eventuale riga bundle Club del Libro/Tè e Riviste] [+ eventuale riga sul messaggio libero] *Ti scrivo personalmente entro 24-48 ore per confermarti tutti i dettagli e i prossimi passi. A presto, Giada*
+
+**PL**
+- Oggetto: *Twoje miejsce jest zarezerwowane! 🇮🇹*
+- Corpo: *Cześć {nome}, otrzymałam twoje zgłoszenie na kurs {corso}: twoje miejsce jest zarezerwowane.*
+  - [se Club del Libro] *Poprosiłaś/eś też o dołączenie Klubu Książki: cenę i szczegóły pakietu potwierdzę razem z resztą.*
+  - [se Tè e Riviste] *Poprosiłaś/eś też o dołączenie Herbaty i Czasopism: cenę i szczegóły pakietu potwierdzę razem z resztą.*
+  - [se messaggio libero] *Przeczytałam to, co do mnie napisałaś/eś: „{messaggio}", wezmę to pod uwagę, kiedy będę odpowiadać.*
+  - *Napiszę do ciebie osobiście w ciągu 24-48 godzin, żeby potwierdzić wszystkie szczegóły i kolejne kroki. Do zobaczenia, Giada*
+
+**EN**
+- Oggetto: *Your spot is reserved! 🇮🇹*
+- Corpo: *Hi {nome}, I've received your enrollment for the {corso} course: your spot is reserved.*
+  - [se Club del Libro] *You also asked to add the Book Club: I'll confirm the bundle price and details along with everything else.*
+  - [se Tè e Riviste] *You also asked to add Tea & Magazines: I'll confirm the bundle price and details along with everything else.*
+  - [se messaggio libero] *I've read what you wrote me: "{messaggio}", I'll keep it in mind when I get back to you.*
+  - *I'll write to you personally within 24-48 hours to confirm all the details and next steps. See you soon, Giada*
+
+*(La bandierina 🇮🇹 nell'oggetto resta uguale in tutte le lingue: si riferisce all'italiano che si sta imparando, non alla lingua del destinatario.)*
+
+### Mail di notifica interna a Giada (resta in italiano)
+
+Nessuna traduzione necessaria — cambia solo l'oggetto, con un'etichetta
+della lingua di provenienza aggiunta davanti (esempio, il resto del testo
+non cambia):
+- Oggi: *Nuova richiesta: {nome} · {corso}*
+- Con l'etichetta: *[PL] Nuova richiesta: {nome} · {corso}* (oppure `[EN]`,
+  o nessuna etichetta per l'italiano, per non appesantire l'oggetto sulla
+  maggioranza dei lead)
 
 ---
 
