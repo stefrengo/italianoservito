@@ -23,10 +23,17 @@ export const SCADENZA_ISO = '2026-09-14T23:59:59'; // <- data reale per il count
 
 // tipoPl/tipoEn: traduzione dell'etichetta "tipo" per le pagine /pl e /en di
 // Offerta Formativa (vedi tabella "Etichette e testi delle card corso" nella
-// bozza traduzioni). Date/orari/prezzi restano invariati in tutte le lingue.
+// bozza traduzioni). tagPl/tagEn: nome tradotto del percorso, stessa
+// traduzione già usata in src/pages/pl/faq.astro e src/pages/en/faq.astro
+// (Q1), usata SOLO per il testo mostrato — il valore inviato al form/a
+// Supabase resta sempre "tag" in italiano, per non disallineare i dati coi
+// lead già raccolti. Date/orari (giorni della settimana, mesi) restano in
+// italiano nei dati e vengono tradotti a runtime da src/lib/traduciData.js
+// sulle pagine /pl e /en, per lo stesso motivo (fonte unica, niente
+// duplicazione a rischio di disallineamento).
 export const corsiStagione = [
   {
-    pasto: 'Antipasto', tag: 'Sbloccati da Zero', livello: 'A1',
+    pasto: 'Antipasto', tag: 'Sbloccati da Zero', tagPl: 'Odblokuj się od zera', tagEn: 'Unlock from Zero', livello: 'A1',
     orario: 'Martedì, 16:05 – 17:05',
     prezzo: 600,
     tipo: 'Corso base da zero', tipoPl: 'Kurs podstawowy od zera', tipoEn: 'Basic course from zero',
@@ -34,7 +41,7 @@ export const corsiStagione = [
     giornoLibero: '10 novembre, 29 dicembre, 5 gennaio',
   },
   {
-    pasto: 'Antipasto', tag: 'Sbloccati da Zero', livello: 'A2',
+    pasto: 'Antipasto', tag: 'Sbloccati da Zero', tagPl: 'Odblokuj się od zera', tagEn: 'Unlock from Zero', livello: 'A2',
     orario: 'Lunedì, 16:00 – 17:00',
     prezzo: 600,
     tipo: 'Corso di consolidamento delle basi', tipoPl: 'Kurs utrwalający podstawy', tipoEn: 'Foundations consolidation course',
@@ -42,7 +49,7 @@ export const corsiStagione = [
     giornoLibero: '9 novembre, 28 dicembre, 4 gennaio',
   },
   {
-    pasto: 'Primo', tag: 'Trova la tua Voce', livello: 'B1',
+    pasto: 'Primo', tag: 'Trova la tua Voce', tagPl: 'Znajdź swój głos', tagEn: 'Find Your Voice', livello: 'B1',
     orario: 'Giovedì, 17:00 – 18:00',
     prezzo: 600,
     tipo: 'Corso di gruppo', tipoPl: 'Kurs grupowy', tipoEn: 'Group course',
@@ -50,7 +57,7 @@ export const corsiStagione = [
     giornoLibero: '12 novembre, 24 e 31 dicembre, 7 gennaio',
   },
   {
-    pasto: 'Secondo', tag: 'Esplora la Lingua', livello: 'C1',
+    pasto: 'Secondo', tag: 'Esplora la Lingua', tagPl: 'Odkryj język', tagEn: 'Explore the Language', livello: 'C1',
     orario: 'Lunedì, 18:15 – 19:45',
     prezzo: 800,
     tipo: 'Corso di approfondimento avanzato', tipoPl: 'Kurs zaawansowany', tipoEn: 'Advanced in-depth course',
@@ -58,7 +65,7 @@ export const corsiStagione = [
     giornoLibero: '9 novembre, 28 dicembre, 4 gennaio',
   },
   {
-    pasto: 'Secondo', tag: 'Esplora la Lingua', livello: 'C1/C2',
+    pasto: 'Secondo', tag: 'Esplora la Lingua', tagPl: 'Odkryj język', tagEn: 'Explore the Language', livello: 'C1/C2',
     orario: 'Lunedì, 8:00 – 9:00',
     prezzo: 600,
     tipo: 'Corso di approfondimento avanzato', tipoPl: 'Kurs zaawansowany', tipoEn: 'Advanced in-depth course',
@@ -66,7 +73,7 @@ export const corsiStagione = [
     giornoLibero: '9 novembre, 28 dicembre, 4 gennaio',
   },
   {
-    pasto: 'Secondo', tag: 'Esplora la Lingua', livello: 'C2',
+    pasto: 'Secondo', tag: 'Esplora la Lingua', tagPl: 'Odkryj język', tagEn: 'Explore the Language', livello: 'C2',
     orario: 'Giovedì, 18:00 – 19:00',
     prezzo: 600,
     tipo: 'Corso di approfondimento avanzato', tipoPl: 'Kurs zaawansowany', tipoEn: 'Advanced in-depth course',
@@ -81,7 +88,7 @@ export const corsiStagione = [
 // e un prezzo scontato ("prezzoBundle") per chi li abbina a un corso standard.
 export const corsiDolce = [
   {
-    tag: 'Tè e Riviste', edizione: '1° edizione', novita: true,
+    tag: 'Tè e Riviste', tagPl: 'Herbata i Czasopisma', tagEn: 'Tea & Magazines', edizione: '1° edizione', novita: true,
     comeFunziona: "A casa leggi un articolo da una rivista italiana che ti fornisco io; a lezione (circa ogni due settimane) lo analizziamo e commentiamo insieme. Le riviste e gli articoli cambiano ogni volta genere e argomento.",
     comeFunzionaPl: 'W domu czytasz artykuł z włoskiego czasopisma, które Ci dostarczam; na spotkaniu (mniej więcej co dwa tygodnie) analizujemy go i komentujemy razem. Czasopisma i artykuły za każdym razem zmieniają gatunek i temat.',
     comeFunzionaEn: 'At home, you read an article from an Italian magazine that I provide; in the session (roughly every two weeks) we analyze and discuss it together. The magazines and articles change genre and topic each time.',
@@ -92,7 +99,7 @@ export const corsiDolce = [
     prezzo: 320, prezzoBundle: 288,
   },
   {
-    tag: 'Il Club del Libro', edizione: '3° edizione', novita: false,
+    tag: 'Il Club del Libro', tagPl: 'Klub Książki', tagEn: 'Book Club', edizione: '3° edizione', novita: false,
     comeFunziona: "A casa leggi un brano da un libro italiano che ti fornisco io; a lezione (circa ogni due settimane) lo analizziamo e commentiamo insieme.",
     comeFunzionaPl: 'W domu czytasz fragment włoskiej książki, którą Ci dostarczam; na spotkaniu (mniej więcej co dwa tygodnie) analizujemy go i komentujemy razem.',
     comeFunzionaEn: 'At home, you read a passage from an Italian book that I provide; in the session (roughly every two weeks) we analyze and discuss it together.',

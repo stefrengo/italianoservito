@@ -6,13 +6,14 @@
 import MainLayout from '../../layouts/MainLayout.astro';
 import SignupForm from '../../components/SignupForm.astro';
 import { STAGIONE, PERIODO, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione, corsiDolce } from '../../data/corsiStagione.js';
+import { traduciData } from '../../lib/traduciData.js';
 
 const tutteLeCard = [
   ...corsiStagione.map((c) => ({ ...c, dolce: false })),
   ...corsiDolce.map((c) => ({ ...c, dolce: true })),
 ];
 
-const stagionePiana = STAGIONE.replace(' | ', ' ');
+const stagionePiana = traduciData(STAGIONE.replace(' | ', ' '), 'en');
 
 const perche = [
   { titolo: 'Experienced native speaker', testo: '10 years teaching adults at every language level.' },
@@ -24,7 +25,7 @@ const perche = [
 
 <MainLayout
   locale="en"
-  title={`Italian courses ${STAGIONE} | L'Italiano è Servito`}
+  title={`Italian courses ${traduciData(STAGIONE, 'en')} | L'Italiano è Servito`}
   description="Online Italian courses with Giada Longo. Limited spots: reserve your spot now."
 >
   <section class="hero-ads">
@@ -53,12 +54,12 @@ const perche = [
       <div class="price-grid">
         {tutteLeCard.map((c, i) => (
           <div class={`price-card reveal d${i % 3}`}>
-            <div class="price-head">{c.orario}</div>
+            <div class="price-head">{traduciData(c.orario, 'en')}</div>
             <div class="price-tag">
               <span class="stamp ink small">{c.dolce ? 'Bonus' : c.pasto}</span>
               <span class="livello">{c.livello}</span>
             </div>
-            <p class="path-name">{c.tag}</p>
+            <p class="path-name">{c.tagEn}</p>
             <div class="price-amount"><span class="currency">PLN</span>{c.prezzo}</div>
             {c.dolce ? (
               <ul>
@@ -69,8 +70,8 @@ const perche = [
             ) : (
               <ul>
                 <li>{c.tipoEn}</li>
-                <li>{c.lezioni}</li>
-                <li>Day off: {c.giornoLibero}</li>
+                <li>{traduciData(c.lezioni, 'en')}</li>
+                <li>Day off: {traduciData(c.giornoLibero, 'en')}</li>
               </ul>
             )}
             <button type="button" class="btn small" data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} · ${c.livello}`}>Reserve your spot</button>
@@ -116,13 +117,13 @@ const perche = [
       <div class="reveal">
         <h2>Details</h2>
         <ul class="dettagli-list">
-          <li>📅 {PERIODO}</li>
+          <li>📅 {traduciData(PERIODO, 'en')}</li>
           <li>💻 Online on Zoom</li>
           <li>🧑‍🏫 Limited spots: to confirm your spot, I'll explain the details personally.</li>
         </ul>
       </div>
       <div class="scadenza-card reveal d1">
-        <h3>Enrollment deadline: {SCADENZA_LABEL}</h3>
+        <h3>Enrollment deadline: {traduciData(SCADENZA_LABEL, 'en')}</h3>
         <div class="countdown" id="countdown" data-target={SCADENZA_ISO}>
           <div><span id="cd-days">00</span><small>Days</small></div>
           <div><span id="cd-hours">00</span><small>Hours</small></div>

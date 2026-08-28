@@ -5,8 +5,8 @@ const prefix = locale === 'it' ? '' : `/${locale}`;
 
 const t = {
   it: { tagline: 'Un percorso di trasformazione linguistica, non una lista di regole da studiare.', ilSito: 'Il sito', chiSono: 'Chi Sono', percorsi: 'I Percorsi', faq: 'FAQ', contatti: 'Contatti', privacy: 'Privacy Policy', seguimi: 'Seguimi' },
-  pl: { tagline: 'Droga przemiany językowej, a nie lista reguł do wykucia.', ilSito: 'Strona', chiSono: 'O mnie', faq: 'FAQ', privacy: 'Privacy Policy', seguimi: 'Obserwuj mnie' },
-  en: { tagline: 'A path of linguistic transformation, not a list of rules to memorize.', ilSito: 'Site', chiSono: 'About me', faq: 'FAQ', privacy: 'Privacy Policy', seguimi: 'Follow me' },
+  pl: { tagline: 'Droga przemiany językowej, a nie lista reguł do wykucia.', ilSito: 'Strona', chiSono: 'O mnie', faq: 'FAQ', contatti: 'Kontakt', privacy: 'Privacy Policy', seguimi: 'Obserwuj mnie' },
+  en: { tagline: 'A path of linguistic transformation, not a list of rules to memorize.', ilSito: 'Site', chiSono: 'About me', faq: 'FAQ', contatti: 'Contact', privacy: 'Privacy Policy', seguimi: 'Follow me' },
 }[locale];
 ---
 
@@ -26,7 +26,7 @@ const t = {
           <li><a href={`${prefix}/chi-sono`}>{t.chiSono}</a></li>
           {locale === 'it' && <li><a href="/percorsi">{t.percorsi}</a></li>}
           <li><a href={`${prefix}/faq`}>{t.faq}</a></li>
-          {locale === 'it' && <li><a href="/contatti">{t.contatti}</a></li>}
+          <li><a href={`${prefix}/contatti`}>{t.contatti}</a></li>
           <!-- La Privacy Policy resta un'unica pagina in italiano, non ancora tradotta. -->
           <li><a href="/privacy">{t.privacy}</a></li>
         </ul>

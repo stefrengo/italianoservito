@@ -1,8 +1,9 @@
 ---
 // locale: 'it' (default) | 'pl' | 'en'. Il menu PL/EN è volutamente più
-// snello — solo Home, Chi Sono, FAQ + il bottone CTA — perché le pagine
-// "I Percorsi" e "Contatti" non hanno versione PL/EN (vedi asimmetria
-// intelligente nel brief di progetto).
+// snello — Home, Chi Sono, FAQ, Contatti + il bottone CTA — perché solo
+// "I Percorsi" non ha versione PL/EN (vedi asimmetria intelligente nel
+// brief di progetto; Contatti è stato aggiunto anche in PL/EN il
+// 28/08/2026 su richiesta di Stefano).
 const { locale = 'it' } = Astro.props;
 
 const prefix = locale === 'it' ? '' : `/${locale}`;
@@ -16,16 +17,17 @@ const percorsiLinks = [
 
 const t = {
   it: { home: 'Home', chiSono: 'Chi Sono', percorsi: 'I Percorsi ▾', faq: 'FAQ', contatti: 'Contatti', ctaFull: 'Corsi I semestre 2026/27', ctaShort: 'Iscriviti', menuAria: 'Apri il menu' },
-  pl: { home: 'Home', chiSono: 'O mnie', faq: 'FAQ', ctaFull: 'Kursy, I semestr 2026/27', ctaShort: 'Zapisz się', menuAria: 'Otwórz menu' },
-  en: { home: 'Home', chiSono: 'About me', faq: 'FAQ', ctaFull: 'I semester 2026/27 courses', ctaShort: 'Enroll', menuAria: 'Open menu' },
+  pl: { home: 'Home', chiSono: 'O mnie', faq: 'FAQ', contatti: 'Kontakt', ctaFull: 'Kursy, I semestr 2026/27', ctaShort: 'Zapisz się', menuAria: 'Otwórz menu' },
+  en: { home: 'Home', chiSono: 'About me', faq: 'FAQ', contatti: 'Contact', ctaFull: 'I semester 2026/27 courses', ctaShort: 'Enroll', menuAria: 'Open menu' },
 }[locale];
 
 // Selettore lingua: prova a restare sulla stessa pagina cambiando lingua
-// (es. /pl/chi-sono → /en/chi-sono), ma solo per le 4 pagine che esistono
-// in tutte e tre le lingue (Home, Chi Sono, FAQ, Offerta Formativa) — per
-// tutte le altre (percorsi, contatti, club-del-libro...) il selettore porta
-// alla home nella lingua scelta, per non rischiare un link rotto.
-const SLUG_CONDIVISI = ['/', '/chi-sono', '/faq', '/offerta-formativa'];
+// (es. /pl/chi-sono → /en/chi-sono), ma solo per le 5 pagine che esistono
+// in tutte e tre le lingue (Home, Chi Sono, FAQ, Offerta Formativa,
+// Contatti) — per tutte le altre (percorsi, club-del-libro...) il
+// selettore porta alla home nella lingua scelta, per non rischiare un
+// link rotto.
+const SLUG_CONDIVISI = ['/', '/chi-sono', '/faq', '/offerta-formativa', '/contatti'];
 let slugBase = Astro.url.pathname;
 if (slugBase.startsWith('/pl/')) slugBase = slugBase.slice(3);
 else if (slugBase === '/pl') slugBase = '/';
@@ -67,7 +69,7 @@ const langHref = (loc) => {
           </li>
         )}
         <li><a href={`${prefix}/faq`}>{t.faq}</a></li>
-        {locale === 'it' && <li><a href="/contatti">{t.contatti}</a></li>}
+        <li><a href={`${prefix}/contatti`}>{t.contatti}</a></li>
       </ul>
     </nav>
     <div class="nav-right">
@@ -102,7 +104,7 @@ const langHref = (loc) => {
         </li>
       )}
       <li><a href={`${prefix}/faq`}>{t.faq}</a></li>
-      {locale === 'it' && <li><a href="/contatti">{t.contatti}</a></li>}
+      <li><a href={`${prefix}/contatti`}>{t.contatti}</a></li>
     </ul>
   </nav>
 </header>

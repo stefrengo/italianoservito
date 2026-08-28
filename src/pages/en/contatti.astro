@@ -1,0 +1,76 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+// Versione inglese di /contatti — stesso form/endpoint dell'italiano
+// (POST a /api/iscrizione), stessa struttura. "fonte" ha un suffisso -en
+// per riconoscere la provenienza del lead su Supabase/nelle notifiche.
+// La lingua della mail di conferma e il redirect a /grazie?lang=en sono
+// già gestiti automaticamente da /api/iscrizione (rileva il Referer).
+---
+
+<MainLayout
+  locale="en"
+  title="Contact | Book your get-to-know-you lesson | L'Italiano è Servito"
+  description="Get in touch with Giada Longo: tell her where you're starting from, and together you'll find the right Italian course for you."
+>
+  <section class="apertura">
+    <div class="wrap narrow" style="text-align:center;">
+      <span class="eyebrow">Contact</span>
+      <h1>You don't need perfection. Just the first step.</h1>
+      <p class="lede">Tell me where you're starting from, and together we'll figure out the right path for you.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap narrow">
+      <form class="contact-form" method="POST" action="/api/iscrizione">
+        <input type="hidden" name="fonte" value="contatti-en" />
+        <label>
+          Name
+          <input type="text" name="nome" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Phone (WhatsApp works too)
+          <input type="tel" name="telefono" placeholder="E.g. +48 123 456 789" required />
+        </label>
+        <label>
+          Current level
+          <select name="livello">
+            <option>Starting from zero</option>
+            <option>I understand but don't speak</option>
+            <option>I want to refine my Italian</option>
+          </select>
+        </label>
+        <label>
+          Your goal
+          <textarea name="obiettivo" rows="4" placeholder="E.g. travel in Italy, speak with more confidence, explore the culture..."></textarea>
+        </label>
+        <label class="checkbox">
+          <input type="checkbox" name="privacy" required />
+          <span>I have read and accept the <a href="/privacy">Privacy Policy</a> *</span>
+        </label>
+        <button type="submit" class="btn">Book your get-to-know-you lesson</button>
+      </form>
+    </div>
+  </section>
+</MainLayout>
+
+<style>
+  .apertura { padding: 70px 0 20px; }
+  .narrow { max-width: 620px; margin: 0 auto; }
+  .lede { color: var(--ink-soft); margin-top: 12px; }
+  .contact-form { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; }
+  .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.92rem; font-weight: 500; color: var(--ink-soft); }
+  .contact-form input, .contact-form select, .contact-form textarea {
+    font-family: var(--font-body), sans-serif; font-size: 1rem; color: var(--ink);
+    border: 1.5px solid var(--card-line); border-radius: 12px; padding: 12px 14px;
+    background: #fff;
+  }
+  .contact-form label.checkbox { flex-direction: row; align-items: flex-start; gap: 10px; font-size: 0.85rem; }
+  .contact-form label.checkbox input { margin-top: 3px; width: auto; }
+  .contact-form label.checkbox a { color: var(--red); font-weight: 600; }
+  .contact-form button { align-self: flex-start; margin-top: 8px; }
+</style>

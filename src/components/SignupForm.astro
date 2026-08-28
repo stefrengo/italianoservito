@@ -19,6 +19,18 @@
 //          salvata su Supabase per sapere dove si iscrive di più la gente
 
 import { corsiDolce } from '../data/corsiStagione.js';
+import { traduciData } from '../lib/traduciData.js';
+
+// Nome del corso da mostrare nel form, tradotto per PL/EN (stessa
+// traduzione usata nelle FAQ e nelle card di /offerta-formativa) — il
+// valore inviato al form/a Supabase resta sempre il "tag" italiano, per
+// non disallineare i dati coi lead già raccolti (vedi anche
+// src/data/corsiStagione.js e src/lib/traduciData.js).
+function nomeCorso(c, locale) {
+  if (locale === 'pl') return c.tagPl || c.tag;
+  if (locale === 'en') return c.tagEn || c.tag;
+  return c.tag;
+}
 
 // locale: 'it' (default) | 'pl' | 'en' — traduce le etichette fisse del
 // form (vedi tabella "Stringhe condivise" nella bozza traduzioni). titolo/
@@ -105,11 +117,11 @@ const T = { titolo: titolo ?? L.titolo, intro: intro ?? L.intro };
             {corsi.map((c) => {
               const eDolce = corsiDolce.some((d) => d.tag === c.tag);
               return (
-                <option value={`${c.tag} · ${c.livello}`} data-standalone={eDolce ? 'true' : undefined}>{c.tag} · {c.livello}</option>
+                <option value={`${c.tag} · ${c.livello}`} data-standalone={eDolce ? 'true' : undefined}>{nomeCorso(c, locale)} · {c.livello}</option>
               );
             })}
             {includiClubStandalone && corsiDolce.map((c) => (
-              <option value={`${c.tag} (solo)`} data-standalone="true">{c.tag} {L.solo}</option>
+              <option value={`${c.tag} (solo)`} data-standalone="true">{nomeCorso(c, locale)} {L.solo}</option>
             ))}
             <option value="Non ho ancora deciso">{L.nonDeciso}</option>
           </select>
@@ -119,7 +131,7 @@ const T = { titolo: titolo ?? L.titolo, intro: intro ?? L.intro };
           {corsiDolce.map((c) => (
             <label class="checkbox bundle">
               <input type="checkbox" name={c.tag === 'Il Club del Libro' ? 'club_del_libro' : 'te_e_riviste'} value="si" />
-              <span set:html={L.bundleVoglio(c.tag, c.orario, c.prezzoBundle)} />
+              <span set:html={L.bundleVoglio(nomeCorso(c, locale), traduciData(c.orario, locale), c.prezzoBundle)} />
             </label>
           ))}
         </div>
