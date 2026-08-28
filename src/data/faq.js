@@ -11,7 +11,7 @@
 export const faq = [
   {
     q: "Le lezioni sono individuali o di gruppo?",
-    a: "Tutti i corsi de \"L'Italiano è Servito\" sono lezioni di gruppo, mai individuali: piccoli gruppi online, da 3 a un massimo di 6 persone. È una scelta precisa, non un limite: credo nel potere dell'interazione tra le persone. Si impara di più, e più in fretta, parlando con altri che stanno affrontando le tue stesse difficoltà.",
+    a: "Tutti i corsi de \"L'Italiano è Servito\" sono lezioni di gruppo: piccoli gruppi online, da 3 a un massimo di 6 persone. È una scelta precisa, non un limite: credo nel potere dell'interazione tra le persone. Si impara di più, e più in fretta, parlando con altri che stanno affrontando le tue stesse difficoltà.",
   },
   {
     q: "Perché scegliere un corso di gruppo invece di un'insegnante privata?",

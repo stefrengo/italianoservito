@@ -5,8 +5,10 @@
 > questo testo e costruito le 8 pagine `/pl/*` e `/en/*` sul sito, oltre ad
 > applicare le stesse correzioni al sito italiano live dove pertinente. Il
 > documento resta come riferimento/cronologia delle decisioni prese, non è
-> più una bozza in attesa. Un solo punto è ancora aperto — vedi la nota
-> "⚠️ Punto da chiarire con te" nella sezione FAQ, domanda 1.
+> più una bozza in attesa. Aggiornamento del 28/08/2026: Stefano ha
+> confermato il punto rimasto aperto sulla FAQ, domanda 1 (vedi sotto) —
+> non ci sono più punti aperti sui testi, restano solo le note 2 e 3
+> dell'elenco "Cosa mi serve ancora da te" in fondo al documento.
 
 Bozza di traduzione delle 4 pagine concordate (Home, Chi Sono, FAQ, Offerta
 Formativa) più la pagina Grazie (unica per le tre lingue). Percorso di
@@ -281,10 +283,10 @@ una rilettura veloce non guasta comunque.
 
 **1. Le lezioni sono individuali o di gruppo?**
 
-> ⚠️ **Punto da chiarire con te**: nella tua correzione, vicino a "kursy grupowe, nigdy indywidualne" c'è la nota "DA ELIMINARE IN TUTTE LE LINGUE", ma non capisco a quale parola/frase esatta si riferisca (l'unica differenza visibile rispetto alla mia bozza è "lekcje" → "kursy", che ho comunque applicato). Dimmi cosa intendevi togliere e lo sistemo.
+> **Risolto (28/08/2026)**: la nota "DA ELIMINARE IN TUTTE LE LINGUE" vicino a "kursy grupowe, nigdy indywidualne" si riferiva a "nigdy indywidualne" — Stefano ha confermato di toglierlo. Rimosso qui, nel sito PL/EN/IT e nell'italiano (`src/data/faq.js`).
 
-- PL: *Czy lekcje są indywidualne, czy grupowe?* — *Wszystkie kursy „L'Italiano è Servito" to kursy grupowe, nigdy indywidualne: małe grupy online, od 3 do maksymalnie 6 osób. To świadomy wybór, a nie ograniczenie: wierzę w siłę interakcji między ludźmi. Uczysz się więcej i szybciej, rozmawiając z innymi, którzy mierzą się z tymi samymi trudnościami co ty.*
-- EN: *Are the lessons individual or group lessons?* — *All "L'Italiano è Servito" courses are group lessons, never individual ones: small online groups, from 3 to a maximum of 6 people. It's a deliberate choice, not a limitation: I believe in the power of interaction between people. You learn more, and faster, by talking with others who are facing the same challenges as you.*
+- PL: *Czy lekcje są indywidualne, czy grupowe?* — *Wszystkie kursy „L'Italiano è Servito" to kursy grupowe: małe grupy online, od 3 do maksymalnie 6 osób. To świadomy wybór, a nie ograniczenie: wierzę w siłę interakcji między ludźmi. Uczysz się więcej i szybciej, rozmawiając z innymi, którzy mierzą się z tymi samymi trudnościami co ty.*
+- EN: *Are the lessons individual or group lessons?* — *All "L'Italiano è Servito" courses are group lessons: small online groups, from 3 to a maximum of 6 people. It's a deliberate choice, not a limitation: I believe in the power of interaction between people. You learn more, and faster, by talking with others who are facing the same challenges as you.*
 
 **2. Perché scegliere un corso di gruppo invece di un'insegnante privata?**
 - PL: *Dlaczego wybrać kurs grupowy zamiast prywatnej nauczycielki?* — *Ponieważ języka uczysz się, rozmawiając z innymi ludźmi. W małej grupie konfrontujesz się z innymi, słuchasz, jak wyrażają się osoby na twoim poziomie, a przede wszystkim ćwiczysz prowadzenie prawdziwej rozmowy. To ta sama zasada, na której zbudowałam swoją metodę, wypracowaną przez lata nauczania w Polsce.*
@@ -537,12 +539,9 @@ non cambia):
 
 ## Cosa mi serve ancora da te
 
-1. **Il punto aperto sulla FAQ, domanda 1** (vedi nota "⚠️ Punto da
-   chiarire con te" più sopra): cosa intendevi eliminare esattamente vicino
-   a "kursy grupowe, nigdy indywidualne"?
-2. Il testo originale in polacco delle testimonianze di Kamila e Małgosia,
+1. Il testo originale in polacco delle testimonianze di Kamila e Małgosia,
    se vuoi che compaiano anche nella Home in PL (oggi omesse, vedi nota 4).
-3. Una rilettura del polacco da parte tua/di Giada/di una madrelingua
+2. Una rilettura del polacco da parte tua/di Giada/di una madrelingua
    prima del lancio pubblico — resta il punto più delicato, come segnalato
    in cima al documento.
 4. **Fatto**: le 4 pagine × 2 lingue sono costruite, Navbar/Footer/
