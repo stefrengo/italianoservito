@@ -394,11 +394,11 @@ una rilettura veloce non guasta comunque.
 
 ### Sezione "Dettagli"
 
-> **Modifica di Giada**: hai segnalato che il riferimento alla caparra qui andava reso vago come già fatto nella mail di conferma (l'avevamo tolto lì ma non su questa pagina) — ho riformulato in tutte le lingue, coerente con la modifica già applicata al bullet "Posti limitati" sull'italiano live.
+> **Corretto (28/08/2026)**: avevo reso vago il riferimento alla caparra su questa sezione in tutte le lingue, pensando che la nota di Giada sulla mail di conferma dovesse valere anche qui — non era così: Stefano ha chiarito che qui il riferimento esplicito ai 100 PLN va mantenuto, in italiano, polacco e inglese, con l'aggiunta di "ti darò tutti i dettagli via email". Testo attuale: IT *"Posti limitati: per bloccare effettivamente il tuo posto, ti chiederò una caparra di 100 PLN. Ti darò tutti i dettagli via email."* — EN *"Limited spots: to actually reserve your spot, I'll ask you for a 100 PLN deposit. I'll give you all details via email."* — PL sotto.
 
 **PL**
 - H2: *Szczegóły*
-- 📅 {okres} · 💻 *Online na Zoomie* · 🧑‍🏫 *Ograniczona liczba miejsc: żeby zarezerwować swoje miejsce, szczegóły wyjaśnię Ci osobiście.*
+- 📅 {okres} · 💻 *Online na Zoomie* · 🧑‍🏫 *Ograniczona liczba miejsc: żeby faktycznie zarezerwować swoje miejsce, poproszę Cię o zadatek w wysokości 100 PLN. Wszystkie szczegóły prześlę Ci mailowo.*
 - Card scadenza: *Termin zapisów: {data}* — countdown *Dni / Godziny / Min / Sek*
 - CTA: *Zarezerwuj swoje miejsce już teraz*
 
