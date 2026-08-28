@@ -26,30 +26,37 @@ import MainLayout from '../layouts/MainLayout.astro';
 const langParam = Astro.url.searchParams.get('lang');
 const lang = langParam === 'pl' || langParam === 'en' ? langParam : 'it';
 
+// Testo volutamente generico ("richiesta", non "iscrizione"/"posto
+// prenotato"): questa pagina compare per QUALSIASI invio del form, non
+// solo per chi si iscrive a un corso — anche per chi scrive dal form
+// Contatti o sceglie "non ho ancora deciso, aiutami a scegliere" nella
+// landing. Deciso con Stefano il 28/08/2026: più semplice ed onesto non
+// promettere un posto riservato a chi ha solo fatto una domanda (vedi
+// stessa scelta nella mail di conferma, src/pages/api/iscrizione.js).
 const testi = {
   it: {
     htmlLang: 'it',
-    stamp: 'Iscrizione ricevuta',
-    h1: 'Grazie! Il tuo posto è prenotato.',
-    lede: "Ho ricevuto i tuoi dati e ti scrivo personalmente entro 24-48 ore, per confermarti tutti i dettagli e i prossimi passi.",
+    stamp: 'Richiesta ricevuta',
+    h1: 'Grazie! Ho ricevuto la tua richiesta.',
+    lede: "Ti scrivo personalmente entro 24-48 ore, per confermarti tutti i dettagli e i prossimi passi.",
     ledeSoft: "Nel frattempo, se hai già controllato la posta e non trovi nulla, dai un'occhiata anche nella cartella spam: a volte le email di conferma finiscono lì.",
     cta: 'Torna alla home',
     ctaHref: '/',
   },
   pl: {
     htmlLang: 'pl',
-    stamp: 'Zgłoszenie zostało odebrane',
-    h1: 'Dziękuję! Twoje miejsce jest zarezerwowane.',
-    lede: 'Otrzymałam Twoje dane i napiszę do Ciebie osobiście w ciągu 24-48 godzin, żeby potwierdzić wszystkie szczegóły i kolejne kroki.',
+    stamp: 'Zapytanie otrzymane',
+    h1: 'Dziękuję! Otrzymałam Twoje zapytanie.',
+    lede: 'Napiszę do Ciebie osobiście w ciągu 24-48 godzin, żeby potwierdzić wszystkie szczegóły i kolejne kroki.',
     ledeSoft: 'W międzyczasie, jeśli sprawdziłaś/eś już pocztę i nic nie widzisz, zajrzyj też do folderu spam: czasem maile potwierdzające tam trafiają.',
     cta: 'Wróć do strony głównej',
     ctaHref: '/pl',
   },
   en: {
     htmlLang: 'en',
-    stamp: 'Enrollment received',
-    h1: 'Thank you! Your spot is reserved.',
-    lede: "I've received your details and I'll write to you personally within 24-48 hours to confirm all the details and next steps.",
+    stamp: 'Request received',
+    h1: "Thank you! I've received your request.",
+    lede: "I'll write to you personally within 24-48 hours to confirm all the details and next steps.",
     ledeSoft: "In the meantime, if you've already checked your inbox and can't find anything, take a look in your spam folder too: confirmation emails sometimes end up there.",
     cta: 'Back to home',
     ctaHref: '/en',
@@ -61,7 +68,7 @@ const t = testi[lang];
 
 <MainLayout
   title="Grazie! | L'Italiano è Servito"
-  description="La tua iscrizione è stata ricevuta: Giada ti risponde entro 24-48 ore."
+  description="La tua richiesta è stata ricevuta: Giada ti risponde entro 24-48 ore."
   noindex={true}
   locale={lang}
 >

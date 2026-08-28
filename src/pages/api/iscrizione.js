@@ -79,12 +79,21 @@ function rilevaLingua(request) {
 }
 
 // Testo dell'email di conferma nelle tre lingue. Le parti tra ${} sono
-// generate dai dati del form (nome, corso, bundle, messaggio libero).
+// generate dai dati del form (nome, bundle, messaggio libero).
+//
+// "intro" è volutamente generico ("ho ricevuto la tua richiesta", non "la
+// tua iscrizione: il tuo posto è prenotato") e non menziona più il corso:
+// lo stesso form/endpoint riceve sia vere iscrizioni sia semplici
+// richieste di aiuto (form Contatti, opzione "non ho ancora deciso,
+// aiutami a scegliere" nella landing), e promettere un posto riservato a
+// chi ha solo fatto una domanda sarebbe fuorviante. Deciso con Stefano il
+// 28/08/2026 (stessa scelta sulla pagina /grazie). Il corso scelto resta
+// comunque visibile a Giada nella notifica interna qui sotto.
 const TESTI_CONFERMA = {
   it: {
-    subject: 'Il tuo posto è prenotato! 🇮🇹',
+    subject: 'Ho ricevuto la tua richiesta! 🇮🇹',
     saluto: (nome) => `Ciao ${nome},`,
-    intro: (corso) => `ho ricevuto la tua iscrizione al corso <strong>${corso}</strong>: il tuo posto è prenotato.`,
+    intro: 'ho ricevuto la tua richiesta.',
     club: 'Hai chiesto di abbinare anche il <strong>Club del Libro</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.',
     te: 'Hai chiesto di abbinare anche <strong>Tè e Riviste</strong>: ti confermo prezzo e dettagli del bundle insieme al resto.',
     messaggio: (msg) => `Ho letto quello che mi hai scritto: <em>"${msg}"</em>, ne terrò conto quando ti risponderò.`,
@@ -92,9 +101,9 @@ const TESTI_CONFERMA = {
     firma: 'A presto,<br>Giada',
   },
   pl: {
-    subject: 'Twoje miejsce jest zarezerwowane! 🇮🇹',
+    subject: 'Otrzymałam Twoje zapytanie! 🇮🇹',
     saluto: (nome) => `Cześć ${nome},`,
-    intro: (corso) => `otrzymałam Twoje zgłoszenie na kurs <strong>${corso}</strong>: Twoje miejsce jest zarezerwowane.`,
+    intro: 'otrzymałam Twoje zapytanie.',
     club: 'Poprosiłaś/eś też o dołączenie <strong>Klubu Książki</strong>: cenę i szczegóły pakietu potwierdzę razem z resztą.',
     te: 'Poprosiłaś/eś też o dołączenie <strong>Herbaty i Czasopism</strong>: cenę i szczegóły pakietu potwierdzę razem z resztą.',
     messaggio: (msg) => `Przeczytałam to, co do mnie napisałaś/eś: <em>„${msg}"</em>, wezmę to pod uwagę, kiedy będę odpowiadać.`,
@@ -102,9 +111,9 @@ const TESTI_CONFERMA = {
     firma: 'Do zobaczenia,<br>Giada',
   },
   en: {
-    subject: 'Your spot is reserved! 🇮🇹',
+    subject: "I've received your request! 🇮🇹",
     saluto: (nome) => `Hi ${nome},`,
-    intro: (corso) => `I've received your enrollment for the <strong>${corso}</strong> course: your spot is reserved.`,
+    intro: "I've received your request.",
     club: 'You also asked to add the <strong>Book Club</strong>: I\'ll confirm the bundle price and details along with everything else.',
     te: 'You also asked to add <strong>Tea &amp; Magazines</strong>: I\'ll confirm the bundle price and details along with everything else.',
     messaggio: (msg) => `I've read what you wrote me: <em>"${msg}"</em>, I'll keep it in mind when I get back to you.`,
@@ -193,7 +202,7 @@ export async function POST({ request, locals }) {
         subject: t.subject,
         html: mailConfermaHtml(`
           <p style="margin:0 0 18px; font-family: Georgia, 'Times New Roman', serif; font-size:21px; font-weight:600; color:#2F6B4F;">${t.saluto(nome)}</p>
-          <p style="margin:0 0 14px;">${t.intro(percorso)}</p>
+          <p style="margin:0 0 14px;">${t.intro}</p>
           ${clubDelLibro ? `<p style="margin:0 0 14px;">${t.club}</p>` : ''}
           ${teERiviste ? `<p style="margin:0 0 14px;">${t.te}</p>` : ''}
           ${messaggio ? `<p style="margin:0 0 14px;">${t.messaggio(messaggio)}</p>` : ''}
