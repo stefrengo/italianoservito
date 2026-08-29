@@ -23,7 +23,7 @@ export const faq = [
   },
   {
     q: "Che livello di italiano serve per iniziare?",
-    a: "Nessuno. \"Sbloccati da Zero\" è pensato proprio per chi non ha mai parlato italiano o ha solo provato. Da lì in poi ci sono percorsi per ogni livello, da B1 a C2: \"Trova la tua Voce\" per chi ha le basi ma si blocca a parlare, \"Esplora la Lingua\" per chi vuole cogliere le sfumature culturali più fini. In caso di dubbio, un incontro conoscitivo aiuta a capire da dove partire.",
+    a: "Nessuno. \"Sbloccati adesso\" è pensato proprio per chi non ha mai parlato italiano o ha solo provato. Da lì in poi ci sono percorsi per ogni livello, da B1 a C2: \"Trova la tua Voce\" per chi ha le basi ma si blocca a parlare, \"Esplora la Lingua\" per chi vuole cogliere le sfumature culturali più fini. In caso di dubbio, un incontro conoscitivo aiuta a capire da dove partire.",
   },
   {
     q: "Le spiegazioni sono disponibili anche in polacco?",

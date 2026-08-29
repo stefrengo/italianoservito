@@ -13,7 +13,7 @@
 // attivo: è normale, non tutti i livelli sono offerti a ogni edizione.
 //
 // tag deve corrispondere esattamente al `title` del percorso in src/data/corsi.js
-// (es. "Sbloccati da Zero"), è la chiave usata per filtrare i corsi di quella
+// (es. "Sbloccati adesso"), è la chiave usata per filtrare i corsi di quella
 // pagina nel form di iscrizione.
 
 export const STAGIONE = 'I semestre | 2026/27'; // <- aggiorna a ogni campagna
@@ -33,7 +33,7 @@ export const SCADENZA_ISO = '2026-09-14T23:59:59'; // <- data reale per il count
 // duplicazione a rischio di disallineamento).
 export const corsiStagione = [
   {
-    pasto: 'Antipasto', tag: 'Sbloccati da Zero', tagPl: 'Odblokuj się od zera', tagEn: 'Unlock from Zero', livello: 'A1',
+    pasto: 'Antipasto', tag: 'Sbloccati adesso', tagPl: 'Odblokuj się teraz', tagEn: 'Unlock Now', livello: 'A1',
     orario: 'Martedì, 16:05 – 17:05',
     prezzo: 600,
     tipo: 'Corso base da zero', tipoPl: 'Kurs podstawowy od zera', tipoEn: 'Basic course from zero',
@@ -41,7 +41,7 @@ export const corsiStagione = [
     giornoLibero: '10 novembre, 29 dicembre, 5 gennaio',
   },
   {
-    pasto: 'Antipasto', tag: 'Sbloccati da Zero', tagPl: 'Odblokuj się od zera', tagEn: 'Unlock from Zero', livello: 'A2',
+    pasto: 'Antipasto', tag: 'Sbloccati adesso', tagPl: 'Odblokuj się teraz', tagEn: 'Unlock Now', livello: 'A2',
     orario: 'Lunedì, 16:00 – 17:00',
     prezzo: 600,
     tipo: 'Corso di consolidamento delle basi', tipoPl: 'Kurs utrwalający podstawy', tipoEn: 'Foundations consolidation course',

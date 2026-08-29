@@ -4,7 +4,7 @@ export const corsi = {
     stampLabel: 'Antipasto',
     img: '/foto/corsi/antipasto.jpg',
     imgPos: 'center',
-    title: 'Sbloccati da Zero',
+    title: 'Sbloccati adesso',
     heroLine: 'Non sai da dove cominciare? È il posto giusto.',
     lede: "Per chi non ha mai parlato italiano, o ha solo provato, o ha iniziato e mai continuato. Le fondamenta per muoverti in Italia con sicurezza, senza mai perderti.",
     perChi: "Sei qui se: hai paura di non farcela, se ogni volta che hai provato a studiare l'italiano per conto tuo hai mollato dopo due settimane, se sogni di ordinare al bar, chiedere indicazioni, presentarti, senza tradurre mentalmente ogni parola dal polacco.",
@@ -38,7 +38,7 @@ export const corsi = {
     ],
     faq: [
       { q: "Cosa succede se ho paura di parlare?", a: "È il punto di partenza più comune in questo percorso, non un ostacolo. Il gruppo piccolo e il clima accogliente servono proprio ad abbassare la pressione, lezione dopo lezione." },
-      { q: "Qual è la differenza rispetto a \"Sbloccati da Zero\"?", a: "Qui si parte già con delle basi: l'obiettivo non è impararle, ma finalmente usarle per parlare con scioltezza." },
+      { q: "Qual è la differenza rispetto a \"Sbloccati adesso\"?", a: "Qui si parte già con delle basi: l'obiettivo non è impararle, ma finalmente usarle per parlare con scioltezza." },
     ],
   },
   'esplora-la-lingua': {
