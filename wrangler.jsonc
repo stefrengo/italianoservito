@@ -17,7 +17,24 @@
     // Serve la 404.astro personalizzata (src/pages/404.astro) per qualunque
     // URL non esistente, invece della 404 generica di Cloudflare — copre
     // anche i vecchi link del sito WordPress. Vedi commento in 404.astro.
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // BUGFIX 29/08/2026: da compatibility_date 2025-04-01 in poi Cloudflare
+    // applica di default "assets_navigation_prefers_asset_serving" — le
+    // richieste di NAVIGAZIONE (form POST nativi inclusi: il browser li
+    // tratta come navigazione a tutti gli effetti) che non combaciano con
+    // un file statico vengono intercettate dalla logica assets/not_found
+    // PRIMA che il Worker (quindi Astro) venga invocato. Introdotto oggi
+    // insieme a not_found_handling, questo ha rotto silenziosamente
+    // /api/iscrizione (che non è un file statico, essendo prerender=false):
+    // il form veniva reindirizzato alla 404 invece di essere processato,
+    // niente scrittura su Supabase, niente redirect a /grazie. /grazie
+    // stessa è prerender=false quindi ugualmente a rischio. run_worker_first
+    // forza il Worker a girare per OGNI richiesta (valore `true`, non
+    // l'array di pattern tipo ["/api/*"]: quella sintassi richiede Wrangler
+    // 4.20+, mentre questo progetto risolve wrangler 3.114.17 tramite
+    // @astrojs/cloudflare — l'array manda in errore la config).
+    // https://developers.cloudflare.com/workers/configuration/compatibility-flags/#navigation-requests-prefer-asset-serving
+    "run_worker_first": true
   },
   "observability": {
     "enabled": true
