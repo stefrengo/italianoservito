@@ -20,6 +20,7 @@
 
 import { corsiDolce } from '../data/corsiStagione.js';
 import { traduciData } from '../lib/traduciData.js';
+import { TURNSTILE_SITE_KEY } from '../lib/turnstile.js';
 
 // Nome del corso da mostrare nel form, tradotto per PL/EN (stessa
 // traduzione usata nelle FAQ e nelle card di /offerta-formativa) — il
@@ -157,11 +158,23 @@ const T = { titolo: titolo ?? L.titolo, intro: intro ?? L.intro };
           <input type="checkbox" name="privacy" required />
           <span>{L.privacy} <a href={L.privacyHref}>Privacy Policy</a> *</span>
         </label>
+        <!-- Turnstile: verifica anti-bot di Cloudflare. Per la maggior parte
+             delle persone reali è invisibile (widget "Managed"); mostra una
+             piccola verifica solo se il traffico sembra sospetto. Il token
+             generato finisce automaticamente in un campo nascosto
+             "cf-turnstile-response", verificato server-side in
+             /api/iscrizione prima di salvare qualunque cosa. Aggiunto il
+             31/08/2026 dopo che honeypot e controllo Referer da soli non
+             sono bastati contro un bot che naviga il sito come un utente
+             reale. -->
+        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light"></div>
         <button type="submit" class="btn">{L.submit}</button>
       </form>
     </div>
   </div>
 </section>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
 
 <script>
   // Bottoni "Prenota il tuo posto" (es. sulle price-card della landing): scorrono

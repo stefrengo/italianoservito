@@ -3,6 +3,8 @@ dist/
 .astro/
 .env
 .env.*
+.dev.vars
+.dev.vars.*
 /.cache
 /.DS_Store
 /.idea

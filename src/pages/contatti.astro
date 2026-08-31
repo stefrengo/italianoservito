@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { TURNSTILE_SITE_KEY } from '../lib/turnstile.js';
 ---
 
 <MainLayout title="Contatti | Prenota la tua lezione conoscitiva | L'Italiano è Servito">
@@ -54,11 +55,15 @@ import MainLayout from '../layouts/MainLayout.astro';
           <input type="checkbox" name="privacy" required />
           <span>Ho letto e accetto la <a href="/privacy">Privacy Policy</a> *</span>
         </label>
+        <!-- Turnstile: vedi SignupForm.astro per la spiegazione completa. -->
+        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light"></div>
         <button type="submit" class="btn">Prenota la lezione conoscitiva</button>
       </form>
     </div>
   </section>
 </MainLayout>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
 
 <style>
   .apertura { padding: 70px 0 20px; }

@@ -170,6 +170,53 @@ export async function POST({ request, locals }) {
       }
     }
 
+    // Verifica Cloudflare Turnstile: i log del 31/08/2026 hanno mostrato un
+    // bot che naviga il sito come un utente reale (homepage → /contatti →
+    // invio form), quindi con un Referer legittimo e senza mai "vedere" il
+    // campo honeypot — honeypot e controllo Referer da soli non bastano più
+    // contro questo tipo di bot. Turnstile richiede che un vero browser
+    // risolva una verifica invisibile (o quasi: si mostra solo nei casi
+    // dubbi, widget "Managed") prima di poter inviare il form; il token
+    // ottenuto arriva qui nel campo "cf-turnstile-response" e viene
+    // verificato contro l'API di Cloudflare con la Secret Key.
+    // A differenza di honeypot/referer, un fallimento qui è quasi sempre un
+    // bot reale (non un cliente che ha semplicemente un Referer assente o
+    // "strano"), quindi blocchiamo con un errore vero invece di fingere un
+    // successo — deciso con Stefano il 31/08/2026.
+    // Se TURNSTILE_SECRET_KEY non è ancora configurata (es. subito dopo il
+    // primo deploy, prima di aver impostato la variabile su Cloudflare) non
+    // blocchiamo nessuno: meglio un buco temporaneo in questo livello di
+    // difesa che rischiare di respingere iscrizioni vere per un errore di
+    // configurazione nostro.
+    if (env.TURNSTILE_SECRET_KEY) {
+      const turnstileToken = data.get('cf-turnstile-response')?.toString() || '';
+      let turnstileOk = false;
+      try {
+        const turnstileVerifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            secret: env.TURNSTILE_SECRET_KEY,
+            response: turnstileToken,
+            remoteip: request.headers.get('cf-connecting-ip') || '',
+          }),
+        });
+        const turnstileResult = await turnstileVerifyRes.json();
+        turnstileOk = turnstileResult?.success === true;
+        if (!turnstileOk) {
+          console.warn('Turnstile non superato, richiesta scartata:', turnstileResult?.['error-codes'] || turnstileResult);
+        }
+      } catch (turnstileErr) {
+        console.error('Errore durante la verifica Turnstile:', turnstileErr);
+      }
+      if (!turnstileOk) {
+        return new Response(
+          JSON.stringify({ error: 'Verifica di sicurezza non riuscita. Ricarica la pagina e riprova.' }),
+          { status: 400, headers: { 'Content-Type': 'application/json' } }
+        );
+      }
+    }
+
     const nome = data.get('nome')?.toString().trim();
     const email = data.get('email')?.toString().trim();
     const telefono = data.get('telefono')?.toString().trim() || '';

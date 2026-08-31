@@ -1,5 +1,6 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import { TURNSTILE_SITE_KEY } from '../../lib/turnstile.js';
 // Versione inglese di /contatti — stesso form/endpoint dell'italiano
 // (POST a /api/iscrizione), stessa struttura. "fonte" ha un suffisso -en
 // per riconoscere la provenienza del lead su Supabase/nelle notifiche.
@@ -57,11 +58,15 @@ import MainLayout from '../../layouts/MainLayout.astro';
           <input type="checkbox" name="privacy" required />
           <span>I have read and accept the <a href="/privacy">Privacy Policy</a> *</span>
         </label>
+        <!-- Turnstile: vedi SignupForm.astro (versione italiana) per la spiegazione completa. -->
+        <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="light"></div>
         <button type="submit" class="btn">Book your get-to-know-you lesson</button>
       </form>
     </div>
   </section>
 </MainLayout>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer is:inline></script>
 
 <style>
   .apertura { padding: 70px 0 20px; }
