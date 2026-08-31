@@ -146,6 +146,30 @@ export async function POST({ request, locals }) {
       return Response.redirect(grazieUrlBot, 303);
     }
 
+    // Controllo Referer: chi invia davvero il form dal browser porta sempre
+    // l'indicazione della pagina di provenienza (italianoservito.it/...).
+    // Scartiamo SOLO quando il Referer è presente e punta esplicitamente a un
+    // dominio esterno — un segnale chiaro di richiesta non genuina. Se è
+    // assente lasciamo passare: alcuni browser/estensioni per la privacy non
+    // lo mandano nemmeno per persone reali, e non vogliamo rischiare di
+    // bloccare un'iscrizione vera per questo. Aggiunto il 31/08/2026 dopo aver
+    // scoperto che il bot manda le richieste direttamente all'endpoint, quindi
+    // l'honeypot da solo non basta (il bot non "vede" mai il campo trappola).
+    const referer = request.headers.get('referer');
+    if (referer) {
+      try {
+        const refererHost = new URL(referer).hostname;
+        if (!refererHost.endsWith('italianoservito.it')) {
+          console.warn('Referer esterno sospetto, richiesta scartata:', refererHost);
+          const grazieUrlRef = new URL('/grazie', request.url);
+          grazieUrlRef.searchParams.set('lang', rilevaLingua(request));
+          return Response.redirect(grazieUrlRef, 303);
+        }
+      } catch {
+        // Referer non parsabile: non blocchiamo, per prudenza.
+      }
+    }
+
     const nome = data.get('nome')?.toString().trim();
     const email = data.get('email')?.toString().trim();
     const telefono = data.get('telefono')?.toString().trim() || '';
