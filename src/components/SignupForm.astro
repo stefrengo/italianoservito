@@ -102,6 +102,14 @@ const T = { titolo: titolo ?? L.titolo, intro: intro ?? L.intro };
       </div>
       <form class="signup-form" method="POST" action="/api/iscrizione">
         <input type="hidden" name="fonte" value={fonte} />
+        <!-- Campo trappola anti-spam: invisibile per una persona reale (fuori
+             schermo via CSS, escluso dal tab con tabindex="-1"), ma un bot che
+             legge l'HTML e compila tutti i campi lo riempie. Se arriva pieno,
+             /api/iscrizione scarta la richiesta senza salvare né mandare email. -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="sito-web-hp">Non compilare questo campo</label>
+          <input type="text" id="sito-web-hp" name="sito_web" tabindex="-1" autocomplete="off" />
+        </div>
         <div class="row">
           <label>{L.nome}<input type="text" name="nome" required /></label>
           <label>{L.email}<input type="email" name="email" required /></label>
@@ -197,6 +205,7 @@ const T = { titolo: titolo ?? L.titolo, intro: intro ?? L.intro };
   .section-head h2 { font-size: clamp(1.3rem,2.2vw,1.7rem); margin-bottom: 10px; }
   .section-head .intro { color: var(--ink-soft); }
   .signup-form { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+  .hp-field { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .signup-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .signup-form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.9rem; font-weight: 500; color: var(--ink-soft); }
   .signup-form input[type="text"], .signup-form input[type="email"], .signup-form input[type="tel"], .signup-form select, .signup-form textarea {

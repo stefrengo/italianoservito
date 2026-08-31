@@ -18,6 +18,14 @@ import MainLayout from '../layouts/MainLayout.astro';
            Collegato a functions/api/iscrizione.js (Supabase + Resend). -->
       <form class="contact-form" method="POST" action="/api/iscrizione">
         <input type="hidden" name="fonte" value="contatti" />
+        <!-- Campo trappola anti-spam: invisibile per una persona reale (fuori
+             schermo via CSS, escluso dal tab con tabindex="-1"), ma un bot che
+             legge l'HTML e compila tutti i campi lo riempie. Se arriva pieno,
+             /api/iscrizione scarta la richiesta senza salvare né mandare email. -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="sito-web-hp">Non compilare questo campo</label>
+          <input type="text" id="sito-web-hp" name="sito_web" tabindex="-1" autocomplete="off" />
+        </div>
         <label>
           Nome
           <input type="text" name="nome" required />
@@ -57,6 +65,7 @@ import MainLayout from '../layouts/MainLayout.astro';
   .narrow { max-width: 620px; margin: 0 auto; }
   .lede { color: var(--ink-soft); margin-top: 12px; }
   .contact-form { display: flex; flex-direction: column; gap: 18px; margin-top: 20px; }
+  .hp-field { position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .contact-form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.92rem; font-weight: 500; color: var(--ink-soft); }
   .contact-form input, .contact-form select, .contact-form textarea {
     font-family: var(--font-body), sans-serif; font-size: 1rem; color: var(--ink);

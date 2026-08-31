@@ -131,6 +131,21 @@ export async function POST({ request, locals }) {
       );
     }
     const data = await request.formData();
+
+    // Campo trappola anti-spam (vedi SignupForm.astro e le pagine contatti.astro):
+    // invisibile per una persona reale, ma i bot che compilano tutti i campi
+    // dell'HTML lo riempiono. Se arriva valorizzato, fingiamo un invio andato
+    // a buon fine (redirect a /grazie) ma senza scrivere su Supabase né
+    // mandare email — così il bot non impara che è stato bloccato e non ha
+    // un errore su cui iterare. Aggiunto il 31/08/2026 dopo un'ondata di
+    // iscrizioni false (nome sempre "RobertFuern", email diverse ogni volta).
+    if (data.get('sito_web')) {
+      console.warn('Honeypot anti-spam attivato, richiesta scartata.');
+      const grazieUrlBot = new URL('/grazie', request.url);
+      grazieUrlBot.searchParams.set('lang', rilevaLingua(request));
+      return Response.redirect(grazieUrlBot, 303);
+    }
+
     const nome = data.get('nome')?.toString().trim();
     const email = data.get('email')?.toString().trim();
     const telefono = data.get('telefono')?.toString().trim() || '';
