@@ -26,6 +26,18 @@ import MainLayout from '../layouts/MainLayout.astro';
 const langParam = Astro.url.searchParams.get('lang');
 const lang = langParam === 'pl' || langParam === 'en' ? langParam : 'it';
 
+// Query param "conv" — impostato SOLO da /api/iscrizione quando honeypot o
+// controllo Referer bloccano una richiesta sospetta (vedi iscrizione.js):
+// quel "successo" è finto, serve solo a non far capire al bot di essere
+// stato scoperto, e non ha scritto nulla su Supabase né mandato email. Se
+// conv=0 non dobbiamo mandare eventi di conversione reali (GA4 generate_lead,
+// Meta Pixel Lead) qui sotto: altrimenti inquineremmo i dati di conversione
+// con iscrizioni mai avvenute — proprio le metriche su cui vogliamo poi
+// ottimizzare le sponsorizzate. Deciso con Stefano l'1/09/2026. Turnstile
+// non ha questo problema: quando blocca, non arriva mai qui (risposta di
+// errore diretta, nessun redirect).
+const trackConversion = Astro.url.searchParams.get('conv') !== '0';
+
 // Testo volutamente generico ("richiesta", non "iscrizione"/"posto
 // prenotato"): questa pagina compare per QUALSIASI invio del form, non
 // solo per chi si iscrive a un corso — anche per chi scrive dal form
@@ -79,11 +91,11 @@ const t = testi[lang];
     esistono e questi due "if" non fanno nulla: nessun dato inviato senza
     consenso, come richiesto dal GDPR.
   -->
-  <script>
-    if (typeof window.gtag === 'function') {
+  <script define:vars={{ trackConversion }}>
+    if (trackConversion && typeof window.gtag === 'function') {
       window.gtag('event', 'generate_lead', { event_category: 'iscrizione' });
     }
-    if (typeof window.fbq === 'function') {
+    if (trackConversion && typeof window.fbq === 'function') {
       window.fbq('track', 'Lead');
     }
   </script>

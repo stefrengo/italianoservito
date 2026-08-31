@@ -143,6 +143,13 @@ export async function POST({ request, locals }) {
       console.warn('Honeypot anti-spam attivato, richiesta scartata.');
       const grazieUrlBot = new URL('/grazie', request.url);
       grazieUrlBot.searchParams.set('lang', rilevaLingua(request));
+      // Non è una conversione vera: dice a /grazie di NON attivare GA4/Meta
+      // Pixel per questa visita, altrimenti inquineremmo i dati di
+      // conversione con iscrizioni mai avvenute — proprio le metriche su cui
+      // vogliamo ottimizzare le sponsorizzate. Aggiunto l'1/09/2026, vedi
+      // grazie.astro. Non tocca in alcun modo Supabase/Resend, già saltati
+      // sopra.
+      grazieUrlBot.searchParams.set('conv', '0');
       return Response.redirect(grazieUrlBot, 303);
     }
 
@@ -163,6 +170,9 @@ export async function POST({ request, locals }) {
           console.warn('Referer esterno sospetto, richiesta scartata:', refererHost);
           const grazieUrlRef = new URL('/grazie', request.url);
           grazieUrlRef.searchParams.set('lang', rilevaLingua(request));
+          // Stesso motivo del blocco honeypot qui sopra: niente eventi di
+          // conversione per un "successo" finto. Vedi grazie.astro.
+          grazieUrlRef.searchParams.set('conv', '0');
           return Response.redirect(grazieUrlRef, 303);
         }
       } catch {
