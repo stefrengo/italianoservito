@@ -55,6 +55,10 @@ export const corsiStagione = [
     tipo: 'Corso di gruppo', tipoPl: 'Kurs grupowy', tipoEn: 'Group course',
     lezioni: '15 lezioni da 60 minuti (24.09.26 – 28.01.27).',
     giornoLibero: '12 novembre, 24 e 31 dicembre, 7 gennaio',
+    // Corso al completo (07/09/2026, richiesta di Stefano): mostra "Corso
+    // completo" al posto del badge "Ultimi posti disponibili" e disabilita
+    // il pulsante di iscrizione ovunque questa edizione viene mostrata.
+    completo: true,
   },
   {
     pasto: 'Secondo', tag: 'Esplora la Lingua', tagPl: 'Odkryj język', tagEn: 'Explore the Language', livello: 'C1',

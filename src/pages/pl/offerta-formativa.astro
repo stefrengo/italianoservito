@@ -60,6 +60,7 @@ const perche = [
               <span class="livello">{c.livello}</span>
             </div>
             <p class="path-name">{c.tagPl}</p>
+            <span class={`posti-badge${c.completo ? ' completo' : ''}`}>{c.completo ? 'Kurs pełny' : 'Ostatnie wolne miejsca'}</span>
             <div class="price-amount"><span class="currency">PLN</span>{c.prezzo}</div>
             {c.dolce ? (
               <ul>
@@ -74,7 +75,7 @@ const perche = [
                 <li>Dzień wolny: {traduciData(c.giornoLibero, 'pl')}</li>
               </ul>
             )}
-            <button type="button" class="btn small" data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} · ${c.livello}`}>Zarezerwuj swoje miejsce</button>
+            <button type="button" class="btn small" disabled={c.completo} data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} · ${c.livello}`}>Zarezerwuj swoje miejsce</button>
           </div>
         ))}
       </div>
@@ -183,6 +184,7 @@ const perche = [
   .price-tag { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px 0; }
   .price-tag .livello { font-weight: 700; color: var(--green); font-size: 0.9rem; }
   .path-name { margin: 8px 16px 0; font-size: 0.82rem; color: var(--ink-soft); font-weight: 600; }
+  .price-card .posti-badge { margin: 8px 16px 0; }
   .price-amount { padding: 6px 16px 12px; font-family: var(--font-display); }
   .price-amount .currency { font-size: 0.85rem; color: var(--ink-soft); margin-right: 6px; }
   .price-amount { font-size: 2.1rem; font-weight: 700; color: var(--red); }
