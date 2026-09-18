@@ -31,6 +31,11 @@ export const SCADENZA_ISO = '2026-09-14T23:59:59'; // <- data reale per il count
 // italiano nei dati e vengono tradotti a runtime da src/lib/traduciData.js
 // sulle pagine /pl e /en, per lo stesso motivo (fonte unica, niente
 // duplicazione a rischio di disallineamento).
+// Campagna chiusa (18/09/2026, richiesta di Stefano): le iscrizioni per
+// questa stagione sono chiuse su tutte le pagine. Non c'è più bisogno di un
+// flag per-corso come il vecchio "completo" — l'etichetta "Iscrizioni
+// chiuse!" e la rimozione dei pulsanti/form sono gestite direttamente nei
+// template (vedi /offerta-formativa, /percorsi/*, /club-del-libro).
 export const corsiStagione = [
   {
     pasto: 'Antipasto', tag: 'Sbloccati adesso', tagPl: 'Odblokuj się teraz', tagEn: 'Unlock Now', livello: 'A1',
@@ -55,10 +60,6 @@ export const corsiStagione = [
     tipo: 'Corso di gruppo', tipoPl: 'Kurs grupowy', tipoEn: 'Group course',
     lezioni: '15 lezioni da 60 minuti (24.09.26 – 28.01.27).',
     giornoLibero: '12 novembre, 24 e 31 dicembre, 7 gennaio',
-    // Corso al completo (07/09/2026, richiesta di Stefano): mostra "Corso
-    // completo" al posto del badge "Ultimi posti disponibili" e disabilita
-    // il pulsante di iscrizione ovunque questa edizione viene mostrata.
-    completo: true,
   },
   {
     pasto: 'Secondo', tag: 'Esplora la Lingua', tagPl: 'Odkryj język', tagEn: 'Explore the Language', livello: 'C1',

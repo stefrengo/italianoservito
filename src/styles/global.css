@@ -147,7 +147,8 @@ a { color: inherit; text-decoration: none; }
 .stamp.green { border-color: var(--green); color: var(--green); }
 .stamp.gold { border-color: var(--gold); color: var(--gold); }
 
-/* ---------- badge disponibilità posti — aggiunto 07/09/2026 ---------- */
+/* ---------- badge "Iscrizioni chiuse!" — aggiunto 07/09/2026, campagna
+   chiusa il 18/09/2026: un solo stato (chiuso) su tutte le card corso. ---------- */
 .posti-badge {
   display: inline-flex;
   align-self: flex-start;
@@ -157,12 +158,7 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   padding: 5px 11px 4px;
   border-radius: 100px;
-  border: 1.5px solid var(--gold);
-  color: var(--gold);
-  background: rgba(192,138,62,0.08);
-}
-.posti-badge.completo {
-  border-color: var(--card-line);
+  border: 1.5px solid var(--card-line);
   color: var(--ink-soft);
   background: rgba(90,80,68,0.06);
 }

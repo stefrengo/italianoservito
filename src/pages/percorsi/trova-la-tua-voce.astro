@@ -1,6 +1,5 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
-import SignupForm from '../../components/SignupForm.astro';
 import { corsi } from '../../data/corsi.js';
 import { corsiStagione, STAGIONE } from '../../data/corsiStagione.js';
 const c = corsi['trova-la-tua-voce'];
@@ -34,7 +33,7 @@ const faqSchema = {
         <span class="level-badge" style="margin-left:8px;">{c.badge}</span>
         <h1>{c.heroLine}</h1>
         <p class="lede">{c.lede}</p>
-        <a class="btn" href="#iscrizione">Scopri se è il tuo percorso</a>
+        <a class="btn" href="/contatti">Scrivimi per la prossima edizione</a>
       </div>
       <div class="photo hero-photo torn-bottom reveal d1">
         <img src={c.img} alt={c.title} style={`object-position:${c.imgPos};`} />
@@ -66,13 +65,12 @@ const faqSchema = {
               <span class="livello">{cs.livello}</span>
               <span class="prezzo"><span class="currency">PLN</span>{cs.prezzo}</span>
             </div>
-            <span class={`posti-badge${cs.completo ? ' completo' : ''}`}>{cs.completo ? 'Corso completo' : 'Ultimi posti disponibili'}</span>
+            <span class="posti-badge">Iscrizioni chiuse!</span>
             <ul>
               <li>{cs.tipo}</li>
               <li>{cs.lezioni}</li>
               <li>Giorno libero: {cs.giornoLibero}</li>
             </ul>
-            <button type="button" class="btn small" disabled={cs.completo} data-corso={`${cs.tag} · ${cs.livello}`}>Prenota il tuo posto</button>
           </div>
         ))}
       </div>
@@ -96,12 +94,6 @@ const faqSchema = {
     </div>
   </section>
 
-  <SignupForm
-    corsi={corsiDelPercorso}
-    titolo={`Iscriviti a ${c.title}`}
-    intro={`Compila il modulo per prenotare il tuo posto in ${c.title}: non è una semplice richiesta di informazioni, è la tua iscrizione. Ti confermo tutto via email appena la ricevo.`}
-    fonte="percorso:trova-la-tua-voce"
-  />
 </MainLayout>
 
 <style>
@@ -135,7 +127,6 @@ const faqSchema = {
   .edizione-card ul { list-style: none; margin: 0; padding: 12px 16px; border-top: 1px solid var(--card-line); margin-top: 12px; flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
   .edizione-card li { font-size: 0.82rem; color: var(--ink-soft); padding-left: 14px; position: relative; }
   .edizione-card li::before { content: "•"; position: absolute; left: 0; color: var(--red); }
-  .edizione-card .btn.small { margin: 0 16px 16px; text-align: center; font-size: 0.82rem; padding: 10px 16px; }
 
   details { border-top: 1px solid var(--card-line); padding: 20px 0; }
   summary { font-weight: 600; cursor: pointer; }

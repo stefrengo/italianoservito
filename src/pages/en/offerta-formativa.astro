@@ -4,8 +4,7 @@
 // tradotti (vedi traduzioni-pl-en-bozza.md). Fuori dal menu di navigazione,
 // come la versione italiana.
 import MainLayout from '../../layouts/MainLayout.astro';
-import SignupForm from '../../components/SignupForm.astro';
-import { STAGIONE, PERIODO, SCADENZA_LABEL, SCADENZA_ISO, corsiStagione, corsiDolce } from '../../data/corsiStagione.js';
+import { STAGIONE, corsiStagione, corsiDolce } from '../../data/corsiStagione.js';
 import { traduciData } from '../../lib/traduciData.js';
 
 const tutteLeCard = [
@@ -26,17 +25,17 @@ const perche = [
 <MainLayout
   locale="en"
   title={`Italian courses ${traduciData(STAGIONE, 'en')} | L'Italiano è Servito`}
-  description="Online Italian courses with Giada Longo. Limited spots: reserve your spot now."
+  description="Online Italian courses with Giada Longo. Enrollment for this season is closed — contact me about the next one."
 >
   <section class="hero-ads">
     <div class="wrap hero-grid">
       <div class="reveal">
-        <span class="stamp ink">Enroll in the new courses</span>
+        <span class="stamp ink">Enrollment closed</span>
         <h1>Online Italian<br>language courses</h1>
         <p class="stagione">Because Italian is a pleasure!</p>
         <p class="lede">Hi! I'm Giada, a teacher of Italian language and culture for people from abroad. After years of teaching in Poland, I founded "L'Italiano è Servito" to help people from the Slavic world truly immerse themselves in the Italian language, not just study it.</p>
         <p class="lede">To me, teaching Italian means stepping into the heart of Italy: into its gestures, its flavors, its traditions.</p>
-        <a class="btn" href="#iscrizione">Reserve your spot</a>
+        <a class="btn" href="/en/contatti">Contact me</a>
       </div>
       <div class="photo main-photo torn-bottom reveal d1">
         <img src="/foto/giada-1.png" alt="Giada Longo" />
@@ -60,7 +59,7 @@ const perche = [
               <span class="livello">{c.livello}</span>
             </div>
             <p class="path-name">{c.tagEn}</p>
-            <span class={`posti-badge${c.completo ? ' completo' : ''}`}>{c.completo ? 'Course full' : 'Last spots available'}</span>
+            <span class="posti-badge">Enrollment closed!</span>
             <div class="price-amount"><span class="currency">PLN</span>{c.prezzo}</div>
             {c.dolce ? (
               <ul>
@@ -75,7 +74,6 @@ const perche = [
                 <li>Day off: {traduciData(c.giornoLibero, 'en')}</li>
               </ul>
             )}
-            <button type="button" class="btn small" disabled={c.completo} data-corso={c.dolce ? `${c.tag} (solo)` : `${c.tag} · ${c.livello}`}>Reserve your spot</button>
           </div>
         ))}
       </div>
@@ -113,59 +111,7 @@ const perche = [
     </div>
   </section>
 
-  <section class="dettagli-section">
-    <div class="wrap dettagli-grid">
-      <div class="reveal">
-        <h2>Details</h2>
-        <ul class="dettagli-list">
-          <li>📅 {traduciData(PERIODO, 'en')}</li>
-          <li>💻 Online on Zoom</li>
-          <li>🧑‍🏫 Limited spots: to actually reserve your spot, I'll ask you for a 100 PLN deposit. I'll give you all details via email.</li>
-        </ul>
-      </div>
-      <div class="scadenza-card reveal d1">
-        <h3>Enrollment deadline: {traduciData(SCADENZA_LABEL, 'en')}</h3>
-        <div class="countdown" id="countdown" data-target={SCADENZA_ISO}>
-          <div><span id="cd-days">00</span><small>Days</small></div>
-          <div><span id="cd-hours">00</span><small>Hours</small></div>
-          <div><span id="cd-min">00</span><small>Min</small></div>
-          <div><span id="cd-sec">00</span><small>Sec</small></div>
-        </div>
-        <a class="btn" href="#iscrizione">Reserve your spot now</a>
-      </div>
-    </div>
-  </section>
-
-  <SignupForm corsi={corsiStagione} includiClubStandalone={true} fonte="offerta-formativa-en" locale="en" />
 </MainLayout>
-
-<script>
-  const el = document.getElementById('countdown');
-  if (el) {
-    const target = new Date(el.dataset.target).getTime();
-    const dEl = document.getElementById('cd-days');
-    const hEl = document.getElementById('cd-hours');
-    const mEl = document.getElementById('cd-min');
-    const sEl = document.getElementById('cd-sec');
-    function tick() {
-      const diff = target - Date.now();
-      if (diff <= 0) {
-        [dEl, hEl, mEl, sEl].forEach(e => e.textContent = '00');
-        return;
-      }
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      dEl.textContent = String(d).padStart(2, '0');
-      hEl.textContent = String(h).padStart(2, '0');
-      mEl.textContent = String(m).padStart(2, '0');
-      sEl.textContent = String(s).padStart(2, '0');
-    }
-    tick();
-    setInterval(tick, 1000);
-  }
-</script>
 
 <style>
   .hero-ads { padding: 60px 0 40px; }
@@ -191,7 +137,6 @@ const perche = [
   .price-card ul { list-style: none; margin: 0; padding: 14px 16px; border-top: 1px solid var(--card-line); flex-grow: 1; display: flex; flex-direction: column; gap: 10px; }
   .price-card li { font-size: 0.85rem; color: var(--ink-soft); padding-left: 14px; position: relative; }
   .price-card li::before { content: "•"; position: absolute; left: 0; color: var(--red); }
-  .price-card .btn.small { margin: 0 16px 18px; text-align: center; font-size: 0.85rem; padding: 11px 18px; }
   .info-line { text-align: center; margin-top: 34px; color: var(--ink-soft); }
   .info-line a { color: var(--red); font-weight: 600; }
 
@@ -211,16 +156,6 @@ const perche = [
   .storia-content h2 { color: #fff; font-size: clamp(1.3rem,2.2vw,1.7rem); margin: 8px 0 16px; }
   .storia-content p { color: #F5E4DC; font-size: 0.95rem; margin-bottom: 14px; }
 
-  .dettagli-section { padding: 60px 0; }
-  .dettagli-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-  .dettagli-list { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 12px; font-size: 1rem; }
-  .scadenza-card { background: var(--card); border: 1px solid var(--card-line); border-radius: var(--radius); padding: 30px; text-align: center; }
-  .scadenza-card h3 { font-size: 1.15rem; margin-bottom: 18px; }
-  .countdown { display: flex; justify-content: center; gap: 16px; margin-bottom: 22px; }
-  .countdown div { display: flex; flex-direction: column; align-items: center; }
-  .countdown span { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--red); }
-  .countdown small { font-size: 0.7rem; color: var(--ink-soft); text-transform: uppercase; }
-
   @media (max-width: 980px) {
     .price-grid, .perche-grid { grid-template-columns: repeat(2, 1fr); }
   }
@@ -229,6 +164,5 @@ const perche = [
     .main-photo { order: -1; height: 280px; }
     .price-grid, .perche-grid { grid-template-columns: 1fr; }
     .storia-section { grid-template-columns: 1fr; padding: 40px 24px; }
-    .dettagli-grid { grid-template-columns: 1fr; }
   }
 </style>
